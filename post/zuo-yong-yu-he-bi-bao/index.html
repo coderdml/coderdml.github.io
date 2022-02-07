@@ -2,21 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>vue学习笔记 | Study for money</title>
+<title>作用域和闭包 | Study for money</title>
 <link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644231348214">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="vue学习笔记 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="作用域和闭包 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="插槽
-&lt;slot&gt;&lt;/slot&gt;
-在使用插槽时要注意设置的内容是直接把整个插槽覆盖替换的
-所以如果要对插槽使用如：v-if,v-else,v-bind等等的方法时，建议给插槽包裹一层div标签
-示例
-&lt;temp..." />
+    <meta name="description" content="掘金链接
+https://juejin.cn/post/6844904165672484871
+当可执行代码内部访问变量时，会先查找本地作用域，如果找到目标变量即返回，否则会去父级作用域继续查找...一直找到全局作用域。我们把这种作用域的嵌..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,11 +76,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              vue学习笔记
+              作用域和闭包
             </h2>
             <div class="post-info">
               <span>
-                2021-07-31
+                2022-02-07
               </span>
               <span>
                 1 min read
@@ -93,29 +90,17 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="插槽">插槽</h1>
-<p><code>&lt;slot&gt;&lt;/slot&gt;</code><br>
-在使用插槽时要注意设置的内容是直接把整个插槽覆盖替换的<br>
-所以如果要对插槽使用如：<em>v-if</em>,<em>v-else</em>,<em>v-bind</em>等等的方法时，建议给插槽包裹一层<em>div</em>标签</p>
-<p><strong>示例</strong></p>
-<pre><code>&lt;template&gt;
-    &lt;div class=&quot;tab-bar-item&quot;&gt; 
-        &lt;div v-if=&quot;!isActive&quot;&gt;&lt;slot  name = &quot;item-icon&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
-        &lt;div v-else&gt;&lt;slot name = &quot;item-icon-active&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
-        &lt;div :class=&quot;{active:isActive}&quot;&gt;&lt;slot name = &quot;item-text&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
-    &lt;/div&gt;  
-&lt;/template&gt;
-</code></pre>
-<p>//vue3好像已经改了<br>
-非原生的标签不能监听点击，要监听组件的点击要用到<code>native</code>属性<br>
-<code>@click.native</code></p>
+                <p>掘金链接<br>
+https://juejin.cn/post/6844904165672484871</p>
+<pre><code>当可执行代码内部访问变量时，会先查找本地作用域，如果找到目标变量即返回，否则会去父级作用域继续查找...一直找到全局作用域。我们把这种作用域的嵌套机制，称为 作用域链。
+
+需要注意，函数参数也在函数作用域中。
+
+词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。</code></pre>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E6%8F%92%E6%A7%BD">插槽</a></li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -124,9 +109,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://coderdml.github.io/post/javascript-indexof-fang-fa/">
+            <a href="https://coderdml.github.io/post/mian-shi-ti-ji-lei/">
               <h3 class="post-title">
-                JavaScript indexOf() 方法
+                大厂面试题
               </h3>
             </a>
           </div>
