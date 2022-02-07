@@ -1,0 +1,237 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Promise链式编程 | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Promise链式编程 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="&lt;script&gt;
+    new Promise((resolve,reject)=&gt;{
+        setTimeout(()=&gt;{
+            // resolve('Hello World')
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Promise链式编程
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-08-01
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <pre><code>&lt;script&gt;
+    new Promise((resolve,reject)=&gt;{
+        setTimeout(()=&gt;{
+            // resolve('Hello World')
+            reject('err message')
+        },1000)
+        }).then((data)=&gt;{         //也可以在then中传入两个函数代替catch
+            console.log(data)
+        }).catch((err)=&gt;{
+            console.log(err)
+        })
+&lt;/script&gt;
+</code></pre>
+<pre><code>&lt;script&gt;
+    Promise链式编程
+    new Promise((resolve, reject)=&gt;{
+        setTimeout(()=&gt;{
+         resolve()
+    },1000)
+    }).then(()=&gt;{
+        console.log(&quot;Hello World&quot;)
+        console.log(&quot;Hello World&quot;)
+        console.log(&quot;Hello World&quot;)
+        console.log(&quot;Hello World&quot;)
+
+        return new Promise((resolve,reject)=&gt;{
+            setTimeout(()=&gt;{
+                resolve()
+            },1000)
+        })
+    }).then(()=&gt;{
+        console.log(&quot;Hello VUe&quot;)
+        console.log(&quot;Hello VUe&quot;)
+        console.log(&quot;Hello VUe&quot;)
+        console.log(&quot;Hello VUe&quot;)
+
+        return new Promise((resolve, reject)=&gt;{
+            setTimeout(()=&gt;{
+                resolve()
+            },1000)
+        })
+    }).then(()=&gt;{
+        console.log(&quot;Hello promise&quot;)
+        console.log(&quot;Hello promise&quot;)
+        console.log(&quot;Hello promise&quot;)
+        console.log(&quot;Hello promise&quot;)
+    })
+&lt;/script&gt;
+</code></pre>
+<h1 id="promise的all方法">Promise的all方法</h1>
+<p><strong>需要获取到两个异步请求的结果，确认两个请求都收到</strong></p>
+<pre><code>Promise.all([
+    new Promise((resolve)=&gt;{
+        setTimeout(()=&gt;{
+            resolve({name:'coderdml',age:18})
+        },1000)
+    }),
+    new Promise((resolve)=&gt;{
+        setTimeout(()=&gt;{
+            resolve({name:'coderwhy',age:19})
+        },2000)
+    })
+]).then((res)=&gt;{
+    console.log(res)
+})
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#promise%E7%9A%84all%E6%96%B9%E6%B3%95">Promise的all方法</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/gong-zuo-nei-rong/">
+              <h3 class="post-title">
+                TabBar移动端底部导航
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

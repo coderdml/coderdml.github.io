@@ -1,0 +1,397 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Supermall项目进展 | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Supermall项目进展 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1.在GitHub上创建一个仓库，使用gitbash创建仓库和本地的连接
+使用到的git指令
+git status git add . git commit -m '初始化项目' git push
+或者
+git remote add ori..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Supermall项目进展
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-08-08
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>1.在GitHub上创建一个仓库，使用gitbash创建仓库和本地的连接<br>
+<em>使用到的git指令</em><br>
+<code>git status</code> <code>git add .</code> <code>git commit -m '初始化项目'</code> <code>git push</code><br>
+或者<br>
+<code>git remote add origin https://github.com/coderdml/supermall.git</code><br>
+<code>git push -u origin main</code> or<code>git push -u origin master</code></p>
+<p>2.划分目录结构<br>
+<img src="https://coderdml.github.io/post-images/1628441430320.png" alt="" loading="lazy"><br>
+3.css的引入<br>
+引入normalize.css，创建base.css<br>
+normalize.css下载地址<code>https://github.com/necolas/normalize.css</code></p>
+<p>4.别名的配置<br>
+在<code>src</code>目录下创建<code>vue.config.js</code>文件</p>
+<pre><code>module.exports ={
+    configureWebpack:{
+        resolve:{
+            alias:{
+                //'@': 'src'   内部已经自己配置过
+                'assets': '@/assets',
+                'common':'@/common',
+                'components':'@/components',
+                'network':'@/network',
+                'views':'@/views',
+                //router和store文件不配置
+            }
+        }
+    }
+}
+</code></pre>
+<p>5.导入tabbar实现项目的模块划分<br>
+导入之前做过的tabbar，修改一些路径，创建vue.config.js文件并在其中进行别名的配置</p>
+<p>在这个环节遇到了很多问题，按理说是不该如此，下面记录一下问题<br>
+<strong>错误1 eslint信息报错</strong><br>
+因为之前没有用过eslint对此不熟悉，所以选择的修改办法是<br>
+<em>关闭eslint</em>:在vue.config.js文件中添加代码</p>
+<pre><code>lintOnSave:false //关闭eslint检查
+</code></pre>
+<p>但是会报其他错误，即不可行<br>
+<strong>错误2 router报错</strong><br>
+项目最初创建时没有选择router，而后自行使用npm指令安装</p>
+<pre><code>npm install vue-router --save
+</code></pre>
+<p>依然显示router报错<br>
+<strong>最终解决方案</strong><br>
+重新创建项目时去掉eslint并加上router即可解决<br>
+原因未知，需要以后明确找到问题原因，否则很可能对项目进展造成困扰</p>
+<p>6.首页开发<br>
+6.1导航栏navbar<br>
+划分为左中右三个插槽<br>
+<em>components/common/navbar/NavBar.vue</em></p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;nav-bar&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;&lt;slot name=&quot;left&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
+    &lt;div class=&quot;center&quot;&gt;&lt;slot name=&quot;center&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
+    &lt;div class=&quot;right&quot;&gt;&lt;slot name=&quot;right&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>6.2轮播图<em>swiper</em><br>
+导入封装好的轮播图组件<br>
+使用<code>axios</code>进行网络请求<em>request请求返回的是一个Promise值</em><br>
+在生命周期函数create()中对请求的结果使用<code>then方法</code>把请求到的数据存放在data()中<br>
+尔后动态绑定data()中对应的数据把结果显示出来<br>
+network/home.js</p>
+<pre><code>import {request} from &quot;./request&quot;;
+export function getHomeMultidata(){
+    return request({
+        url:'/home/multidata'
+    })
+}
+</code></pre>
+<p>Home.vue</p>
+<pre><code>data(){
+        return {
+            banner : [],
+            recommend : [],
+        }
+    },
+    created(){
+        getHomeMultidata().then(res=&gt;{
+            this.banner=res.data.banner.list;
+            this.recommend=res.data.recommend.list;
+        })
+    }
+</code></pre>
+<pre><code>&lt;swiper&gt;
+    &lt;swiper-item v-for=&quot;(item,index) in banner&quot; :key=&quot;index&quot;&gt;
+        &lt;a :href=&quot;item.link&quot;&gt;
+            &lt;img :src=&quot;item.image&quot;&gt;
+        &lt;/a&gt;
+    &lt;/swiper-item&gt;
+&lt;/swiper&gt;
+</code></pre>
+<p>6.3推荐信息<br>
+简单的贴图加一个链接<br>
+6.4本周流行<br>
+简单的贴图加一个链接<br>
+6.5<code>tabcontrol</code>以及商品数据的请求和展示<br>
+具有吸顶效果的一个组件，实现点击组件内对应的不同<span>标签请求到不同的数据并展示<br>
+<em>吸顶样式代码</em></p>
+<pre><code>.tab-control{
+        position:sticky;
+        top:43px;
+        z-index:8;
+    }
+</code></pre>
+<p>组件代码</p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;tab-bar-control&quot;&gt;
+      &lt;div 
+      v-for=&quot;(item,index) in title&quot; :key=&quot;index&quot; 
+      class=&quot;tab-bar-control-item&quot;
+      :class=&quot;{active: index==currentIndex}&quot;
+      @click=&quot;itemClick(index)&quot;&gt;
+          &lt;span&gt;{{item}}&lt;/span&gt;
+      &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+    name : &quot;tabBarControl&quot;,
+    props:{title:{type:Array,default(){ return [] } } },
+    data(){return {currentIndex:0}},
+    methods:{ itemClick(index){this.currentIndex=index;
+    this.$emit('tabClick',index); }}}
+&lt;/script&gt;
+</code></pre>
+<p>父组件中请求方法以及数据在下方<code>6.7</code>中<br>
+6.6<code>backtop</code>返回顶部<br>
+在界面右下角完成一个能实现返回顶部功能的组件，并且能根据页面位置显示和隐藏<br>
+实现过程：</p>
+<p>通过子组件<code>backtop</code>向外发送点击事件</p>
+<pre><code>&lt;template&gt;
+    &lt;div class=&quot;backTop&quot; @click=&quot;backTop&quot;&gt;
+</code></pre>
+<pre><code>  export default {name: &quot;backTop&quot;,
+  methods:{backTop(){this.$emit(&quot;backTop&quot;)}}}
+</code></pre>
+<p>在父组件中监听点击事件</p>
+<pre><code>&lt;back-top class=&quot;backTop&quot; :class=&quot;{'hide': scrollTop&lt;=200}&quot; @backTop=&quot;backTop&quot;/&gt;
+</code></pre>
+<p>并实现对应方法</p>
+<pre><code>backTop(){
+           window.scrollTo({
+               top: 0,
+               behavior: &quot;smooth&quot;
+               });
+       }
+</code></pre>
+<p>隐藏功能的实现：<br>
+获取滚动条的位置</p>
+<pre><code>created(){
+window.addEventListener('scroll',this.windowScrollListener); 
+    },
+</code></pre>
+<pre><code>destroyed () {
+        window.removeEventListener('scroll', this.windowScrollListener)
+    },
+</code></pre>
+<pre><code>methods:{
+windowScrollListener(){
+this.scrollTop = document.body.scrollTop || document.documentElement.scrollTop;}
+}
+</code></pre>
+<p>根据滚动条的位置动态绑定<code>class</code><br>
+<code>:class=&quot;{'hide': scrollTop&lt;=200}&quot;</code><br>
+6.7下拉加载更多功能<br>
+data中定义数据</p>
+<pre><code>            goods:{
+                'pop':{page:0, list:[]},
+                'new':{page:0, list:[]},
+                'sell':{page:0, list:[]}
+            },
+            currenttype:'pop',
+            scrollTop:0,
+            domHeight:0,
+            scrollHeight:0,
+            loading:false,
+</code></pre>
+<p>方法</p>
+<pre><code> windowScrollListener(){
+            this.scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            this.domHeight = document.documentElement.clientHeight;
+            this.scrollHeight = document.documentElement.scrollHeight;
+              // 当内容滚动到距离底部&lt;130时,且不在加载中
+             // 内容距离底部多少距离 = 内容总高度-滚动高度-当前可视高度
+            if (this.scrollHeight  - this.scrollTop - this.domHeight &lt;130 &amp;&amp;  !this.loading ) {
+           // 设置为正在加载中
+            this.loading = true;
+            setTimeout(()=&gt;{
+                this.getHomegoods(this.currenttype)
+            ----------
+                },500)
+        }
+       },
+       getHomegoods(type){
+            const page=this.goods[type].page+1;
+            getHomegoods(type,page).then(res=&gt;{
+            this.goods[type].list.push(...res.data.list);
+            this.goods[type].page +=1;
+            //设为未在加载中
+            this.loading=false;
+            })
+        }
+</code></pre>
+<p>过程中的bug以及解决</p>
+<pre><code>BUG：下拉时多次请求数据
+解决方案：判断条件中加一个loading
+</code></pre>
+<pre><code>BUG：下拉时只请求一次请求数据
+解决方案：在网络请求方法中加一行代码让请求结束后修改loading的值
+</code></pre>
+<p>问题：<br>
+（1）<code>this.loading=false;</code>为什么不能放在<code>------</code>位置<br>
+（2）当<code>pop</code>页面请求数据到<code>page=6</code>切停留时切换到其他页面也会请求到<code>page=6</code>（复用？）<br>
+处理：<br>
+（1）：放在'------'位置虽然实现起来没有问题，但是在逻辑上是在请求数据时就把<code>loading</code>设置为<code>false</code>不合逻辑，放在异步请求<code>getHomegoods</code>的<code>then</code>中才贴合逻辑<br>
+（2）：<br>
+6.8离开<code>Home</code>页面时的状态保存</p>
+<pre><code>activated() {
+        window.scrollTo(0,this.saveY)
+    },
+    deactivated() {
+        this.saveY = this.scrollTop
+    },
+</code></pre>
+<p>6.9详情页跳转<br>
+获取<code>iid</code>数据</p>
+<p>根据<code>iid</code>配置动态路由</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/axios/">
+              <h3 class="post-title">
+                axios
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VUE | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="VUE | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="懒加载
+√
+一、为什么要使用路由懒加载
+为给客户更好的客户体验，首屏组件加载速度更快一些，解决白屏问题。
+懒加载则可以将页面进行划分，需要的时候加载页面，可以有效的分担首页所承担的加载压力，减少首页加载用时。
+二、定义
+懒加载简单来说就是延..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              VUE
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-09-06
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="懒加载">懒加载</h1>
+<p>√<br>
+一、为什么要使用路由懒加载<br>
+为给客户更好的客户体验，首屏组件加载速度更快一些，解决白屏问题。<br>
+懒加载则可以将页面进行划分，需要的时候加载页面，可以有效的分担首页所承担的加载压力，减少首页加载用时。<br>
+二、定义<br>
+懒加载简单来说就是延迟加载或按需加载，即在需要的时候的时候进行加载。<br>
+三、使用<br>
+常用的懒加载方式有两种：即使用vue异步组件 和 ES中的import</p>
+<h1 id="keep-alive">keep-alive</h1>
+<p>√</p>
+<h1 id="router-route-routes">router、route、routes</h1>
+<p>√</p>
+<h1 id="ref和refs">ref和$refs</h1>
+<p>√</p>
+<h1 id="ajax和axios">ajax和axios</h1>
+<p>√×</p>
+<h1 id="生命周期">生命周期</h1>
+<p>created()：在创建vue对象时，当html渲染之前触发；但是注意，全局vue.js不强制刷新或者重启时只创建一次，也就是说，created()只会触发一次；</p>
+<p>activated()：在vue对象存活的情况下，进入当前存在activated()函数的页面时，一进入页面就触发；可用于初始化页面数据、keepalive缓存组件后，可执行方法；</p>
+<p>deactivated()：离开组件时执行；</p>
+<h1 id="vue双向数据绑定原理">VUE双向数据绑定原理</h1>
+<p>√×</p>
+<h1 id="时间戳">时间戳</h1>
+<p>√×</p>
+<h1 id="组件通信">组件通信</h1>
+<p>props、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>e</mi><mi>f</mi><mi>s</mi><mi mathvariant="normal">、</mi></mrow><annotation encoding="application/x-tex">refs、</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">、</span></span></span></span>emit</p>
+<h1 id="vuex">vuex</h1>
+<p>五个属性</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E6%87%92%E5%8A%A0%E8%BD%BD">懒加载</a></li>
+<li><a href="#keep-alive">keep-alive</a></li>
+<li><a href="#router-route-routes">router、route、routes</a></li>
+<li><a href="#ref%E5%92%8Crefs">ref和$refs</a></li>
+<li><a href="#ajax%E5%92%8Caxios">ajax和axios</a></li>
+<li><a href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">生命周期</a></li>
+<li><a href="#vue%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86">VUE双向数据绑定原理</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E6%88%B3">时间戳</a></li>
+<li><a href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1">组件通信</a></li>
+<li><a href="#vuex">vuex</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/guan-yu-flex-bu-ju-he-nth-of-typen/">
+              <h3 class="post-title">
+                关于flex布局和:nth-of-type(n)
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,261 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>面试题 | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="面试题 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="#面试题
+##CSS
+###1.一个盒子垂直水平居中有哪些方法？（2~3种方法）
+space-bettewn属性
+###2.flex怎么使用，flex:1代表了什么（三个属性）
+###3.使用自适应布局的时候用rem,为什么可以实现自适应布..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              面试题
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-08-21
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>#面试题<br>
+##CSS<br>
+###1.一个盒子垂直水平居中有哪些方法？（2~3种方法）<br>
+space-bettewn属性<br>
+###2.flex怎么使用，flex:1代表了什么（三个属性）<br>
+###3.使用自适应布局的时候用rem,为什么可以实现自适应布局，在不同的手机端表现得是什么<br>
+rem是基于html的字体大小来进行布局的（问：不同的移动端是有不同的html字体大小吗，在拿到设计图是怎么计算的）除以16px(问：16px是基于什么来的)<br>
+##4.http计算机基础相关<br>
+三次握手四次挥手<br>
+常见状态码<br>
+##vue<br>
+axios的底层是怎么实现的，用什么实现的（配套AJAX问题）<br>
+###5.vue的生命周期<br>
+mounted和created的区别：<br>
+created的时候，他的html的节点都没有渲染出来<br>
+mounted的时候，可以进行数据请求，进行数据绑定（此时HTML的结构已经出来了，可以将数据绑定到DOM结构上）<br>
+###6.组件传值分为（父传子、子传父、兄弟组件之间传值）<br>
+###7.keep-alive是怎么使用的<br>
+缓存、会多出来几个生命周期<br>
+###8.VUE双向绑定的原理<br>
+数据劫持objectDefinePropoty<br>
+数据劫持之后，通过发布订阅模式<br>
+##JS<br>
+###9.跨域是有哪几种方式实现的（什么是跨域，限制了什么，不同源的话会进行什么策略）<br>
+跨域的方式有：jsonP、nigix的代理、websocket以及php端修改header。<br>
+代理设置了location的哪一项？<br>
+websocket是怎么进行跨域的？<br>
+php修改header为很么修改了就想能跨域了？<br>
+###10.this指向<br>
+普通函数和箭头函数的this，以及怎么改变普通函数里的this指向<br>
+###11.apply、call、bind,区别<br>
+apply怎样实现bind<br>
+##ES6<br>
+###12.promise和async await有什么区别<br>
+await有什么特点<br>
+这两个方法报错了怎么抓取<br>
+###13.ES6的新特性有哪些<br>
+promise async await class继承、解构赋值<br>
+定义const、var、let、箭头函数<br>
+###14.let、var、const的区别<br>
+const定义的对象是可以改变的（定义的是指向对象的地址）</p>
+<hr>
+<p>大场css会问实现一个啥，不再是那些死记应背的东西，一定要自己去灵活运用css知识，BFC、伪类、flex等，也会问懒加载和延迟加载、回流和重绘等，问js必问ES6 promise await this 继承 手撕节流和防抖、手撕二叉树的前中后（非递归）平衡二叉树的左右旋、基本的排序和查找、动态归划、贪心等  proxy也会问，深拷贝浅拷贝，垃圾回收以及它的算法，事件绑定、事件监听、事件委托，设计模式、手撕单例、工厂等，函数式编程、跨域、加密（Token、JWT）缓存cookie与session、xss和csrf攻击、https与http 、了解SSL和TLS、了解SSR和SEO、前端测试怎么做、TCP与UDP DNS 问VUE必问webpack，git的常用指令、怎样实现版本回退、Linux常用指令、数据库了解吗？SQL基本操作、MonogoDB、MySQL等</p>
+<hr>
+<p>定位至少说三种，这是基本。然后高度塌陷 一般是想让你回答BFC 清除浮动 然后语义话 主要是H5引入的，一定要说优点：利于SEO 利于不同设备展示，特别是移动设备 还有利于残障人士操作网页等等。web storage 一定要说清楚cookie的用法，延伸就是和session的区别等，还有就是要回答到local storage和session storage的区别，然后闭包，这个是面试八股文，建议面试回答说出扩展了作用域这个特点还有优缺点，然后简单说明一下即可，作用域和作用域链🈶️详细点说法：栈存储，这个我之前雪有详细的说名，然后es6:let const 三点运算符 箭头函数 解构赋值 promise 处理异步用promise，async await 或者使用回调函数 绑定事件监听等  null和undefined 建议看红宝书 上面说的很清楚 循环当中加key作为标识是为了解决产生等数据有变动，而不会造成显示异常（混乱）的场景，而且使用key也能提升效率</p>
+<p>css</p>
+<ol>
+<li>一个盒子垂直水平居中有哪些方法</li>
+</ol>
+<p>https://www.cnblogs.com/gzy-tw/p/11205854.html</p>
+<ol start="2">
+<li>flex:1 是什么意思</li>
+</ol>
+<p>https://www.runoob.com/cssref/css3-pr-flex.html</p>
+<ol start="3">
+<li>rem为什么可以实现自适应布局</li>
+</ol>
+<p>https://blog.csdn.net/qq_42707446/article/details/93200711</p>
+<p>http</p>
+<ol>
+<li>三次握手和四次挥手</li>
+</ol>
+<p>https://www.pianshen.com/article/8384298792/</p>
+<ol start="2">
+<li>常见状态码</li>
+</ol>
+<p>301和302的区别 https://blog.csdn.net/banana960531/article/details/85621865</p>
+<ol start="3">
+<li>http的8种请求方式及区别</li>
+</ol>
+<p>Vue</p>
+<ol>
+<li>axios底层是怎么实现的</li>
+</ol>
+<p>https://blog.csdn.net/luchuanqi67/article/details/81329358 https://www.jianshu.com/p/8bc48f8fde75</p>
+<ol start="2">
+<li>Vue的生命周期</li>
+</ol>
+<p>created和mounted的区别</p>
+<p>https://cn.vuejs.org/v2/guide/instance.html</p>
+<ol start="3">
+<li>Vue之间父子组件传值</li>
+</ol>
+<p>父传子、子传父、兄弟组件之间的传值 https://cn.vuejs.org/v2/guide/components-props.html https://www.jianshu.com/p/af9cb05bfbaf https://www.cnblogs.com/chen-yi-yi/p/11152391.html</p>
+<ol start="4">
+<li>keep-alive的作用</li>
+</ol>
+<p>https://www.jianshu.com/p/9523bb439950</p>
+<ol start="5">
+<li>Vue的双向绑定原理</li>
+</ol>
+<p>https://www.jianshu.com/p/78b31df97b70</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/mian-jing-xue-xi/">
+              <h3 class="post-title">
+                面经学习
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

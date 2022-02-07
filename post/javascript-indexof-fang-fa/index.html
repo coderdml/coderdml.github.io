@@ -1,0 +1,214 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JavaScript indexOf() 方法 | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="JavaScript indexOf() 方法 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="定义和用法
+indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+语法
+stringObject.indexOf(searchvalue,fromindex)
+参数                           ..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              JavaScript indexOf() 方法
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-31
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="定义和用法">定义和用法</h1>
+<p>indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。</p>
+<p><strong>语法</strong><br>
+<code>stringObject.indexOf(searchvalue,fromindex)</code></p>
+<p><strong>参数</strong>                           <strong>描述</strong><br>
+searchvalue         必需。规定需检索的字符串值。<br>
+fromindex           可选的整数参数。规定在字符串中开始检索的位置。它的合法取值是 0到                             stringObject.length - 1。</p>
+<p><strong>说明</strong><br>
+该方法将从头到尾地检索字符串 stringObject，看它是否含有子串 searchvalue。开始检索的位置在字符串的 fromindex 处或字符串的开头（没有指定 fromindex 时）。如果找到一个 searchvalue，则返回 searchvalue 的第一次出现的位置。stringObject 中的字符位置是从 0 开始的。</p>
+<pre><code>提示和注释
+注释：indexOf() 方法对大小写敏感！
+
+注释：如果要检索的字符串值没有出现，则该方法返回 -1。
+</code></pre>
+<p><strong>实例</strong></p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+var str=&quot;Hello world!&quot;
+document.write(str.indexOf(&quot;Hello&quot;) + &quot;&lt;br /&gt;&quot;)
+document.write(str.indexOf(&quot;World&quot;) + &quot;&lt;br /&gt;&quot;)
+document.write(str.indexOf(&quot;world&quot;))
+
+&lt;/script&gt;
+</code></pre>
+<p><strong>输出</strong>：</p>
+<pre><code>0
+-1
+6
+</code></pre>
+<h1 id="实际使用">实际使用</h1>
+<p>在项目中可以对 <em>当前活跃路由</em> 的 <em>路径</em> 使用 <em>indexOf()</em> 方法来判断是否处于活跃状态<br>
+<strong>示例</strong></p>
+<pre><code>props : {
+        path : String,
+    }
+</code></pre>
+<pre><code>computed : {
+    isActive(){
+        return this.$route.path.indexOf(this.path) !==-1
+    }
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%AE%9A%E4%B9%89%E5%92%8C%E7%94%A8%E6%B3%95">定义和用法</a></li>
+<li><a href="#%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

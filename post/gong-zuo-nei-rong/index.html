@@ -1,0 +1,238 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TabBar移动端底部导航 | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="TabBar移动端底部导航 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="工作总结   为方便查阅写在前面
+//router
+const Home = () =&gt; import('../views/home/Home')  //懒加载
+Vue.use(VueRouter)
+const routes = [
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              TabBar移动端底部导航
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-08-01
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>工作总结</strong>   <em>为方便查阅写在前面</em></p>
+<pre><code>//router
+const Home = () =&gt; import('../views/home/Home')  //懒加载
+Vue.use(VueRouter)
+const routes = [
+    {
+        path : '',
+        redirect : '/home',   //默认路由
+    },
+    {
+        path : '/home',
+        component : Home
+    }
+const router = new VueRouter({
+    routes,
+    mode : &quot;history&quot;    //设置history取代哈希
+}
+)
+
+
+//&lt;slot&gt;的使用
+//在整个tabbar设置插槽供给各个item使用
+&lt;template&gt;
+    &lt;div id=&quot;tab-bar&quot;&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+      &lt;/div&gt;
+&lt;/template&gt;
+//需要给插槽设置限定条件时使用&lt;div/&gt;标签包裹起来以防止插槽被整个替换
+&lt;template&gt;
+    &lt;div class=&quot;tab-bar-item&quot;&gt; 
+        &lt;div v-if=&quot;!isActive&quot;&gt;&lt;slot  name = &quot;item-icon&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
+        &lt;div v-else&gt;&lt;slot name = &quot;item-icon-active&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
+        &lt;div :class=&quot;{active:isActive}&quot;&gt;&lt;slot name = &quot;item-text&quot;&gt;&lt;/slot&gt;&lt;/div&gt;
+    &lt;/div&gt;  
+&lt;/template&gt;
+
+
+//css
+#tab-bar {
+    display: flex;
+    background-color: #f6f6f6;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(100, 100, 100, 0.2);  //x方向，y方向，厚度，透明度
+}
+.tab-bar-item {
+    flex : 1; 
+    text-align: center;
+    font-size:14px;
+    height: 49px;  //通用高度为49px
+}
+.tab-bar-item img {
+    height : 22px;
+}
+</code></pre>
+<p><strong>完成情况</strong><br>
+实现了一个组件树，实现了一个移动端项目的大体框架结构，只许再单独填写页面内容即可<br>
+<img src="https://coderdml.github.io/post-images/1627753568549.png" alt="" loading="lazy"></p>
+<p><strong>预留内容</strong><br>
+组件可以供给使用者修改item的图标、活跃图标、文字、文字活跃颜色</p>
+<p><strong>工程目录</strong><br>
+<img src="https://coderdml.github.io/post-images/1627753469547.png" alt="" loading="lazy"></p>
+<p><strong>实现效果</strong><br>
+<img src="https://coderdml.github.io/post-images/1627753485932.png" alt="" loading="lazy"><br>
+<img src="https://coderdml.github.io/post-images/1627753490272.png" alt="" loading="lazy"><br>
+<img src="https://coderdml.github.io/post-images/1627753501383.png" alt="" loading="lazy"><br>
+<img src="https://coderdml.github.io/post-images/1627753510983.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/vue-xue-xi-bi-ji/">
+              <h3 class="post-title">
+                vue学习笔记
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

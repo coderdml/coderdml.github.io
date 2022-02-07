@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>03.力扣剑指OFFER——JZ25 合并两个排序的链表 | Study for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644228612876">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="03.力扣剑指OFFER——JZ25 合并两个排序的链表 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="描述
+输入两个递增的链表，单个链表的长度为n，合并这两个链表并使新链表中的节点仍然是递增排序的。
+数据范围： 0 \le n \le 10000≤n≤1000，-1000 \le 节点值 \le 1000−1000≤节点值≤1000
+要求：..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1644228612876" alt="">
+  </a>
+  <h1 class="site-title">
+    Study for money
+  </h1>
+  <p class="site-description">
+    Work for pussy
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              03.力扣剑指OFFER——JZ25 合并两个排序的链表
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-02-07
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>描述<br>
+输入两个递增的链表，单个链表的长度为n，合并这两个链表并使新链表中的节点仍然是递增排序的。<br>
+数据范围： 0 \le n \le 10000≤n≤1000，-1000 \le 节点值 \le 1000−1000≤节点值≤1000<br>
+要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<pre><code>构造一个链表函数，new一个虚拟头部，比较两个链表头节点的值并且向后移动节点，当有链表被遍历结束之后指针指向剩余的链表
+</code></pre>
+<pre><code>function Merge(pHead1, pHead2)
+{
+    // write code here
+    function ListNode(x){
+    this.val = x;
+    this.next = null;
+        }
+    let dummy = new ListNode(-1)
+    let cur = dummy
+    while(pHead1 &amp;&amp; pHead2){
+        if(pHead1.val &lt;= pHead2.val){
+            cur.next = pHead1
+            pHead1 = pHead1.next
+            
+        }
+        else{
+            cur.next = pHead2
+            pHead2 = pHead2.next
+            
+        }
+        cur = cur.next
+    }
+    if(!pHead1){
+        cur.next = pHead2
+    }
+    if(!pHead2){
+        cur.next = pHead1
+    }
+     return dummy.next
+}
+</code></pre>
+<pre><code>function Merge(pHead1, pHead2)
+{
+    // write code here
+    let head = {
+        val: null,
+        next: null,
+    };
+    
+    let cur = head;
+    while (pHead1 &amp;&amp; pHead2){
+        if (pHead1.val &lt;= pHead2.val){
+            cur.next = pHead1;
+            cur = cur.next;
+            pHead1 = pHead1.next;
+        } else {
+            cur.next = pHead2;
+            cur = cur.next;
+            pHead2 = pHead2.next;
+        } 
+    }
+    
+    if (pHead1) cur.next = pHead1;
+    else cur.next = pHead2;
+    
+    return head.next;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/02li-kou-jian-zhi-offer-jz24-fan-zhuan-lian-biao/">
+              <h3 class="post-title">
+                02.力扣剑指OFFER——JZ24 反转链表
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

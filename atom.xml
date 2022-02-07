@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://coderdml.github.io</id>
+    <title>Study for money</title>
+    <updated>2022-02-07T10:10:57.548Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://coderdml.github.io"/>
+    <link rel="self" href="https://coderdml.github.io/atom.xml"/>
+    <subtitle>Work for pussy</subtitle>
+    <logo>https://coderdml.github.io/images/avatar.png</logo>
+    <icon>https://coderdml.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, Study for money</rights>
+    <entry>
+        <title type="html"><![CDATA[大厂面试题]]></title>
+        <id>https://coderdml.github.io/post/mian-shi-ti-ji-lei/</id>
+        <link href="https://coderdml.github.io/post/mian-shi-ti-ji-lei/">
+        </link>
+        <updated>2022-02-07T09:42:52.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>01.字节面试题</strong><br>
+123['toString'].length + 123 = ?<br>
+考点1：原型链的继承<br>
+123是Number的实例，继承了Number的toString方法<br>
+考点2：函数的length<br>
+函数的length就是形参的个数，toString方法的形参个数是一个</p>
+<p>答案：124</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[04.力扣剑指OFFER——JZ52 两个链表的第一个公共结点]]></title>
+        <id>https://coderdml.github.io/post/04/</id>
+        <link href="https://coderdml.github.io/post/04/">
+        </link>
+        <updated>2022-02-07T09:34:57.000Z</updated>
+        <content type="html"><![CDATA[<p>描述<br>
+输入两个无环的单向链表，找出它们的第一个公共结点，如果没有公共节点则返回空。（注意因为传入数据是链表，所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）</p>
+<p>数据范围： n \le 1000n≤1000<br>
+要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<p><strong>解题思路：</strong></p>
+<p>使用两个指针N1,N2，一个从链表1的头节点开始遍历，我们记为N1，一个从链表2的头节点开始遍历，我们记为N2。</p>
+<p>让N1和N2一起遍历，当N1先走完链表1的尽头（为null）的时候，则从链表2的头节点继续遍历，同样，如果N2先走完了链表2的尽头，则从链表1的头节点继续遍历，也就是说，N1和N2都会遍历链表1和链表2。</p>
+<p>因为两个指针，同样的速度，走完同样长度（链表1+链表2），不管两条链表有无相同节点，都能够到达同时到达终点。</p>
+<p>（N1最后肯定能到达链表2的终点，N2肯定能到达链表1的终点）。</p>
+<p>所以，如何得到公共节点：</p>
+<pre><code>有公共节点的时候，N1和N2必会相遇，因为长度一样嘛，速度也一定，必会走到相同的地方的，所以当两者相等的时候，则会第一个公共的节点
+无公共节点的时候，此时N1和N2则都会走到终点，那么他们此时都是null，所以也算是相等了。
+</code></pre>
+<p>下面看个动态图，可以更形象的表示这个过程~<br>
+<img src="https://coderdml.github.io/post-images/1644226544855.gif" alt="" loading="lazy"></p>
+<pre><code>function FindFirstCommonNode(pHead1, pHead2)
+{
+    // write code here
+    let p1 = pHead1
+    let p2 = pHead2
+    while(p1 != p2){
+        if(p1)
+            p1 = p1.next
+        else
+            p1 = pHead2
+        if(p2)
+            p2 = p2.next
+        else
+            p2 = pHead1
+}
+    return p1
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[03.力扣剑指OFFER——JZ25 合并两个排序的链表]]></title>
+        <id>https://coderdml.github.io/post/03/</id>
+        <link href="https://coderdml.github.io/post/03/">
+        </link>
+        <updated>2022-02-07T08:51:17.000Z</updated>
+        <content type="html"><![CDATA[<p>描述<br>
+输入两个递增的链表，单个链表的长度为n，合并这两个链表并使新链表中的节点仍然是递增排序的。<br>
+数据范围： 0 \le n \le 10000≤n≤1000，-1000 \le 节点值 \le 1000−1000≤节点值≤1000<br>
+要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<pre><code>构造一个链表函数，new一个虚拟头部，比较两个链表头节点的值并且向后移动节点，当有链表被遍历结束之后指针指向剩余的链表
+</code></pre>
+<pre><code>function Merge(pHead1, pHead2)
+{
+    // write code here
+    function ListNode(x){
+    this.val = x;
+    this.next = null;
+        }
+    let dummy = new ListNode(-1)
+    let cur = dummy
+    while(pHead1 &amp;&amp; pHead2){
+        if(pHead1.val &lt;= pHead2.val){
+            cur.next = pHead1
+            pHead1 = pHead1.next
+            
+        }
+        else{
+            cur.next = pHead2
+            pHead2 = pHead2.next
+            
+        }
+        cur = cur.next
+    }
+    if(!pHead1){
+        cur.next = pHead2
+    }
+    if(!pHead2){
+        cur.next = pHead1
+    }
+     return dummy.next
+}
+</code></pre>
+<pre><code>function Merge(pHead1, pHead2)
+{
+    // write code here
+    let head = {
+        val: null,
+        next: null,
+    };
+    
+    let cur = head;
+    while (pHead1 &amp;&amp; pHead2){
+        if (pHead1.val &lt;= pHead2.val){
+            cur.next = pHead1;
+            cur = cur.next;
+            pHead1 = pHead1.next;
+        } else {
+            cur.next = pHead2;
+            cur = cur.next;
+            pHead2 = pHead2.next;
+        } 
+    }
+    
+    if (pHead1) cur.next = pHead1;
+    else cur.next = pHead2;
+    
+    return head.next;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[02.力扣剑指OFFER——JZ24 反转链表]]></title>
+        <id>https://coderdml.github.io/post/02li-kou-jian-zhi-offer-jz24-fan-zhuan-lian-biao/</id>
+        <link href="https://coderdml.github.io/post/02li-kou-jian-zhi-offer-jz24-fan-zhuan-lian-biao/">
+        </link>
+        <updated>2022-01-19T22:24:47.000Z</updated>
+        <content type="html"><![CDATA[<p>要求：空间复杂度 O(1) ，时间复杂度 O(n) 。</p>
+<pre><code>链表特点：只有前序节点指向后序节点的指针
+</code></pre>
+<p>反转链表需要使后序节点指向前序节点，pre指针指向当前节点的前一个节点，cur指针指向当前节点<br>
+为防止链表断开还需要一个tmp指针保存当前节点的后序节点</p>
+<p>tmp保存后序节点-&gt;改变指针指向-&gt;向后移动<br>
+<img src="https://coderdml.github.io/post-images/1644216902830.png" alt="" loading="lazy"></p>
+<pre><code>function ReverseList(pHead)
+{
+    // write code here
+    let pre = null , cur = pHead
+    while(cur){
+        let tmp = cur.next  //用tmp保存后序节点防止链表断开
+        cur.next = pre //改变当前节点的指向
+        pre = cur //向后移动pre指针
+        cur = tmp //向后移动cur指针
+    }
+    return pre
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[01.力扣剑指OFFER——JZ6 从尾到头打印链表]]></title>
+        <id>https://coderdml.github.io/post/01li-kou-jian-zhi-offer-jz6-cong-wei-dao-tou-da-yin-lian-biao/</id>
+        <link href="https://coderdml.github.io/post/01li-kou-jian-zhi-offer-jz6-cong-wei-dao-tou-da-yin-lian-biao/">
+        </link>
+        <updated>2022-01-19T22:09:14.000Z</updated>
+        <content type="html"><![CDATA[<p>利用栈的先进后出特性</p>
+<pre><code> /*function ListNode(x){
+    this.val = x;
+    this.next = null;
+}*/
+function printListFromTailToHead(head)
+{
+    let res = [];
+    while(head){
+        res.unshift(head.val);
+        head = head.next
+    }
+    return res
+}
+module.exports = {
+    printListFromTailToHead : printListFromTailToHead
+};
+</code></pre>
+<p>或者使用push方法在尾部添加后，返回时使用reverse方法逆转数组</p>
+<p>unshift()方法<br>
+实例<br>
+将新项添加到数组起始位置:</p>
+<pre><code>var fruits = [&quot;Banana&quot;, &quot;Orange&quot;, &quot;Apple&quot;, &quot;Mango&quot;];
+fruits.unshift(&quot;Lemon&quot;,&quot;Pineapple&quot;);
+</code></pre>
+<p>fruits 将输出：</p>
+<pre><code>Lemon,Pineapple,Banana,Orange,Apple,Mango
+</code></pre>
+<p>unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。</p>
+<p>注意： 该方法将改变数组的数目。</p>
+<p>提示: 将新项添加到数组末尾，请使用 push() 方法。</p>
+<pre><code>shift方法和pop方法
+删除并返回数组的第一个元素。
+注：如果数组是空的，那么该方法不进行任何操作，返回 undefined。
+该方法直接修改原数组。
+提示：要删除并返回数组的最后一个元素，请使用 pop() 方法。
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[重学面试知识]]></title>
+        <id>https://coderdml.github.io/post/chong-xue-mian-shi-zhi-shi/</id>
+        <link href="https://coderdml.github.io/post/chong-xue-mian-shi-zhi-shi/">
+        </link>
+        <updated>2021-12-16T17:46:27.000Z</updated>
+        <content type="html"><![CDATA[<p>作用域</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[防抖函数]]></title>
+        <id>https://coderdml.github.io/post/fang-dou-han-shu/</id>
+        <link href="https://coderdml.github.io/post/fang-dou-han-shu/">
+        </link>
+        <updated>2021-11-30T01:51:59.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>&lt;input type=&quot;text&quot; id=&quot;input&quot;&gt;
+&lt;script&gt;
+    function debounce(fun,delay){
+        let timer
+        
+        return function(args){
+            clearInterval(timer)
+             timer = setTimeout(function(){
+                 fun(args)
+        },delay)
+        }
+       
+    }
+    function inputFun(value){
+        console.log('输入的结果是${value}')
+    }
+
+    const input = document.getElementById(&quot;input&quot;)
+    const debounceInput = debounce(inputFun,1000)
+    input.addEventListener('keyup',function(e){
+        debounceInput(e.target.value)
+    }
+&lt;/script&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[原生JS实现call、apply、bind || Promise.all]]></title>
+        <id>https://coderdml.github.io/post/yuan-sheng-js-shi-xian-call/</id>
+        <link href="https://coderdml.github.io/post/yuan-sheng-js-shi-xian-call/">
+        </link>
+        <updated>2021-11-09T00:59:41.000Z</updated>
+        <content type="html"><![CDATA[<p>使用扩展运算符...</p>
+<pre><code>const o = {
+    name : 'shs'
+}
+function fn(a,b,c,d){
+    console.log(this.name,a,b,c,d)
+    retrun 123
+}
+
+//fn.call(o,1,2,3,4)
+Function.prototype.myCall = function(obj,...args){
+    obj = obj || window
+    obj.fn = this
+    let res=obj.fn(...args)
+    delete obj.fn
+    return res
+}
+fn.myCall(o,1,2,3,4)
+</code></pre>
+<p>使用eval()函数进行解析</p>
+<pre><code>const o = {
+    name : 'dml'
+}
+function fn(a,b,c,d){
+    console.log(this.name,a,b,c,d)
+}
+Function.prototype.myCall = function (obj){
+    const newArgs = []
+    obj = obj || window
+    obj.fn = this
+    for(let i =1;i&lt;arguments.length;i++){
+        newArgs.push(arguments[i])
+    }
+    console.log(newArgs)
+    eval(&quot;obj.fn(&quot;+newArgs.join(&quot;,&quot;)+&quot;)&quot;) 
+    //eval(&quot;obj.fn(&quot;+newArgs+&quot;)&quot;)
+    delete obj.fn
+}
+fn.myCall(o,1,2,3)
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[请求数据]]></title>
+        <id>https://coderdml.github.io/post/qing-qiu-shu-ju/</id>
+        <link href="https://coderdml.github.io/post/qing-qiu-shu-ju/">
+        </link>
+        <updated>2021-11-04T19:16:02.000Z</updated>
+        <content type="html"><![CDATA[<p>network文件夹下创建一个axios实例，导出<br>
+同级目录下创建相关视图（模块）的网络请求js文件<br>
+文件中export相关的网络请求方法<br>
+回到对应模块vue文件中导入相关网络请求方法、data中创建要保存的数据、在created生命周期中使用网络请求方法获取数据并保存在创建好的data属性中</p>
+<pre><code>import axios from 'axios'
+
+export function request(config){
+   const instance = new axios.create({
+       baseURL:
+       timeout:
+   }) 
+   instance.interceptors.request.use(config=&gt;{
+       return config
+   },err=&gt;{
+       console.log(err)
+   })
+   instance.interceptors.respones.use(res=&gt;{
+       return res.data
+   },err=&gt;{
+       console.log(err)
+   })
+   return instance(config)
+}
+</code></pre>
+<pre><code>import {request} from './request.js'
+
+export function getHomedata(){
+    return request({
+        url:
+    })
+}
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[export default 和 export 区别]]></title>
+        <id>https://coderdml.github.io/post/export-default-he-export-qu-bie/</id>
+        <link href="https://coderdml.github.io/post/export-default-he-export-qu-bie/">
+        </link>
+        <updated>2021-11-03T21:39:46.000Z</updated>
+        <content type="html"><![CDATA[<p>1.export与export default均可用于导出常量、函数、文件、模块等</p>
+<p>2.你可以在其它文件或模块中通过import+(常量 | 函数 | 文件 | 模块)名的方式，将其导入，以便能够对其进行使用</p>
+<p>3.在一个文件或模块中，export、import可以有多个，export default仅有一个</p>
+<p>4.通过export方式导出，在导入时要加{ }，export default则不需要</p>
+<p>使用export default命令，为模块指定默认输出，这样就不需要知道所要加载模块的变量名</p>
+]]></content>
+    </entry>
+</feed>
