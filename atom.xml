@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://coderdml.github.io</id>
     <title>Study for money</title>
-    <updated>2022-02-07T14:22:20.136Z</updated>
+    <updated>2022-02-08T09:36:53.980Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://coderdml.github.io"/>
     <link rel="self" href="https://coderdml.github.io/atom.xml"/>
@@ -10,6 +10,99 @@
     <logo>https://coderdml.github.io/images/avatar.png</logo>
     <icon>https://coderdml.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Study for money</rights>
+    <entry>
+        <title type="html"><![CDATA[诡异面试题]]></title>
+        <id>https://coderdml.github.io/post/gui-yi-mian-shi-ti/</id>
+        <link href="https://coderdml.github.io/post/gui-yi-mian-shi-ti/">
+        </link>
+        <updated>2022-02-08T09:36:02.000Z</updated>
+        <content type="html"><![CDATA[<p>函数提升</p>
+<p>变量提升</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[06.力扣剑指OFFER——JZ22 链表中倒数最后k个结点]]></title>
+        <id>https://coderdml.github.io/post/06li-kou-jian-zhi-offer-jz22-lian-biao-zhong-dao-shu-zui-hou-k-ge-jie-dian/</id>
+        <link href="https://coderdml.github.io/post/06li-kou-jian-zhi-offer-jz22-lian-biao-zhong-dao-shu-zui-hou-k-ge-jie-dian/">
+        </link>
+        <updated>2022-02-08T08:55:09.000Z</updated>
+        <content type="html"><![CDATA[<p>描述<br>
+输入一个长度为 n 的链表，设链表中的元素的值为 ai ，返回该链表中倒数第k个节点。<br>
+如果该链表长度小于k，请返回一个长度为 0 的链表。</p>
+<p>要求：空间复杂度 O(n)O(n)，时间复杂度 O(n)O(n)<br>
+进阶：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<p>思路一：进栈出栈<br>
+时间复杂度O(N)：N表示链表的数量，遍历链表<br>
+空间复杂度O(N)：存储链表元素的栈空间</p>
+<p>思路二：快慢指针<br>
+双指针，先让快指针移动K步，然后两个指针同步移动，当快指针指向null时，返回慢指针<br>
+时间复杂度O(N)：N为链表长度，遍历整个链表<br>
+空间复杂度O(1)：使用额外常数大小空间</p>
+<pre><code>function FindKthToTail( pHead ,  k ) {
+    // write code here
+    if (pHead === null || k === 0) return null;
+        
+    let fast = pHead
+    let slow = pHead
+    for(let i = 0;i &lt; k;i++){
+        if(fast === null) return null;
+        fast = fast.next
+    }
+    while(fast){
+        slow = slow.next
+        fast = fast.next
+    }
+    return slow;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[05.力扣剑指OFFER——JZ23 链表中环的入口结点]]></title>
+        <id>https://coderdml.github.io/post/05/</id>
+        <link href="https://coderdml.github.io/post/05/">
+        </link>
+        <updated>2022-02-08T08:49:48.000Z</updated>
+        <content type="html"><![CDATA[<p>描述<br>
+给一个长度为n链表，若其中包含环，请找出该链表的环的入口结点，否则，返回null。</p>
+<p>数据范围： n\le10000n≤10000，1&lt;=结点值&lt;=100001&lt;=结点值&lt;=10000<br>
+要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<pre><code>function EntryNodeOfLoop(pHead)
+{
+    // write code here
+//     设置快慢指针，都从链表头出发，快指针每次走两步，慢指针一次走一步
+//   假如有环，一定相遇于环中某点(结论1)
+//   接着让两个指针分别从相遇点和链表头出发，两者都改为每次走一步，最终相遇于环入口(结论2)。
+    if(pHead === null || pHead.next === null){
+        return null;
+    }
+    let p1 = pHead
+    let p2 = pHead
+    while(p2 &amp;&amp; p2.next){  //p2是快指针，保证p2
+        p1 = p1.next
+        p2 = p2.next.next
+        if(p1 === p2){  //第一次相遇后改变指针位置
+            p1 = pHead
+            while(p1 !== p2){
+            p2 = p2.next
+            p1 = p1.next
+            }
+            return p1
+        }
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[面经草稿]]></title>
+        <id>https://coderdml.github.io/post/mian-jing-cao-gao/</id>
+        <link href="https://coderdml.github.io/post/mian-jing-cao-gao/">
+        </link>
+        <updated>2022-02-08T08:25:49.000Z</updated>
+        <content type="html"><![CDATA[<p>1</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[作用域和闭包]]></title>
         <id>https://coderdml.github.io/post/zuo-yong-yu-he-bi-bao/</id>
@@ -38,6 +131,11 @@ https://juejin.cn/post/6844904165672484871</p>
 考点2：函数的length<br>
 函数的length就是形参的个数，toString方法的形参个数是一个</p>
 <p>答案：124</p>
+<p><strong>02.字节面试题</strong><br>
+(a<mark>1&amp;&amp;a</mark>2&amp;&amp;a==3)为true？</p>
+<p>思路一：利用对象的隐式转换调用toString</p>
+<p>思路二：利用数组的隐式转换调用join</p>
+<p>思路三：利用defineProperty</p>
 ]]></content>
     </entry>
     <entry>
@@ -223,137 +321,6 @@ fruits.unshift(&quot;Lemon&quot;,&quot;Pineapple&quot;);
 注：如果数组是空的，那么该方法不进行任何操作，返回 undefined。
 该方法直接修改原数组。
 提示：要删除并返回数组的最后一个元素，请使用 pop() 方法。
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[重学面试知识]]></title>
-        <id>https://coderdml.github.io/post/chong-xue-mian-shi-zhi-shi/</id>
-        <link href="https://coderdml.github.io/post/chong-xue-mian-shi-zhi-shi/">
-        </link>
-        <updated>2021-12-16T17:46:27.000Z</updated>
-        <content type="html"><![CDATA[<p>作用域</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[防抖函数]]></title>
-        <id>https://coderdml.github.io/post/fang-dou-han-shu/</id>
-        <link href="https://coderdml.github.io/post/fang-dou-han-shu/">
-        </link>
-        <updated>2021-11-30T01:51:59.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>&lt;input type=&quot;text&quot; id=&quot;input&quot;&gt;
-&lt;script&gt;
-    function debounce(fun,delay){
-        let timer
-        
-        return function(args){
-            clearInterval(timer)
-             timer = setTimeout(function(){
-                 fun(args)
-        },delay)
-        }
-       
-    }
-    function inputFun(value){
-        console.log('输入的结果是${value}')
-    }
-
-    const input = document.getElementById(&quot;input&quot;)
-    const debounceInput = debounce(inputFun,1000)
-    input.addEventListener('keyup',function(e){
-        debounceInput(e.target.value)
-    }
-&lt;/script&gt;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[原生JS实现call、apply、bind || Promise.all]]></title>
-        <id>https://coderdml.github.io/post/yuan-sheng-js-shi-xian-call/</id>
-        <link href="https://coderdml.github.io/post/yuan-sheng-js-shi-xian-call/">
-        </link>
-        <updated>2021-11-09T00:59:41.000Z</updated>
-        <content type="html"><![CDATA[<p>使用扩展运算符...</p>
-<pre><code>const o = {
-    name : 'shs'
-}
-function fn(a,b,c,d){
-    console.log(this.name,a,b,c,d)
-    retrun 123
-}
-
-//fn.call(o,1,2,3,4)
-Function.prototype.myCall = function(obj,...args){
-    obj = obj || window
-    obj.fn = this
-    let res=obj.fn(...args)
-    delete obj.fn
-    return res
-}
-fn.myCall(o,1,2,3,4)
-</code></pre>
-<p>使用eval()函数进行解析</p>
-<pre><code>const o = {
-    name : 'dml'
-}
-function fn(a,b,c,d){
-    console.log(this.name,a,b,c,d)
-}
-Function.prototype.myCall = function (obj){
-    const newArgs = []
-    obj = obj || window
-    obj.fn = this
-    for(let i =1;i&lt;arguments.length;i++){
-        newArgs.push(arguments[i])
-    }
-    console.log(newArgs)
-    eval(&quot;obj.fn(&quot;+newArgs.join(&quot;,&quot;)+&quot;)&quot;) 
-    //eval(&quot;obj.fn(&quot;+newArgs+&quot;)&quot;)
-    delete obj.fn
-}
-fn.myCall(o,1,2,3)
-
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[请求数据]]></title>
-        <id>https://coderdml.github.io/post/qing-qiu-shu-ju/</id>
-        <link href="https://coderdml.github.io/post/qing-qiu-shu-ju/">
-        </link>
-        <updated>2021-11-04T19:16:02.000Z</updated>
-        <content type="html"><![CDATA[<p>network文件夹下创建一个axios实例，导出<br>
-同级目录下创建相关视图（模块）的网络请求js文件<br>
-文件中export相关的网络请求方法<br>
-回到对应模块vue文件中导入相关网络请求方法、data中创建要保存的数据、在created生命周期中使用网络请求方法获取数据并保存在创建好的data属性中</p>
-<pre><code>import axios from 'axios'
-
-export function request(config){
-   const instance = new axios.create({
-       baseURL:
-       timeout:
-   }) 
-   instance.interceptors.request.use(config=&gt;{
-       return config
-   },err=&gt;{
-       console.log(err)
-   })
-   instance.interceptors.respones.use(res=&gt;{
-       return res.data
-   },err=&gt;{
-       console.log(err)
-   })
-   return instance(config)
-}
-</code></pre>
-<pre><code>import {request} from './request.js'
-
-export function getHomedata(){
-    return request({
-        url:
-    })
-}
-
 </code></pre>
 ]]></content>
     </entry>

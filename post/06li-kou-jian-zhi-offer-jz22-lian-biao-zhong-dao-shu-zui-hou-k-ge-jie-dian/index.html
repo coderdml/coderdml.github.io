@@ -2,19 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>面试题笔记 | Study for money</title>
+<title>06.力扣剑指OFFER——JZ22 链表中倒数最后k个结点 | Study for money</title>
 <link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644312991298">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="面试题笔记 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="06.力扣剑指OFFER——JZ22 链表中倒数最后k个结点 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="怎么样解决外边距塌陷问题
-1.当上下相邻的两个块级元素相遇，上面的元素有下边距margin-bottom，下面的元素有上边距margin-top，则它们之间的垂直距离取两个值中的较大者。
-兄弟元素，只给一个盒子设置margin值
-2.嵌套元..." />
+    <meta name="description" content="描述
+输入一个长度为 n 的链表，设链表中的元素的值为 ai ，返回该链表中倒数第k个节点。
+如果该链表长度小于k，请返回一个长度为 0 的链表。
+要求：空间复杂度 O(n)O(n)，时间复杂度 O(n)O(n)
+进阶：空间复杂度 O(1)..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -77,11 +78,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              面试题笔记
+              06.力扣剑指OFFER——JZ22 链表中倒数最后k个结点
             </h2>
             <div class="post-info">
               <span>
-                2021-08-21
+                2022-02-08
               </span>
               <span>
                 2 min read
@@ -91,24 +92,35 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>怎么样解决外边距塌陷问题</p>
-<p>1.当上下相邻的两个块级元素相遇，上面的元素有下边距margin-bottom，下面的元素有上边距margin-top，则它们之间的垂直距离取两个值中的较大者。<br>
-兄弟元素，只给一个盒子设置margin值<br>
-2.嵌套元素<br>
-对于两个嵌套关系的块元素，如果父元素没有上内边距及边框，父元素的上外边距会与子元素的上外边距发生合并，合并后的外边距为两者中的较大者。</p>
-<p>①给父元素定义上边框</p>
-<p>②给父元素定义上内边距</p>
-<p>③给父元素添加 overflow：hidden；</p>
-<p>④添加浮动</p>
-<p>⑤添加绝对定位<br>
-3.如果存在一个空的块级元素，border、padding、inline content、height、min-height都不存在，那么上下边距中间将没有任何阻隔，上下外边距将会合并。</p>
-<pre><code>&lt;p style=&quot;margin-bottom: 0px;&quot;&gt;这个段落的和下面段落的距离将为20px&lt;/p&gt;
-
-&lt;div style=&quot;margin-top: 20px; margin-bottom: 20px;&quot;&gt;&lt;/div&gt;
-
-&lt;p style=&quot;margin-top: 0px;&quot;&gt;这个段落的和上面段落的距离将为20px&lt;/p&gt;
+                <p>描述<br>
+输入一个长度为 n 的链表，设链表中的元素的值为 ai ，返回该链表中倒数第k个节点。<br>
+如果该链表长度小于k，请返回一个长度为 0 的链表。</p>
+<p>要求：空间复杂度 O(n)O(n)，时间复杂度 O(n)O(n)<br>
+进阶：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<p>思路一：进栈出栈<br>
+时间复杂度O(N)：N表示链表的数量，遍历链表<br>
+空间复杂度O(N)：存储链表元素的栈空间</p>
+<p>思路二：快慢指针<br>
+双指针，先让快指针移动K步，然后两个指针同步移动，当快指针指向null时，返回慢指针<br>
+时间复杂度O(N)：N为链表长度，遍历整个链表<br>
+空间复杂度O(1)：使用额外常数大小空间</p>
+<pre><code>function FindKthToTail( pHead ,  k ) {
+    // write code here
+    if (pHead === null || k === 0) return null;
+        
+    let fast = pHead
+    let slow = pHead
+    for(let i = 0;i &lt; k;i++){
+        if(fast === null) return null;
+        fast = fast.next
+    }
+    while(fast){
+        slow = slow.next
+        fast = fast.next
+    }
+    return slow;
+}
 </code></pre>
-<p>可以理解成中间div宽度为0且上下边距融合，只取margin的最大值。</p>
 
               </div>
               <div class="toc-container">
@@ -121,9 +133,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://coderdml.github.io/post/mian-shi-ti/">
+            <a href="https://coderdml.github.io/post/05/">
               <h3 class="post-title">
-                面试题
+                05.力扣剑指OFFER——JZ23 链表中环的入口结点
               </h3>
             </a>
           </div>

@@ -2,19 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>面试题笔记 | Study for money</title>
+<title>05.力扣剑指OFFER——JZ23 链表中环的入口结点 | Study for money</title>
 <link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644312991298">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="面试题笔记 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="05.力扣剑指OFFER——JZ23 链表中环的入口结点 | Study for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="怎么样解决外边距塌陷问题
-1.当上下相邻的两个块级元素相遇，上面的元素有下边距margin-bottom，下面的元素有上边距margin-top，则它们之间的垂直距离取两个值中的较大者。
-兄弟元素，只给一个盒子设置margin值
-2.嵌套元..." />
+    <meta name="description" content="描述
+给一个长度为n链表，若其中包含环，请找出该链表的环的入口结点，否则，返回null。
+数据范围： n\le10000n≤10000，1&lt;=结点值&lt;=100001&lt;=结点值&lt;=10000
+要求：空间复杂度 O(1)..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -77,38 +77,49 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              面试题笔记
+              05.力扣剑指OFFER——JZ23 链表中环的入口结点
             </h2>
             <div class="post-info">
               <span>
-                2021-08-21
+                2022-02-08
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>怎么样解决外边距塌陷问题</p>
-<p>1.当上下相邻的两个块级元素相遇，上面的元素有下边距margin-bottom，下面的元素有上边距margin-top，则它们之间的垂直距离取两个值中的较大者。<br>
-兄弟元素，只给一个盒子设置margin值<br>
-2.嵌套元素<br>
-对于两个嵌套关系的块元素，如果父元素没有上内边距及边框，父元素的上外边距会与子元素的上外边距发生合并，合并后的外边距为两者中的较大者。</p>
-<p>①给父元素定义上边框</p>
-<p>②给父元素定义上内边距</p>
-<p>③给父元素添加 overflow：hidden；</p>
-<p>④添加浮动</p>
-<p>⑤添加绝对定位<br>
-3.如果存在一个空的块级元素，border、padding、inline content、height、min-height都不存在，那么上下边距中间将没有任何阻隔，上下外边距将会合并。</p>
-<pre><code>&lt;p style=&quot;margin-bottom: 0px;&quot;&gt;这个段落的和下面段落的距离将为20px&lt;/p&gt;
-
-&lt;div style=&quot;margin-top: 20px; margin-bottom: 20px;&quot;&gt;&lt;/div&gt;
-
-&lt;p style=&quot;margin-top: 0px;&quot;&gt;这个段落的和上面段落的距离将为20px&lt;/p&gt;
+                <p>描述<br>
+给一个长度为n链表，若其中包含环，请找出该链表的环的入口结点，否则，返回null。</p>
+<p>数据范围： n\le10000n≤10000，1&lt;=结点值&lt;=100001&lt;=结点值&lt;=10000<br>
+要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
+<pre><code>function EntryNodeOfLoop(pHead)
+{
+    // write code here
+//     设置快慢指针，都从链表头出发，快指针每次走两步，慢指针一次走一步
+//   假如有环，一定相遇于环中某点(结论1)
+//   接着让两个指针分别从相遇点和链表头出发，两者都改为每次走一步，最终相遇于环入口(结论2)。
+    if(pHead === null || pHead.next === null){
+        return null;
+    }
+    let p1 = pHead
+    let p2 = pHead
+    while(p2 &amp;&amp; p2.next){  //p2是快指针，保证p2
+        p1 = p1.next
+        p2 = p2.next.next
+        if(p1 === p2){  //第一次相遇后改变指针位置
+            p1 = pHead
+            while(p1 !== p2){
+            p2 = p2.next
+            p1 = p1.next
+            }
+            return p1
+        }
+    }
+}
 </code></pre>
-<p>可以理解成中间div宽度为0且上下边距融合，只取margin的最大值。</p>
 
               </div>
               <div class="toc-container">
@@ -121,9 +132,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://coderdml.github.io/post/mian-shi-ti/">
+            <a href="https://coderdml.github.io/post/mian-jing-cao-gao/">
               <h3 class="post-title">
-                面试题
+                面经草稿
               </h3>
             </a>
           </div>
