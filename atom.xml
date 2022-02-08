@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://coderdml.github.io</id>
     <title>Study for money</title>
-    <updated>2022-02-08T09:36:53.980Z</updated>
+    <updated>2022-02-08T09:47:24.503Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://coderdml.github.io"/>
     <link rel="self" href="https://coderdml.github.io/atom.xml"/>
@@ -10,6 +10,1902 @@
     <logo>https://coderdml.github.io/images/avatar.png</logo>
     <icon>https://coderdml.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Study for money</rights>
+    <entry>
+        <title type="html"><![CDATA[面经汇总05.Vue]]></title>
+        <id>https://coderdml.github.io/post/mian-jing-hui-zong-05vue/</id>
+        <link href="https://coderdml.github.io/post/mian-jing-hui-zong-05vue/">
+        </link>
+        <updated>2022-02-08T09:46:00.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="vue-面试专题">Vue 面试专题</h2>
+<h3 id="简述mvvm">简述MVVM</h3>
+<p><strong>什么是MVVM？</strong></p>
+<p><code>视图模型双向绑定</code>，是<code>Model-View-ViewModel</code>的缩写，也就是把<code>MVC</code>中的<code>Controller</code>演变成<code>ViewModel。Model</code>层代表数据模型，<code>View</code>代表UI组件，<code>ViewModel</code>是<code>View</code>和<code>Model</code>层的桥梁，数据会绑定到<code>viewModel</code>层并自动将数据渲染到页面中，视图变化的时候会通知<code>viewModel</code>层更新数据。以前是操作DOM结构更新视图，现在是<code>数据驱动视图</code>。</p>
+<p><strong>MVVM的优点：</strong></p>
+<p>1.<code>低耦合</code>。视图（View）可以独立于Model变化和修改，一个Model可以绑定到不同的View上，当View变化的时候Model可以不变化，当Model变化的时候View也可以不变；<br>
+2.<code>可重用性</code>。你可以把一些视图逻辑放在一个Model里面，让很多View重用这段视图逻辑。<br>
+3.<code>独立开发</code>。开发人员可以专注于业务逻辑和数据的开发(ViewModel)，设计人员可以专注于页面设计。<br>
+4.<code>可测试</code>。</p>
+<h3 id="vue底层实现原理">Vue底层实现原理</h3>
+<p>vue.js是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter和getter，在数据变动时发布消息给订阅者，触发相应的监听回调<br>
+Vue是一个典型的MVVM框架，模型（Model）只是普通的javascript对象，修改它则试图（View）会自动更新。这种设计让状态管理变得非常简单而直观</p>
+<p><strong>Observer（数据监听器）</strong> : Observer的核心是通过Object.defineProprtty()来监听数据的变动，这个函数内部可以定义setter和getter，每当数据发生变化，就会触发setter。这时候Observer就要通知订阅者，订阅者就是Watcher</p>
+<p><strong>Watcher（订阅者）</strong> : Watcher订阅者作为Observer和Compile之间通信的桥梁，主要做的事情是：</p>
+<ol>
+<li>在自身实例化时往属性订阅器(dep)里面添加自己</li>
+<li>自身必须有一个update()方法</li>
+<li>待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调</li>
+</ol>
+<p><strong>Compile（指令解析器）</strong> : Compile主要做的事情是解析模板指令，将模板中变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加鉴定数据的订阅者，一旦数据有变动，收到通知，更新试图</p>
+<p>传送门：☞ <a href="https://juejin.cn/post/6994959998283907102#heading-2">20分钟吃透Diff算法核心原理</a></p>
+<h3 id="谈谈对vue生命周期的理解">谈谈对vue生命周期的理解？</h3>
+<p>每个<code>Vue</code>实例在创建时都会经过一系列的初始化过程，<code>vue</code>的生命周期钩子，就是说在达到某一阶段或条件时去触发的函数，目的就是为了完成一些动作或者事件</p>
+<ul>
+<li><code>create阶段</code>：vue实例被创建<br>
+<code>beforeCreate</code>: 最初调用触发，创建前，此时data和methods中的数据都还没有初始化，data和events都不能用<br>
+<code>created</code>： 创建完毕，data中有值，未挂载，data和events已经初始化好，data已经具有响应式；在这里可以发送请求</li>
+<li><code>mount阶段</code>： vue实例被挂载到真实DOM节点<br>
+<code>beforeMount</code>：在模版编译之后，渲染之前触发，可以发起服务端请求，去数据，ssr中不可用，基本用不上这个hook<br>
+<code>mounted</code>: 在渲染之后触发，此时可以操作DOM，并能访问组件中的DOM以及$ref,SSR中不可用</li>
+<li><code>update阶段</code>：当vue实例里面的data数据变化时，触发组件的重新渲染<br>
+<code>beforeUpdate</code> :更新前，在数据变化后，模版改变前触发，切勿使用它监听数据变化<br>
+<code>updated</code>：更新后，在数据改变后，模版改变后触发，常用于重渲染案后的打点，性能检测或触发vue组件中非vue组件的更新</li>
+<li><code>destroy阶段</code>：vue实例被销毁<br>
+<code>beforeDestroy</code>：实例被销毁前，组件卸载前触发，此时可以手动销毁一些方法，可以在此时清理事件、计时器或者取消订阅操作<br>
+<code>destroyed</code>:卸载完毕后触发，销毁后，可以做最后的打点或事件触发操作</li>
+</ul>
+<h4 id="组件生命周期">组件生命周期</h4>
+<p>生命周期（父子组件） 父组件beforeCreate --&gt; 父组件created --&gt; 父组件beforeMount --&gt; 子组件beforeCreate --&gt; 子组件created --&gt; 子组件beforeMount --&gt; 子组件 mounted --&gt; 父组件mounted --&gt;父组件beforeUpdate --&gt;子组件beforeDestroy--&gt; 子组件destroyed --&gt; 父组件updated</p>
+<p><strong>加载渲染过程</strong> 父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount-&gt;子mounted-&gt;父mounted</p>
+<p><strong>挂载阶段</strong> 父created-&gt;子created-&gt;子mounted-&gt;父mounted</p>
+<p><strong>父组件更新阶段</strong> 父beforeUpdate-&gt;父updated</p>
+<p><strong>子组件更新阶段</strong> 父beforeUpdate-&gt;子beforeUpdate-&gt;子updated-&gt;父updated</p>
+<p><strong>销毁阶段</strong> 父beforeDestroy-&gt;子beforeDestroy-&gt;子destroyed-&gt;父destroyed</p>
+<h3 id="computed与watch"><code>computed与watch</code></h3>
+<p>通俗来讲，既能用 computed 实现又可以用 watch 监听来实现的功能，推荐用 computed， 重点在于 computed 的缓存功能 computed 计算属性是用来声明式的描述一个值依赖了其它的值，当所依赖的值或者变量 改变时，计算属性也会跟着改变； watch 监听的是已经在 data 中定义的变量，当该变量变化时，会触发 watch 中的方法。</p>
+<p><strong>watch 属性监听</strong> 是一个对象，键是需要观察的属性，值是对应回调函数，主要用来监听某些特定数据的变化，从而进行某些具体的业务逻辑操作,监听属性的变化，需要在数据变化时执行异步或开销较大的操作时使用</p>
+<p><strong>computed 计算属性</strong> 属性的结果会被<code>缓存</code>，当<code>computed</code>中的函数所依赖的属性没有发生改变的时候，那么调用当前函数的时候结果会从缓存中读取。除非依赖的响应式属性变化时才会重新计算，主要当做属性来使用 <code>computed</code>中的函数必须用<code>return</code>返回最终的结果 <code>computed</code>更高效，优先使用。<code>data 不改变，computed 不更新。</code></p>
+<p><strong>使用场景</strong> <code>computed</code>：当一个属性受多个属性影响的时候使用，例：购物车商品结算功能 <code>watch</code>：当一条数据影响多条数据的时候使用，例：搜索数据</p>
+<h4 id="组件中的data为什么是一个函数">组件中的data为什么是一个函数？</h4>
+<p>1.一个组件被复用多次的话，也就会创建多个实例。本质上，这些实例用的都是同一个构造函数。 2.如果data是对象的话，对象属于引用类型，会影响到所有的实例。所以为了保证组件不同的实例之间data不冲突，data必须是一个函数。</p>
+<h4 id="为什么v-for和v-if不建议用在一起">为什么v-for和v-if不建议用在一起</h4>
+<p>1.当 v-for 和 v-if 处于同一个节点时，v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。如果要遍历的数组很大，而真正要展示的数据很少时，这将造成很大的性能浪费<br>
+2.这种场景建议使用 computed，先对数据进行过滤</p>
+<p>注意：3.x 版本中 <code>v-if</code> 总是优先于 <code>v-for</code> 生效。由于语法上存在歧义，建议避免在同一元素上同时使用两者。比起在模板层面管理相关逻辑，更好的办法是通过创建计算属性筛选出列表，并以此创建可见元素。</p>
+<p>解惑传送门 ☞ <a href="https://v3.cn.vuejs.org/guide/migration/v-if-v-for.html#%E6%A6%82%E8%A7%88"># v-if 与 v-for 的优先级对比非兼容</a></p>
+<h3 id="reactvue-项目中-key-的作用">React/Vue 项目中 key 的作用</h3>
+<ul>
+<li>
+<p>key的作用是为了在diff算法执行时更快的找到对应的节点，<code>提高diff速度，更高效的更新虚拟DOM</code>;</p>
+<p>vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在vue的diff函数中，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点。如果没找到就认为是一个新增节点。而如果没有key，那么就会采用遍历查找的方式去找到对应的旧节点。一种一个map映射，另一种是遍历查找。相比而言。map映射的速度更快。</p>
+</li>
+<li>
+<p>为了在数据变化时强制更新组件，以避免<code>“就地复用”</code>带来的副作用。</p>
+<p>当 Vue.js 用 <code>v-for</code> 更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序，而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。重复的key会造成渲染错误。</p>
+</li>
+</ul>
+<h3 id="数组扁平化转换">数组扁平化转换</h3>
+<p>在说到模版编译的时候，有可能会提到数组的转换，一般就用递归处理<br>
+将 [1,2,3,[4,5]] 转换成</p>
+<pre><code>{
+    children:[
+        {
+            value:1
+        },
+        {
+            value:2
+        },
+        {
+            value:3
+        },
+        {
+            children:[
+                {
+                    value:4
+                },
+                {
+                    value:5
+                }
+            ]
+        },
+    ]
+}
+</code></pre>
+<pre><code class="language-js">// 测试数组
+var arr =[1,2，3，[4,5]];
+// 转换函数
+function convert(arr){
+    //准备一个接收结果数组
+    var result = [];
+    // 遍历传入的 arr 的每一项
+    for(let i=0;i&lt;arr.length;i++){
+        //如果遍历到的数字是number，直接放进入
+        if(typeof arr[i] == 'number'){
+            result.push({
+                value:arr[i]
+            });
+        } else if(Array.isArray(arr[i])){
+            //如果遍历到这个项目是数组，那么就递归
+            result.push({
+                children: convert(arr[i])
+            });
+        }
+    }
+    return result;
+}
+
+var o = convert(arr);
+console.log(o);
+</code></pre>
+<h3 id="vue组件的通信方式">vue组件的通信方式</h3>
+<ul>
+<li>
+<p><code>props</code>/<code>$emit</code> 父子组件通信</p>
+<p>父-&gt;子<code>props</code>，子-&gt;父 <code>$on、$emit</code> 获取父子组件实例 <code>parent、children</code> <code>Ref</code>获取实例的方式调用组件的属性或者方法 父-&gt;子孙 <code>Provide、inject</code> 官方不推荐使用，但是写组件库时很常用</p>
+</li>
+<li>
+<p><code>$emit</code>/<code>$on</code> 自定义事件 兄弟组件通信</p>
+<p><code>Event Bus</code> 实现跨组件通信 <code>Vue.prototype.$bus = new Vue()</code> 自定义事件</p>
+</li>
+<li>
+<p>vuex 跨级组件通信</p>
+<p>Vuex、<code>$attrs、$listeners</code> <code>Provide、inject</code></p>
+</li>
+</ul>
+<h3 id="emit-后面的两个参数是什么">$emit 后面的两个参数是什么</h3>
+<p>1、父组件可以使用 props 把数据传给子组件。<br>
+2、子组件可以使用 $emit,让父组件监听到自定义事件 。</p>
+<p><code>vm.$emit( event, arg );</code>//触发当前实例上的事件，要传递的参数<br>
+<code>vm.$on( event, fn );</code>//监听event事件后运行 fn；</p>
+<p>子组件</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;train-city&quot;&gt;
+    &lt;h3&gt;父组件传给子组件的toCity:{{sendData}}&lt;/h3&gt; 
+    &lt;br/&gt;&lt;button @click='select(`大连`)'&gt;点击此处将‘大连’发射给父组件&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  export default {
+    name:'trainCity',
+    props:['sendData'], // 用来接收父组件传给子组件的数据
+    methods:{
+      select(val) {
+        let data = {
+          cityName: val
+        };
+        this.$emit('showCityName',data);//select事件触发后，自动触发showCityName事件
+      }
+    }
+  }
+&lt;/script&gt;
+</code></pre>
+<p>父组件</p>
+<pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+        &lt;div&gt;父组件的toCity{{toCity}}&lt;/div&gt;
+        &lt;train-city @showCityName=&quot;updateCity&quot; :sendData=&quot;toCity&quot;&gt;&lt;/train-city&gt;
+    &lt;/div&gt;
+&lt;template&gt;
+&lt;script&gt;
+  export default {
+    name:'index',
+    components: {},
+    data () {
+      return {
+        toCity:&quot;北京&quot;
+      }
+    },
+    methods:{
+      updateCity(data){//触发子组件城市选择-选择城市的事件
+        this.toCity = data.cityName;//改变了父组件的值
+        console.log('toCity:'+this.toCity)
+      }
+    }
+  }
+&lt;/script&gt;
+</code></pre>
+<h3 id="nexttick的实现">nextTick的实现</h3>
+<ol>
+<li><code>nextTick</code>是<code>Vue</code>提供的一个全局<code>API</code>,是在下次<code>DOM</code>更新循环结束之后执行延迟回调，在修改数据之后使用<code>$nextTick</code>，则可以在回调中获取更新后的<code>DOM</code>；</li>
+<li>Vue在更新DOM时是异步执行的。只要侦听到数据变化，<code>Vue</code>将开启1个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个<code>watcher</code>被多次触发，只会被推入到队列中-次。这种在缓冲时去除重复数据对于避免不必要的计算和<code>DOM</code>操作是非常重要的。<code>nextTick</code>方法会在队列中加入一个回调函数，确保该函数在前面的dom操作完成后才调用；</li>
+<li>比如，我在干什么的时候就会使用nextTick，传一个回调函数进去，在里面执行dom操作即可；</li>
+<li>我也有简单了解<code>nextTick</code>实现，它会在<code>callbacks</code>里面加入我们传入的函数，然后用<code>timerFunc</code>异步方式调用它们，首选的异步方式会是<code>Promise</code>。这让我明白了为什么可以在<code>nextTick</code>中看到<code>dom</code>操作结果。</li>
+</ol>
+<h3 id="nexttick的实现原理是什么">nextTick的实现原理是什么？</h3>
+<p>在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后立即使用 nextTick 来获取更新后的 DOM。 nextTick主要使用了宏任务和微任务。 根据执行环境分别尝试采用Promise、MutationObserver、setImmediate，如果以上都不行则采用setTimeout定义了一个异步方法，多次调用nextTick会将方法存入队列中，通过这个异步方法清空当前队列。</p>
+<h3 id="使用过插槽么用的是具名插槽还是匿名插槽或作用域插槽">使用过插槽么？用的是具名插槽还是匿名插槽或作用域插槽</h3>
+<p>vue中的插槽是一个非常好用的东西slot说白了就是一个占位的 在vue当中插槽包含三种一种是默认插槽（匿名）一种是具名插槽还有一种就是作用域插槽 匿名插槽就是没有名字的只要默认的都填到这里具名插槽指的是具有名字的</p>
+<h3 id="keep-alive的实现">keep-alive的实现</h3>
+<p>keep-alive是Vue.js的一个内置组件。它能够不活动的组件实例保存在内存中，而不是直接将其销毁，它是一个抽象组件，不会被渲染到真实DOM中，也不会出现在父组件链中。</p>
+<p>作用：实现组件缓存，保持这些组件的状态，以避免反复渲染导致的性能问题。 需要缓存组件 频繁切换，不需要重复渲染</p>
+<p>场景：tabs标签页 后台导航，vue性能优化</p>
+<p>原理：<code>Vue.js</code>内部将<code>DOM</code>节点抽象成了一个个的<code>VNode</code>节点，<code>keep-alive</code>组件的缓存也是基于<code>VNode</code>节点的而不是直接存储<code>DOM</code>结构。它将满足条件<code>（pruneCache与pruneCache）</code>的组件在<code>cache</code>对象中缓存起来，在需要重新渲染的时候再将<code>vnode</code>节点从<code>cache</code>对象中取出并渲染。</p>
+<h3 id="keep-alive-的属性">keep-alive 的属性</h3>
+<p>它提供了include与exclude两个属性，允许组件有条件地进行缓存。</p>
+<p>include定义缓存白名单，keep-alive会缓存命中的组件；exclude定义缓存黑名单，被命中的组件将不会被缓存；max定义缓存组件上限，超出上限使用LRU的策略置换缓存数据。</p>
+<p>在动态组件中的应用</p>
+<pre><code class="language-js">&lt;keep-alive :include=&quot;whiteList&quot; :exclude=&quot;blackList&quot; :max=&quot;amount&quot;&gt;
+     &lt;component :is=&quot;currentComponent&quot;&gt;&lt;/component&gt;
+&lt;/keep-alive&gt;
+</code></pre>
+<p>在vue-router中的应用</p>
+<pre><code class="language-js">&lt;keep-alive :include=&quot;whiteList&quot; :exclude=&quot;blackList&quot; :max=&quot;amount&quot;&gt;
+    &lt;router-view&gt;&lt;/router-view&gt;
+&lt;/keep-alive&gt;
+</code></pre>
+<p>vue 中完整示例</p>
+<pre><code>&lt;keep-alive&gt;
+    &lt;coma v-if=&quot;test&quot;&gt;&lt;/coma&gt;
+    &lt;comb v-else=&quot;test&quot;&gt;&lt;/comb&gt;
+&lt;/keep-alive&gt;
+&lt;button @click=&quot;test=handleClick&quot;&gt;请点击&lt;/button&gt;
+
+export default {
+    data () {
+        return {
+            test: true
+        }
+    },
+    methods: {
+        handleClick () {
+            this.test = !this.test;
+        }
+    }
+}
+</code></pre>
+<p>参考:<br>
+<a href="https://cn.vuejs.org/v2/api/#keep-alive">keep-alive 官网</a></p>
+<p><a href="https://www.jianshu.com/p/9523bb439950">keep-alive实现原理</a></p>
+<p><a href="https://blog.csdn.net/weixin_38189842/article/details/103999989">Vue keep-alive的实现原理</a></p>
+<h3 id="mixin">mixin</h3>
+<p>mixin 项目变得复杂的时候，多个组件间有重复的逻辑就会用到mixin<br>
+多个组件有相同的逻辑，抽离出来<br>
+mixin并不是完美的解决方案，会有一些问题<br>
+vue3提出的Composition API旨在解决这些问题【追求完美是要消耗一定的成本的，如开发成本】<br>
+场景：PC端新闻列表和详情页一样的右侧栏目，可以使用mixin进行混合<br>
+劣势：1.变量来源不明确，不利于阅读 2.多mixin可能会造成命名冲突 3.mixin和组件可能出现多对多的关系，使得项目复杂度变高</p>
+<h3 id="vue-如何实现模拟-v-model-指令">vue 如何实现模拟 v-model 指令</h3>
+<p>可以使用 vue 自定义指令 Vue.directive() 模拟</p>
+<p>具体参考：<a href="https://blog.csdn.net/qq_39157944/article/details/106262546">vue自定义指令模拟v-model指令</a></p>
+<h3 id="如何实现-v-model说下思路">如何实现 v-model,说下思路</h3>
+<h3 id="vue-router-相关">Vue Router 相关</h3>
+<h3 id="vuex的理解及使用场景">Vuex的理解及使用场景</h3>
+<p>Vuex 是一个专为 Vue 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。</p>
+<ol>
+<li>Vuex 的状态存储是响应式的；当 Vue 组件从 store 中读取状态的时候，</li>
+</ol>
+<p>若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新 2. 改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation， 这样使得我们可以方便地跟踪每一个状态的变化 Vuex主要包括以下几个核心模块：</p>
+<ol>
+<li>State：定义了应用的状态数据</li>
+<li>Getter：在 store 中定义“getter”（可以认为是 store 的计算属性），</li>
+</ol>
+<p>就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来， 且只有当它的依赖值发生了改变才会被重新计算 3. Mutation：是唯一更改 store 中状态的方法，且必须是同步函数 4. Action：用于提交 mutation，而不是直接变更状态，可以包含任意异步操作 5. Module：允许将单一的 Store 拆分为多个 store 且同时保存在单一的状态树中</p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a7249773a1634f779c48f3f0ffabf968~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[面经汇总04.Js]]></title>
+        <id>https://coderdml.github.io/post/mian-jing-hui-zong-04js/</id>
+        <link href="https://coderdml.github.io/post/mian-jing-hui-zong-04js/">
+        </link>
+        <updated>2022-02-08T09:44:42.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="javascript">JavaScript</h2>
+<h3 id="js中的8种数据类型及区别">JS中的8种数据类型及区别</h3>
+<p>包括值类型(基本对象类型)和引用类型(复杂对象类型)</p>
+<p><strong>基本类型(值类型)：</strong> Number(数字),String(字符串),Boolean(布尔),Symbol(符号),null(空),undefined(未定义)在内存中占据固定大小，保存在栈内存中</p>
+<p><strong>引用类型(复杂数据类型)：</strong> Object(对象)、Function(函数)。其他还有Array(数组)、Date(日期)、RegExp(正则表达式)、特殊的基本包装类型(String、Number、Boolean) 以及单体内置对象(Global、Math)等 引用类型的值是对象 保存在堆内存中，栈内存存储的是对象的变量标识符以及对象在堆内存中的存储地址。</p>
+<p><strong>使用场景：</strong></p>
+<p>Symbol：使用Symbol来作为对象属性名(key)  利用该特性，把一些不需要对外操作和访问的属性使用Symbol来定义</p>
+<p>BigInt：由于在 Number 与 BigInt 之间进行转换会损失精度，因而建议仅在值可能大于253 时使用 BigInt 类型，并且不在两种类型之间进行相互转换。</p>
+<p>传送门 ☞<a href="https://juejin.cn/post/7000754813801775111"># JavaScript 数据类型之 Symbol、BigInt</a></p>
+<h3 id="js中的数据类型检测方案">JS中的数据类型检测方案</h3>
+<h4 id="1typeof">1.typeof</h4>
+<pre><code class="language-js">console.log(typeof 1);               // number
+console.log(typeof true);            // boolean
+console.log(typeof 'mc');            // string
+console.log(typeof Symbol)           // function
+console.log(typeof function(){});    // function
+console.log(typeof console.log());   // function
+console.log(typeof []);              // object 
+console.log(typeof {});              // object
+console.log(typeof null);            // object
+console.log(typeof undefined);       // undefined
+</code></pre>
+<p>优点：能够快速区分基本数据类型</p>
+<p>缺点：不能将Object、Array和Null区分，都返回object</p>
+<h4 id="2instanceof">2.instanceof</h4>
+<pre><code class="language-js">console.log(1 instanceof Number);                    // false
+console.log(true instanceof Boolean);                // false 
+console.log('str' instanceof String);                // false  
+console.log([] instanceof Array);                    // true
+console.log(function(){} instanceof Function);       // true
+console.log({} instanceof Object);                   // true
+</code></pre>
+<p>优点：能够区分Array、Object和Function，适合用于判断自定义的类实例对象</p>
+<p>缺点：Number，Boolean，String基本数据类型不能判断</p>
+<h4 id="3objectprototypetostringcall">3.Object.prototype.toString.call()</h4>
+<pre><code class="language-js">var toString = Object.prototype.toString;
+console.log(toString.call(1));      //[object Number]
+console.log(toString.call(true));   //[object Boolean]
+console.log(toString.call('mc'));   //[object String]
+console.log(toString.call([]));     //[object Array]
+console.log(toString.call({}));     //[object Object]
+console.log(toString.call(function(){})); //[object Function]
+console.log(toString.call(undefined));  //[object Undefined]
+console.log(toString.call(null)); //[object Null]
+</code></pre>
+<p>优点：精准判断数据类型</p>
+<p>缺点：写法繁琐不容易记，推荐进行封装后使用</p>
+<h4 id="instanceof-的作用">instanceof 的作用</h4>
+<p>用于判断一个引用类型是否属于某构造函数；</p>
+<p>还可以在继承关系中用来判断一个实例是否属于它的父类型。</p>
+<h4 id="instanceof-和-typeof-的区别">instanceof 和 typeof 的区别：</h4>
+<p>typeof在对值类型number、string、boolean 、null 、 undefined、 以及引用类型的function的反应是精准的；但是，对于对象{ } 、数组[ ] 、null 都会返回object</p>
+<p>为了弥补这一点，instanceof 从原型的角度，来判断某引用属于哪个构造函数，从而判定它的数据类型。</p>
+<h3 id="var-let-const">var &amp;&amp; let &amp;&amp; const</h3>
+<p>ES6之前创建变量用的是var,之后创建变量用的是let/const</p>
+<p><strong>三者区别</strong>：</p>
+<ol>
+<li>var定义的变量，<code>没有块的概念，可以跨块访问</code>, 不能跨函数访问。<br>
+let定义的变量，只能在块作用域里访问，不能跨块访问，也不能跨函数访问。<br>
+const用来定义常量，使用时必须初始化(即必须赋值)，只能在块作用域里访问，且不能修改。</li>
+<li>var可以<code>先使用，后声明</code>，因为存在变量提升；let必须先声明后使用。</li>
+<li>var是允许在相同作用域内<code>重复声明同一个变量</code>的，而let与const不允许这一现象。</li>
+<li>在全局上下文中，基于let声明的全局变量和全局对象GO（window）没有任何关系 ;<br>
+var声明的变量会和GO有映射关系；</li>
+<li><code>会产生暂时性死区</code>：</li>
+</ol>
+<blockquote>
+<p>暂时性死区是浏览器的bug：检测一个未被声明的变量类型时，不会报错，会返回undefined<br>
+如：console.log(typeof a) //undefined<br>
+而：console.log(typeof a)//未声明之前不能使用<br>
+let a</p>
+</blockquote>
+<ol start="6">
+<li>let /const/function会把当前所在的大括号(除函数之外)作为一个全新的块级上下文，应用这个机制，在开发项目的时候，遇到循环事件绑定等类似的需求，无需再自己构建闭包来存储，只要基于let的块作用特征即可解决</li>
+</ol>
+<h3 id="作用域和作用域链">作用域和作用域链</h3>
+<p>创建函数的时候，已经声明了当前函数的作用域==&gt;<code>当前创建函数所处的上下文</code>。如果是在全局下创建的函数就是<code>[[scope]]:EC(G)</code>，函数执行的时候，形成一个全新的私有上下文<code>EC(FN)</code>，供字符串代码执行(进栈执行)</p>
+<p>定义：简单来说作用域就是变量与函数的可访问范围，<code>由当前环境与上层环境的一系列变量对象组成</code><br>
+1.全局作用域：代码在程序的任何地方都能被访问，window 对象的内置属性都拥有全局作用域。<br>
+2.函数作用域：在固定的代码片段才能被访问</p>
+<p>作用：作用域最大的用处就是<code>隔离变量</code>，不同作用域下同名变量不会有冲突。</p>
+<p><strong>作用域链参考链接</strong>一般情况下，变量到 创建该变量 的函数的作用域中取值。但是如果在当前作用域中没有查到，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。</p>
+<h3 id="闭包的两大作用保存保护">闭包的两大作用：保存/保护</h3>
+<ul>
+<li>
+<p><strong>闭包的概念</strong></p>
+<p>函数执行时形成的私有上下文EC(FN)，正常情况下，代码执行完会出栈后释放;但是特殊情况下，如果当前私有上下文中的某个东西被上下文以外的事物占用了，则上下文不会出栈释放，从而形成不销毁的上下文。 函数执行函数执行过程中，会形成一个全新的私有上下文，可能会被释放，可能不会被释放，不论释放与否，他的作用是：</p>
+</li>
+</ul>
+<p>（1）保护：划分一个独立的代码执行区域，在这个区域中有自己私有变量存储的空间，保护自己的私有变量不受外界干扰（操作自己的私有变量和外界没有关系）；</p>
+<p>（2）保存：如果当前上下文不被释放【只要上下文中的某个东西被外部占用即可】，则存储的这些私有变量也不会被释放，可以供其下级上下文中调取使用，相当于把一些值保存起来了；</p>
+<p>我们把函数执行形成私有上下文，来保护和保存私有变量机制称为<code>闭包</code>。</p>
+<blockquote>
+<p>闭包是指有权访问另一个函数作用域中的变量的函数--《JavaScript高级程序设计》</p>
+</blockquote>
+<p><strong>稍全面的回答</strong>： 在js中变量的作用域属于函数作用域, 在函数执行完后,作用域就会被清理,内存也会随之被回收,但是由于闭包函数是建立在函数内部的子函数, 由于其可访问上级作用域,即使上级函数执行完, 作用域也不会随之销毁, 这时的子函数(也就是闭包),便拥有了访问上级作用域中变量的权限,即使上级函数执行完后作用域内的值也不会被销毁。</p>
+<ul>
+<li>
+<p><strong>闭包的特性</strong>：</p>
+<ul>
+<li>
+<p>1、内部函数可以访问定义他们外部函数的参数和变量。(作用域链的向上查找，把外围的作用域中的变量值存储在内存中而不是在函数调用完毕后销毁)设计私有的方法和变量，避免全局变量的污染。</p>
+<p>1.1.闭包是密闭的容器，，类似于set、map容器，存储数据的</p>
+<p>1.2.闭包是一个对象，存放数据的格式为 key-value 形式</p>
+</li>
+<li>
+<p>2、函数嵌套函数</p>
+</li>
+<li>
+<p>3、本质是将函数内部和外部连接起来。优点是可以读取函数内部的变量，让这些变量的值始终保存在内存中，不会在函数被调用之后自动清除</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>闭包形成的条件</strong>：</p>
+<ol>
+<li>函数的嵌套</li>
+<li>内部函数引用外部函数的局部变量，延长外部函数的变量生命周期</li>
+</ol>
+</li>
+<li>
+<p><strong>闭包的用途</strong>：</p>
+<ol>
+<li>模仿块级作用域</li>
+<li>保护外部函数的变量 能够访问函数定义时所在的词法作用域(阻止其被回收)</li>
+<li>封装私有化变量</li>
+<li>创建模块</li>
+</ol>
+</li>
+<li>
+<p><strong>闭包应用场景</strong></p>
+<p>闭包的两个场景，闭包的两大作用：<code>保存/保护</code>。 在开发中, 其实我们随处可见闭包的身影, 大部分前端JavaScript 代码都是“事件驱动”的,即一个事件绑定的回调方法; 发送ajax请求成功|失败的回调;setTimeout的延时回调;或者一个函数内部返回另一个匿名函数,这些都是闭包的应用。</p>
+</li>
+<li>
+<p><strong>闭包的优点</strong>：延长局部变量的生命周期</p>
+</li>
+<li>
+<p><strong>闭包缺点</strong>：会导致函数的变量一直保存在内存中，过多的闭包可能会导致内存泄漏</p>
+</li>
+</ul>
+<h3 id="js-中-this-的情况">JS 中 this 的情况</h3>
+<ol>
+<li>普通函数调用：通过函数名()直接调用：<code>this</code>指向<code>全局对象window</code>（注意let定义的变量不是window属性，只有window.xxx定义的才是。即let a =’aaa’; this.a是undefined）</li>
+<li>构造函数调用：函数作为构造函数，用new关键字调用时：<code>this</code>指向<code>新new出的对象</code></li>
+<li>对象函数调用：通过对象.函数名()调用的：<code>this</code>指向<code>这个对象</code></li>
+<li>箭头函数调用：箭头函数里面没有 this ，所以<code>永远是上层作用域this</code>（上下文）</li>
+<li>apply和call调用：函数体内 this 的指向的是 call/apply 方法<code>第一个参数</code>，若为空默认是指向全局对象window。</li>
+<li>函数作为数组的一个元素，通过数组下标调用的：this指向这个数组</li>
+<li>函数作为window内置函数的回调函数调用：this指向window（如setInterval setTimeout 等）</li>
+</ol>
+<h3 id="callapplybind-的区别">call/apply/bind 的区别</h3>
+<p>相同：</p>
+<p>1、都是用来改变函数的this对象的指向的。<br>
+2、第一个参数都是this要指向的对象。<br>
+3、都可以利用后续参数传参。</p>
+<p>不同：</p>
+<p>apply和call传入的参数列表形式不同。apply 接收 arguments，call接收一串参数列表</p>
+<pre><code>fn.call(obj, 1, 2);
+fn.apply(obj, [1, 2]);
+</code></pre>
+<p>bind：语法和call一模一样，区别在于立即执行还是等待执行，bind不兼容IE6~8<br>
+bind 主要就是将函数绑定到某个对象，bind()会创建一个函数，返回对应函数便于稍后调用；而apply、call则是立即调用。</p>
+<p>总结：基于Function.prototype上的 <code>apply 、 call 和 bind</code>调用模式，这三个方法都可以显示的指定调用函数的 this 指向。<code>apply</code>接收参数的是数组，<code>call</code>接受参数列表，`` bind<code>方法通过传入一个对象，返回一个</code> this <code>绑定了传入对象的新函数。这个函数的</code>this<code>指向除了使用</code>new `时会被改变，其他情况下都不会改变。若为空默认是指向全局对象window。</p>
+<p>参考：☞ <a href="https://blog.csdn.net/hexinyu_1022/article/details/82795517">call、apply、bind三者的用法和区别</a></p>
+<h3 id="箭头函数的特性">箭头函数的特性</h3>
+<ol>
+<li><code>箭头函数没有自己的this</code>，会捕获其所在的上下文的this值，作为自己的this值</li>
+<li><code>箭头函数没有constructor</code>，是匿名函数，不能作为构造函数，不能通过new 调用；</li>
+<li><code>没有new.target 属性</code>。在通过new运算符被初始化的函数或构造方法中，new.target返回一个指向构造方法或函数的引用。在普通的函数调用中，new.target 的值是undefined</li>
+<li><code>箭头函数不绑定Arguments 对象</code>。取而代之用rest参数...解决。由于 箭头函数没有自己的this指针，通过 call() 或 apply() 方法调用一个函数时，只能传递参数（不能绑定this），他们的第一个参数会被忽略。（这种现象对于bind方法同样成立）</li>
+<li>箭头函数通过 call()  或   apply() 方法调用一个函数时，只传入了一个参数，对 this 并没有影响。</li>
+<li>箭头函数没有原型属性 Fn.prototype 值为 undefined</li>
+<li>箭头函数不能当做Generator函数,不能使用yield关键字</li>
+</ol>
+<p>参考：<a href="https://www.cnblogs.com/biubiuxixiya/p/8610594.html">箭头函数与普通函数的区别</a></p>
+<h3 id="原型-原型链">原型 &amp;&amp; 原型链</h3>
+<p><strong>原型关系：</strong></p>
+<ul>
+<li>每个 class都有显示原型 prototype</li>
+<li>每个实例都有隐式原型 <code>__proto__</code></li>
+<li>实例的 <code>__proto__</code> 指向对应 class 的 prototype</li>
+</ul>
+<p>‌ <strong>原型:</strong>  在 JS 中，每当定义一个对象（函数也是对象）时，对象中都会包含一些预定义的属性。其中每个<code>函数对象</code>都有一个<code>prototype</code> 属性，这个属性指向函数的<code>原型对象</code>。</p>
+<p>原型链：函数的原型链对象constructor默认指向函数本身，原型对象除了有原型属性外，为了实现继承，还有一个原型链指针__proto__,该指针是指向上一层的原型对象，而上一层的原型对象的结构依然类似。因此可以利用__proto__一直指向Object的原型对象上，而Object原型对象用Object.prototype.__ proto__ = null表示原型链顶端。如此形成了js的原型链继承。同时所有的js对象都有Object的基本防范</p>
+<p><strong>特点:</strong>  <code>JavaScript</code>对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变。</p>
+<h3 id="new运算符的实现机制">new运算符的实现机制</h3>
+<ol>
+<li>首先创建了一个新的<code>空对象</code></li>
+<li><code>设置原型</code>，将对象的原型设置为函数的<code>prototype</code>对象。</li>
+<li>让函数的<code>this</code>指向这个对象，执行构造函数的代码（为这个新对象添加属性）</li>
+<li>判断函数的返回值类型，如果是值类型，返回创建的对象。如果是引用类型，就返回这个引用类型的对象。</li>
+</ol>
+<h3 id="eventloop-事件循环">EventLoop 事件循环</h3>
+<p><code>JS</code>是单线程的，为了防止一个函数执行时间过长阻塞后面的代码，所以会先将同步代码压入执行栈中，依次执行，将异步代码推入异步队列，异步队列又分为宏任务队列和微任务队列，因为宏任务队列的执行时间较长，所以微任务队列要优先于宏任务队列。微任务队列的代表就是，<code>Promise.then</code>，<code>MutationObserver</code>，宏任务的话就是<code>setImmediate setTimeout setInterval</code></p>
+<p>JS运行的环境。一般为浏览器或者Node。 在浏览器环境中，有JS 引擎线程和渲染线程，且两个线程互斥。 Node环境中，只有JS 线程。 不同环境执行机制有差异，不同任务进入不同Event Queue队列。 当主程结束，先执行准备好微任务，然后再执行准备好的宏任务，一个轮询结束。</p>
+<h4 id="浏览器中的事件环event-loop"><strong>浏览器中的事件环（Event Loop)</strong></h4>
+<p>事件环的运行机制是，先会执行栈中的内容，栈中的内容执行后执行微任务，微任务清空后再执行宏任务，先取出一个宏任务，再去执行微任务，然后在取宏任务清微任务这样不停的循环。</p>
+<ul>
+<li>
+<p>eventLoop 是由JS的宿主环境（浏览器）来实现的；</p>
+</li>
+<li>
+<p>事件循环可以简单的描述为以下四个步骤:</p>
+<ol>
+<li>函数入栈，当Stack中执行到异步任务的时候，就将他丢给WebAPIs,接着执行同步任务,直到Stack为空；</li>
+<li>此期间WebAPIs完成这个事件，把回调函数放入队列中等待执行（微任务放到微任务队列，宏任务放到宏任务队列）</li>
+<li>执行栈为空时，Event Loop把微任务队列执行清空；</li>
+<li>微任务队列清空后，进入宏任务队列，取队列的第一项任务放入Stack(栈）中执行，执行完成后，查看微任务队列是否有任务，有的话，清空微任务队列。重复4，继续从宏任务中取任务执行，执行完成之后，继续清空微任务，如此反复循环，直至清空所有的任务。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/342e581223d2471d9484fc48beb9f8e1~tplv-k3u1fbpfcp-zoom-1.image" alt="事件循环流程" loading="lazy"></figure>
+</li>
+<li>
+<p>浏览器中的任务源(task):</p>
+<ul>
+<li><code>宏任务(macrotask)</code>：<br>
+宿主环境提供的，比如浏览器<br>
+ajax、setTimeout、setInterval、setTmmediate(只兼容ie)、script、requestAnimationFrame、messageChannel、UI渲染、一些浏览器api</li>
+<li><code>微任务(microtask)</code>：<br>
+语言本身提供的，比如promise.then<br>
+then、queueMicrotask(基于then)、mutationObserver(浏览器提供)、messageChannel 、mutationObersve</li>
+</ul>
+</li>
+</ul>
+<p>传送门 ☞ <a href="https://juejin.cn/post/7001881781125251086"># 宏任务和微任务</a></p>
+<h4 id="node-环境中的事件环event-loop"><strong>Node 环境中的事件环（Event Loop)</strong></h4>
+<p><code>Node</code>是基于V8引擎的运行在服务端的<code>JavaScript</code>运行环境，在处理高并发、I/O密集(文件操作、网络操作、数据库操作等)场景有明显的优势。虽然用到也是V8引擎，但由于服务目的和环境不同，导致了它的API与原生JS有些区别，其Event Loop还要处理一些I/O，比如新的网络连接等，所以Node的Event Loop(事件环机制)与浏览器的是不太一样。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e362c1770f62428fbf3faabd99d2a64c~tplv-k3u1fbpfcp-zoom-1.image" alt="2020120317343116.png" loading="lazy"> 执行顺序如下：</p>
+<ul>
+<li><code>timers</code>: 计时器，执行setTimeout和setInterval的回调</li>
+<li><code>pending callbacks</code>: 执行延迟到下一个循环迭代的 I/O 回调</li>
+<li><code>idle, prepare</code>: 队列的移动，仅系统内部使用</li>
+<li><code>poll轮询</code>: 检索新的 I/O 事件;执行与 I/O 相关的回调。事实上除了其他几个阶段处理的事情，其他几乎所有的异步都在这个阶段处理。</li>
+<li><code>check</code>: 执行<code>setImmediate</code>回调，setImmediate在这里执行</li>
+<li><code>close callbacks</code>: 执行<code>close</code>事件的<code>callback</code>，一些关闭的回调函数，如：socket.on('close', ...)</li>
+</ul>
+<h3 id="settimeout-promise-asyncawait-的区别">setTimeout、Promise、Async/Await 的区别</h3>
+<ol>
+<li>
+<p>setTimeout</p>
+<p>settimeout的回调函数放到宏任务队列里，等到执行栈清空以后执行。</p>
+</li>
+<li>
+<p>Promise</p>
+<p>Promise本身是<strong>同步的立即执行函数</strong>， 当在executor中执行resolve或者reject的时候, 此时是异步操作， 会先执行then/catch等，当主栈完成后，才会去调用resolve/reject中存放的方法执行。</p>
+<pre><code class="language-js">console.log('script start')
+let promise1 = new Promise(function (resolve) {
+    console.log('promise1')
+    resolve()
+    console.log('promise1 end')
+}).then(function () {
+    console.log('promise2')
+})
+setTimeout(function(){
+    console.log('settimeout')
+})
+console.log('script end')
+// 输出顺序: script start-&gt;promise1-&gt;promise1 end-&gt;script end-&gt;promise2-&gt;settimeout
+</code></pre>
+</li>
+<li>
+<p>async/await</p>
+<p>async 函数返回一个 Promise 对象，当函数执行的时候，一旦遇到 await 就会先返回，等到触发的异步操作完成，再执行函数体内后面的语句。可以理解为，是让出了线程，跳出了 async 函数体。</p>
+<pre><code class="language-js">async function async1(){
+   console.log('async1 start');
+    await async2();
+    console.log('async1 end')
+}
+async function async2(){
+    console.log('async2')
+}
+
+console.log('script start');
+async1();
+console.log('script end')
+
+// 输出顺序：script start-&gt;async1 start-&gt;async2-&gt;script end-&gt;async1 end
+</code></pre>
+</li>
+</ol>
+<p>传送门 ☞ <a href="https://juejin.cn/post/6999651011304357925"># JavaScript Promise 专题</a></p>
+<h3 id="asyncawait-如何通过同步的方式实现异步">Async/Await 如何通过同步的方式实现异步</h3>
+<p>Async/Await就是一个<strong>自执行</strong>的generate函数。利用generate函数的特性把异步的代码写成“同步”的形式,第一个请求的返回值作为后面一个请求的参数,其中每一个参数都是一个promise对象.</p>
+<h3 id="介绍节流防抖原理-区别以及应用">介绍节流防抖原理、区别以及应用</h3>
+<p><code>节流</code>：事件触发后，规定时间内，事件处理函数不能再次被调用。也就是说在规定的时间内，函数只能被调用一次，且是最先被触发调用的那次。</p>
+<p><code>防抖</code>：多次触发事件，事件处理函数只能执行一次，并且是在触发操作结束时执行。也就是说，当一个事件被触发准备执行事件函数前，会等待一定的时间（这时间是码农自己去定义的，比如 1 秒），如果没有再次被触发，那么就执行，如果被触发了，那就本次作废，重新从新触发的时间开始计算，并再次等待 1 秒，直到能最终执行！</p>
+<p><code>使用场景</code>：<br>
+节流：滚动加载更多、搜索框搜的索联想功能、高频点击、表单重复提交……<br>
+防抖：搜索框搜索输入，并在输入完以后自动搜索、手机号，邮箱验证输入检测、窗口大小 resize 变化后，再重新渲染。</p>
+<pre><code class="language-js">/**
+ * 节流函数 一个函数执行一次后，只有大于设定的执行周期才会执行第二次。有个需要频繁触发的函数，出于优化性能的角度，在规定时间内，只让函数触发的第一次生效，后面的不生效。
+ * @param fn要被节流的函数
+ * @param delay规定的时间
+ */
+function throttle(fn, delay) {
+    //记录上一次函数触发的时间
+    var lastTime = 0;
+    return function(){
+        //记录当前函数触发的时间
+        var nowTime = Date.now();
+        if(nowTime - lastTime &gt; delay){
+            //修正this指向问题
+            fn.call(this);
+            //同步执行结束时间
+            lastTime = nowTime;
+        }
+    }
+}
+
+document.onscroll = throttle(function () {
+    console.log('scllor事件被触发了' + Date.now());
+}, 200); 
+
+/**
+ * 防抖函数  一个需要频繁触发的函数，在规定时间内，只让最后一次生效，前面的不生效
+ * @param fn要被节流的函数
+ * @param delay规定的时间
+ */
+function debounce(fn, delay) {
+    //记录上一次的延时器
+    var timer = null;
+    return function () {
+       //清除上一次的演示器
+        clearTimeout(timer);
+        //重新设置新的延时器
+        timer = setTimeout(function(){
+            //修正this指向问题
+            fn.apply(this);
+        }, delay); 
+    }
+}
+document.getElementById('btn').onclick = debounce(function () {
+    console.log('按钮被点击了' + Date.now());
+}, 1000);
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[面经汇总03.HTML&&CSS]]></title>
+        <id>https://coderdml.github.io/post/mian-jing-hui-zong-03htmlandcss/</id>
+        <link href="https://coderdml.github.io/post/mian-jing-hui-zong-03htmlandcss/">
+        </link>
+        <updated>2022-02-08T09:43:28.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="html-css">HTML &amp;&amp; CSS</h2>
+<h3 id="html5-新特性-语义化">HTML5 新特性、语义化</h3>
+<ol>
+<li>
+<p><strong>概念</strong>：</p>
+<p>HTML5的语义化指的是<code>合理正确的使用语义化的标签来创建页面结构</code>。【正确的标签做正确的事】</p>
+</li>
+<li>
+<p><strong>语义化标签</strong>：</p>
+<p>header nav main article section aside footer</p>
+</li>
+<li>
+<p><strong>语义化的优点</strong>:</p>
+<ul>
+<li>在<code>没CSS样式的情况下，页面整体也会呈现很好的结构效果</code></li>
+<li><code>代码结构清晰</code>，易于阅读，</li>
+<li><code>利于开发和维护</code> 方便其他设备解析（如屏幕阅读器）根据语义渲染网页。</li>
+<li><code>有利于搜索引擎优化（SEO）</code>，搜索引擎爬虫会根据不同的标签来赋予不同的权重</li>
+</ul>
+</li>
+</ol>
+<h3 id="html5新特性有哪些">HTML5新特性有哪些</h3>
+<ul>
+<li>语义化标签</li>
+<li>音视频处理API(audio,video)</li>
+<li>canvas / webGL</li>
+<li>拖拽释放(Drag and drop) API</li>
+<li>history API</li>
+<li>requestAnimationFrame</li>
+<li>地理位置(Geolocation)API</li>
+<li>webSocket</li>
+<li>web存储 localStorage、SessionStorage</li>
+<li>表单控件，calendar、date、time、email、url、search</li>
+</ul>
+<h3 id="css-选择器及优先级">CSS 选择器及优先级</h3>
+<p><strong>选择器</strong></p>
+<ul>
+<li>id选择器(#myid)</li>
+<li>类选择器(.myclass)</li>
+<li>属性选择器(a[rel=&quot;external&quot;])</li>
+<li>伪类选择器(a:hover, li:nth-child)</li>
+<li>标签选择器(div, h1,p)</li>
+<li>相邻选择器（h1 + p）</li>
+<li>子选择器(ul &gt; li)</li>
+<li>后代选择器(li a)</li>
+<li>通配符选择器(*)</li>
+</ul>
+<p><strong>优先级：</strong></p>
+<ul>
+<li><code>!important</code></li>
+<li>内联样式（1000）</li>
+<li>ID选择器（0100）</li>
+<li>类选择器/属性选择器/伪类选择器（0010）</li>
+<li>元素选择器/伪元素选择器（0001）</li>
+<li>关系选择器/通配符选择器（0000）</li>
+</ul>
+<p>带!important 标记的样式属性优先级最高； 样式表的来源相同时：<br>
+<code>!important &gt; 行内样式&gt;ID选择器 &gt; 类选择器 &gt; 标签 &gt; 通配符 &gt; 继承 &gt; 浏览器默认属性</code></p>
+<h3 id="渐进增强与优雅降级的理解及区别">渐进增强与优雅降级的理解及区别</h3>
+<p><strong>渐进增强（Progressive Enhancement）：</strong><br>
+一开始就针对低版本浏览器进行构建页面，完成基本的功能，然后再针对高级浏览器进行效果、交互、追加功能达到更好的体验。</p>
+<p><strong>优雅降级（Graceful Degradation）：</strong><br>
+一开始就构建站点的完整功能，然后针对浏览器测试和修复。比如一开始使用 CSS3 的特性构建了一个应用，然后逐步针对各大浏览器进行 hack 使其可以在低版本浏览器上正常浏览。<br>
+<strong>两者区别</strong><br>
+1、广义：<br>
+其实要定义一个基准线，在此之上的增强叫做渐进增强，在此之下的兼容叫优雅降级<br>
+2、狭义：<br>
+渐进增强一般说的是使用CSS3技术，在不影响老浏览器的正常显示与使用情形下来增强体验，而优雅降级则是体现html标签的语义，以便在js/css的加载失败/被禁用时，也不影响用户的相应功能。</p>
+<pre><code class="language-css">/* 例子 */
+.transition { /*渐进增强写法*/
+  -webkit-transition: all .5s;
+     -moz-transition: all .5s;
+       -o-transition: all .5s;
+          transition: all .5s;
+}
+.transition { /*优雅降级写法*/
+          transition: all .5s;
+       -o-transition: all .5s;
+     -moz-transition: all .5s;
+  -webkit-transition: all .5s;
+}
+
+</code></pre>
+<h3 id="常见的兼容性问题">常见的兼容性问题</h3>
+<ol>
+<li>
+<p>不同浏览器的标签默认的margin和padding不一样。*{margin:0;padding:0;}</p>
+</li>
+<li>
+<p>IE6双边距bug：块属性标签float后，又有横行的margin情况下，在IE6显示margin比设置的大。hack：display:inline;将其转化为行内属性。</p>
+</li>
+<li>
+<p>设置较小高度标签（一般小于10px），在IE6，IE7中高度超出自己设置高度。hack：给超出高度的标签设置overflow:hidden;或者设置行高line-height 小于你设置的高度。</p>
+</li>
+<li>
+<p>Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示,可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决。</p>
+</li>
+<li>
+<p>超链接访问过后hover样式就不出现了，被点击访问过的超链接样式不再具有hover和active了。解决方法是改变CSS属性的排列顺序:L-V-H-A ( love hate ): a:link {} a:visited {} a:hover {} a:active {}</p>
+</li>
+</ol>
+<h3 id="css3新特性">CSS3新特性</h3>
+<ul>
+<li>过渡</li>
+</ul>
+<pre><code class="language-js">/*所有属性从原始值到制定值的一个过渡，运动曲线ease,运动时间0.5秒*/ 
+transition：all,.5s
+</code></pre>
+<ul>
+<li>动画</li>
+</ul>
+<pre><code class="language-js">//animation：动画名称，一个周期花费时间，运动曲线（默认ease），动画延迟（默认0），播放次数（默认1），是否反向播放动画（默认normal），是否暂停动画（默认running）
+/*执行一次logo2-line动画，运动时间2秒，运动曲线为 linear*/
+animation: logo2-line 2s linear;
+</code></pre>
+<ul>
+<li>形状转换</li>
+</ul>
+<pre><code class="language-js">//transform:适用于2D或3D转换的元素
+//transform-origin：转换元素的位置（围绕那个点进行转换）。默认(x,y,z)：(50%,50%,0)
+transform:translate(30px,30px);
+transform:rotate(30deg);
+transform:scale(.8);
+</code></pre>
+<ul>
+<li>
+<p>选择器:nth-of-type()</p>
+</li>
+<li>
+<p>阴影<br>
+文字阴影: text-shadow: 2px 2px 2px #000;(水平阴影，垂直阴影，模糊距离，阴影颜色) 盒子阴影: box-shadow: 10px 10px 5px #999</p>
+</li>
+<li>
+<p>边框 border-image: url(border.png);</p>
+</li>
+<li>
+<p>背景</p>
+</li>
+<li>
+<p>文字</p>
+</li>
+<li>
+<p>渐变</p>
+</li>
+<li>
+<p>Filter（滤镜）</p>
+</li>
+<li>
+<p>弹性布局、栅格布局、多列布局</p>
+</li>
+<li>
+<p>媒体查询</p>
+</li>
+</ul>
+<h3 id="position-属性的值有哪些及其区别">position 属性的值有哪些及其区别</h3>
+<p><strong>固定定位 fixed</strong>： 元素的位置相对于浏览器窗口是固定位置，即使窗口是滚动的它也不会移动。Fixed 定 位使元素的位置与文档流无关，因此不占据空间。 Fixed 定位的元素和其他元素重叠。</p>
+<p><strong>相对定位 relative</strong>： 如果对一个元素进行相对定位，它将出现在它所在的位置上。然后，可以通过设置垂直 或水平位置，让这个元素“相对于”它的起点进行移动。 在使用相对定位时，无论是 否进行移动，元素仍然占据原来的空间。因此，移动元素会导致它覆盖其它框。</p>
+<p><strong>绝对定位 absolute</strong>： 绝对定位的元素的位置相对于最近的已定位父元素，如果元素没有已定位的父元素，那 么它的位置相对于。absolute 定位使元素的位置与文档流无关，因此不占据空间。 absolute 定位的元素和其他元素重叠。</p>
+<p><strong>粘性定位 sticky</strong>： 元素先按照普通文档流定位，然后相对于该元素在流中的 flow root（BFC）和 containing block（最近的块级祖先元素）定位。而后，元素定位表现为在跨越特定阈值前为相对定 位，之后为固定定位。</p>
+<p><strong>默认定位 Static</strong>： 默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声 明）。 inherit: 规定应该从父元素继承 position 属性的值。</p>
+<h3 id="box-sizing属性">box-sizing属性</h3>
+<p>box-sizing 规定两个并排的带边框的框，语法为 box-sizing：content-box/border-box/inherit</p>
+<p><strong>content-box</strong>：宽度和高度分别应用到元素的内容框，在宽度和高度之外绘制元素的内边距和边框。【标准盒子模型】</p>
+<p><strong>border-box</strong>：为元素设定的宽度和高度决定了元素的边框盒。【IE 盒子模型】</p>
+<p><strong>inherit</strong>：继承父元素的 box-sizing 值。</p>
+<h3 id="css-盒子模型">CSS 盒子模型</h3>
+<p>CSS 盒模型本质上是一个盒子，它包括：边距，边框，填充和实际内容。CSS 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型。<br>
+在标准的盒子模型中，<code>width 指 content 部分的宽度</code>。<br>
+在 IE 盒子模型中，<code>width 表示 content+padding+border 这三个部分的宽度</code>。</p>
+<p>故在计算盒子的宽度时存在差异：</p>
+<p><strong>标准盒模型：</strong> 一个块的总宽度 = width+margin(左右)+padding(左右)+border(左右)</p>
+<p><strong>怪异盒模型：</strong> 一个块的总宽度 = width+margin（左右）（既 width 已经包含了 padding 和 border 值）</p>
+<h3 id="bfc块级格式上下文">BFC（块级格式上下文）</h3>
+<p><strong>BFC的概念</strong></p>
+<p><code>BFC</code> 是 <code>Block Formatting Context</code>的缩写，即块级格式化上下文。<code>BFC</code>是CSS布局的一个概念，是一个独立的渲染区域，规定了内部box如何布局， 并且这个区域的子元素不会影响到外面的元素，其中比较重要的布局规则有内部 box 垂直放置，计算 BFC 的高度的时候，浮动元素也参与计算。</p>
+<p><strong>BFC的原理布局规则</strong></p>
+<ul>
+<li>内部的Box会在<code>垂直方向</code>，一个接一个地放置</li>
+<li>Box<code>垂直方向的距离由margin决定</code>。属于同一个BFC的两个相邻Box的margin会发生重叠</li>
+<li>每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反</li>
+<li>BFC的区域<code>不会与float box重叠</code></li>
+<li>BFC是一个独立容器，容器里面的<code>子元素不会影响到外面的元素</code></li>
+<li>计算BFC的高度时，<code>浮动元素也参与计算高度</code></li>
+<li>元素的类型和<code>display属性，决定了这个Box的类型</code>。不同类型的Box会参与不同的<code>Formatting Context</code>。</li>
+</ul>
+<p><strong>如何创建BFC？</strong></p>
+<ul>
+<li>根元素，即HTML元素</li>
+<li>float的值不为none</li>
+<li>position为absolute或fixed</li>
+<li>display的值为inline-block、table-cell、table-caption</li>
+<li>overflow的值不为visible</li>
+</ul>
+<p><strong>BFC的使用场景</strong></p>
+<ul>
+<li>去除边距重叠现象</li>
+<li>清除浮动（让父元素的高度包含子浮动元素）</li>
+<li>避免某元素被浮动元素覆盖</li>
+<li>避免多列布局由于宽度计算四舍五入而自动换行</li>
+</ul>
+<h3 id="让一个元素水平垂直居中">让一个元素水平垂直居中</h3>
+<ul>
+<li>
+<p><strong>水平居中</strong></p>
+<ul>
+<li>
+<p>对于 行内元素 : <code>text-align: center</code>;</p>
+</li>
+<li>
+<p>对于确定宽度的块级元素：</p>
+<p>（1）width和margin实现。<code>margin: 0 auto</code>;</p>
+<p>（2）绝对定位和margin-left: margin-left: (父width - 子width）/2, 前提是父元素position: relative</p>
+</li>
+<li>
+<p>对于宽度未知的块级元素</p>
+<p>（1）<code>table标签配合margin左右auto实现水平居中</code>。使用table标签（或直接将块级元素设值为 display:table），再通过给该标签添加左右margin为auto。</p>
+<p>（2）inline-block实现水平居中方法。display：inline-block和text-align:center实现水平居中。</p>
+<p>（3）<code>绝对定位+transform</code>，translateX可以移动本身元素的50%。</p>
+<p>（4）flex布局使用<code>justify-content:center</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>垂直居中</strong></p>
+<ol>
+<li>利用 <code>line-height</code> 实现居中，这种方法适合纯文字类</li>
+<li>通过设置父容器 相对定位 ，子级设置 <code>绝对定位</code>，标签通过margin实现自适应居中</li>
+<li>弹性布局 flex :父级设置display: flex; 子级设置margin为auto实现自适应居中</li>
+<li>父级设置相对定位，子级设置绝对定位，并且通过位移 transform 实现</li>
+<li><code>table 布局</code>，父级通过转换成表格形式，<code>然后子级设置 vertical-align 实现</code>。（需要注意的是：vertical-align: middle使用的前提条件是内联元素以及display值为table-cell的元素）。</li>
+</ol>
+</li>
+</ul>
+<p>传送门 ☞ <a href="https://juejin.cn/post/7008348524530106381"># 图解CSS水平垂直居中常见面试方法</a></p>
+<h3 id="隐藏页面中某个元素的方法">隐藏页面中某个元素的方法</h3>
+<p>1.<code>opacity：0</code>，该元素隐藏起来了，但不会改变页面布局，并且，如果该元素已经绑定 一些事件，如click 事件，那么点击该区域，也能触发点击事件的</p>
+<p>2.<code>visibility：hidden</code>，该元素隐藏起来了，但不会改变页面布局，但是不会触发该元素已 经绑定的事件 ，隐藏对应元素，在文档布局中仍保留原来的空间（重绘）</p>
+<p>3.<code>display：none</code>，把元素隐藏起来，并且会改变页面布局，可以理解成在页面中把该元素。 不显示对应的元素，在文档布局中不再分配空间（回流+重绘）</p>
+<blockquote>
+<p>该问题会引出 回流和重绘</p>
+</blockquote>
+<h3 id="用css实现三角符号">用CSS实现三角符号</h3>
+<pre><code class="language-css">/*记忆口诀：盒子宽高均为零，三面边框皆透明。 */
+div:after{
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    content: &quot; &quot;;
+    border-right: 100px solid transparent;
+    border-top: 100px solid #ff0;
+    border-left: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+}
+</code></pre>
+<h3 id="页面布局">页面布局</h3>
+<h4 id="1flex-布局">1.Flex 布局</h4>
+<p>布局的传统解决方案，基于盒状模型，依赖 display 属性 + position 属性 + float 属性。它对于那些特殊布局非常不方便，比如，垂直居中就不容易实现。</p>
+<p>Flex 是 Flexible Box 的缩写，意为&quot;弹性布局&quot;,用来为盒状模型提供最大的灵活性。指定容器 display: flex 即可。 简单的分为容器属性和元素属性。</p>
+<p>容器的属性：</p>
+<ul>
+<li>flex-direction：决定主轴的方向（即子 item 的排列方法）flex-direction: row | row-reverse | column | column-reverse;</li>
+<li>flex-wrap：决定换行规则 flex-wrap: nowrap | wrap | wrap-reverse;</li>
+<li>flex-flow： .box { flex-flow: || ; }</li>
+<li>justify-content：对其方式，水平主轴对齐方式</li>
+<li>align-items：对齐方式，竖直轴线方向</li>
+<li>align-content</li>
+</ul>
+<p>项目的属性（元素的属性）：</p>
+<ul>
+<li>order 属性：定义项目的排列顺序，顺序越小，排列越靠前，默认为 0</li>
+<li>flex-grow 属性：定义项目的放大比例，即使存在空间，也不会放大</li>
+<li>flex-shrink 属性：定义了项目的缩小比例，当空间不足的情况下会等比例的缩小，如果 定义个 item 的 flow-shrink 为 0，则为不缩小</li>
+<li>flex-basis 属性：定义了在分配多余的空间，项目占据的空间。</li>
+<li>flex：是 flex-grow 和 flex-shrink、flex-basis 的简写，默认值为 0 1 auto。</li>
+<li>align-self：允许单个项目与其他项目不一样的对齐方式，可以覆盖</li>
+<li>align-items，默认属 性为 auto，表示继承父元素的 align-items 比如说，用 flex 实现圣杯布局</li>
+</ul>
+<h4 id="2rem-布局">2.Rem 布局</h4>
+<p>首先 Rem 相对于根(html)的 font-size 大小来计算。简单的说它就是一个相对单例 如:font-size:10px;,那么（1rem = 10px）了解计算原理后首先解决怎么在不同设备上设置 html 的 font-size 大小。其实 rem 布局的本质是等比缩放，一般是基于宽度。</p>
+<p><strong>优点</strong>：可以快速适用移动端布局，字体，图片高度</p>
+<p><strong>缺点</strong>：</p>
+<p>①目前 ie 不支持，对 pc 页面来讲使用次数不多；<br>
+②数据量大：所有的图片，盒子都需要我们去给一个准确的值；才能保证不同机型的适配；<br>
+③在响应式布局中，必须通过 js 来动态控制根元素 font-size 的大小。也就是说 css 样式和 js 代码有一定的耦合性。且必须将改变 font-size 的代码放在 css 样式之前。</p>
+<h4 id="3百分比布局">3.百分比布局</h4>
+<p>通过百分比单位 &quot; % &quot; 来实现响应式的效果。通过百分比单位可以使得浏览器中的组件的宽和高随着浏览器的变化而变化，从而实现响应式的效果。 直观的理解，我们可能会认为子元素的百分比完全相对于直接父元素，height 百分比相 对于 height，width 百分比相对于 width。 padding、border、margin 等等不论是垂直方向还是水平方向，都相对于直接父元素的 width。 除了 border-radius 外，还有比如 translate、background-size 等都是相对于自身的。</p>
+<p><strong>缺点</strong>：</p>
+<p>（1）计算困难<br>
+（2）各个属性中如果使用百分比，相对父元素的属性并不是唯一的。造成我们使用百分比单位容易使布局问题变得复杂。</p>
+<h4 id="4浮动布局">4.浮动布局</h4>
+<p>浮动布局:当元素浮动以后可以向左或向右移动，直到它的外边缘碰到包含它的框或者另外一个浮动元素的边框为止。元素浮动以后会脱离正常的文档流，所以文档的普通流中的框就变的好像浮动元素不存在一样。</p>
+<p><strong>优点</strong></p>
+<p>这样做的优点就是在图文混排的时候可以很好的使文字环绕在图片周围。另外当元素浮动了起来之后，它有着块级元素的一些性质例如可以设置宽高等，但它与inline-block还是有一些区别的，第一个就是关于横向排序的时候，float可以设置方向而inline-block方向是固定的；还有一个就是inline-block在使用时有时会有空白间隙的问题</p>
+<p><strong>缺点</strong></p>
+<p>最明显的缺点就是浮动元素一旦脱离了文档流，就无法撑起父元素，<code>会造成父级元素高度塌陷</code>。</p>
+<h3 id="如何使用rem或viewport进行移动端适配">如何使用rem或viewport进行移动端适配</h3>
+<p><strong>rem适配原理：</strong></p>
+<p>改变了一个元素在不同设备上占据的css像素的个数</p>
+<p>rem适配的优缺点</p>
+<ul>
+<li>优点：没有破坏完美视口</li>
+<li>缺点：px值转换rem太过于复杂(下面我们使用less来解决这个问题)</li>
+</ul>
+<p><strong>viewport适配的原理</strong></p>
+<p>viewport适配方案中，每一个元素在不同设备上占据的css像素的个数是一样的。但是css像素和物理像素的比例是不一样的，等比的</p>
+<p>viewport适配的优缺点</p>
+<ul>
+<li>在我们设计图上所量取的大小即为我们可以设置的像素大小，即所量即所设</li>
+<li>缺点破坏完美视口</li>
+</ul>
+<h3 id="清除浮动的方式">清除浮动的方式</h3>
+<ul>
+<li>添加额外标签</li>
+</ul>
+<pre><code class="language-html">&lt;div class=&quot;parent&quot;&gt;
+    //添加额外标签并且添加clear属性
+    &lt;div style=&quot;clear:both&quot;&gt;&lt;/div&gt;
+    //也可以加一个br标签
+&lt;/div&gt;
+</code></pre>
+<ul>
+<li>父级添加overflow属性，或者设置高度</li>
+<li>建立伪类选择器清除浮动</li>
+</ul>
+<pre><code class="language-js">//在css中添加:after伪元素
+.parent:after{
+    /* 设置添加子元素的内容是空 */
+    content: '';
+    /* 设置添加子元素为块级元素 */
+    display: block;
+    /* 设置添加的子元素的高度0 */
+    height: 0;
+    /* 设置添加子元素看不见 */
+    visibility: hidden;
+    /* 设置clear：both */
+    clear: both;
+}
+</code></pre>
+<h3 id="css预处理器sass-less-stylus的区别">CSS预处理器Sass、Less、Stylus的区别</h3>
+<p>什么事CSS预处理器?</p>
+<p>CSS预处理器是一种语言用来为CSS增加一些变成的特性，无需考虑浏览器兼容问题，例如你可以在CSS中使用变量，简单的程序逻辑、函数等在编程语言中的一些基本技巧，可以让CSS更加简洁，适应性更强，代码更直观等诸多好处<br>
+基本语法区别</p>
+<p>Sass是以.sass为扩展名，Less是以.less为扩展名，Stylus是以.styl为扩展名<br>
+变量的区别</p>
+<p>Sass 变量必须是以<code>$</code>开头的，然后变量和值之间使用冒号（：）隔开，和css属性是一样的。<br>
+Less 变量是以<code>@</code>开头的，其余sass都是一样的。<br>
+Stylus 对变量是没有任何设定的，可以是以$开头或者任意字符，而且变量之间可以冒号，空格隔开，但是在stylus中不能用@开头<br>
+三种预处理器都有：嵌套、运算符、颜色函数、导入、继承、混入。Stylus还有一些高级特性。例如循环、判断等</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[面经汇总02.浏览器]]></title>
+        <id>https://coderdml.github.io/post/mian-jing-hui-zong-02liu-lan-qi/</id>
+        <link href="https://coderdml.github.io/post/mian-jing-hui-zong-02liu-lan-qi/">
+        </link>
+        <updated>2022-02-08T09:42:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="浏览器">浏览器</h1>
+<h3 id="从输入url到页面加载的全过程">从输入URL到页面加载的全过程</h3>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e44aa8a92602405db3c12161b71e2094~tplv-k3u1fbpfcp-zoom-1.image" alt="从输入URL到页面加载的主干流程" loading="lazy"></figure>
+<ol>
+<li>
+<p>首先在浏览器中输入URL</p>
+</li>
+<li>
+<p>查找缓存：浏览器先查看浏览器缓存-系统缓存-路由缓存中是否有该地址页面，如果有则显示页面内容。如果没有则进行下一步。</p>
+<ul>
+<li>浏览器缓存：浏览器会记录DNS一段时间，因此，只是第一个地方解析DNS请求；</li>
+<li>操作系统缓存:如果在浏览器缓存中不包含这个记录，则会使系统调用操作系统， 获取操作系统的记录(保存最近的DNS查询缓存)；</li>
+<li>路由器缓存：如果上述两个步骤均不能成功获取DNS记录，继续搜索路由器缓存；</li>
+<li>ISP缓存：若上述均失败，继续向ISP搜索。</li>
+</ul>
+</li>
+<li>
+<p>DNS域名解析：浏览器向DNS服务器发起请求，解析该URL中的域名对应的IP地址。<code>DNS服务器是基于UDP的，因此会用到UDP协议</code>。</p>
+</li>
+<li>
+<p>建立TCP连接：解析出IP地址后，根据IP地址和默认80端口，和服务器建立TCP连接</p>
+</li>
+<li>
+<p>发起HTTP请求：浏览器发起读取文件的HTTP请求，，该请求报文作为TCP三次握手的第三次数据发送给服务器</p>
+</li>
+<li>
+<p>服务器响应请求并返回结果：服务器对浏览器请求做出响应，并把对应的html文件发送给浏览器</p>
+</li>
+<li>
+<p>关闭TCP连接：通过四次挥手释放TCP连接</p>
+</li>
+<li>
+<p>浏览器渲染：客户端（浏览器）解析HTML内容并渲染出来，浏览器接收到数据包后的解析流程为：</p>
+<ul>
+<li>构建DOM树：词法分析然后解析成DOM树（dom tree），是由dom元素及属性节点组成，树的根是document对象</li>
+<li>构建CSS规则树：生成CSS规则树（CSS Rule Tree）</li>
+<li>构建render树：Web浏览器将DOM和CSSOM结合，并构建出渲染树（render tree）</li>
+<li>布局（Layout）：计算出每个节点在屏幕中的位置</li>
+<li>绘制（Painting）：即遍历render树，并使用UI后端层绘制每个节点。</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a90660027f0d4c559732519bad4c6323~tplv-k3u1fbpfcp-zoom-1.image" alt="浏览器渲染流程图" loading="lazy"></figure>
+</li>
+<li>
+<p>JS引擎解析过程：调用JS引擎执行JS代码（JS的解释阶段，预处理阶段，执行阶段生成执行上下文，VO，作用域链、回收机制等等）</p>
+<ul>
+<li>创建window对象：window对象也叫全局执行环境，当页面产生时就被创建，所有的全局变量和函数都属于window的属性和方法，而DOM Tree也会映射在window的doucment对象上。当关闭网页或者关闭浏览器时，全局执行环境会被销毁。</li>
+<li>加载文件：完成js引擎分析它的语法与词法是否合法，如果合法进入预编译</li>
+<li>预编译：在预编译的过程中，浏览器会寻找全局变量声明，把它作为window的属性加入到window对象中，并给变量赋值为'undefined'；寻找全局函数声明，把它作为window的方法加入到window对象中，并将函数体赋值给他（匿名函数是不参与预编译的，因为它是变量）。而变量提升作为不合理的地方在ES6中已经解决了，函数提升还存在。</li>
+<li>解释执行：执行到变量就赋值，如果变量没有被定义，也就没有被预编译直接赋值，在ES5非严格模式下这个变量会成为window的一个属性，也就是成为全局变量。string、int这样的值就是直接把值放在变量的存储空间里，object对象就是把指针指向变量的存储空间。函数执行，就将函数的环境推入一个环境的栈中，执行完成后再弹出，控制权交还给之前的环境。JS作用域其实就是这样的执行流机制实现的。</li>
+</ul>
+</li>
+</ol>
+<p>传送门 ☞ <a href="https://juejin.cn/post/7005468491067162655"># DNS域名解析过程</a> ☞<a href="https://juejin.cn/post/6992597760935460901"># 浏览器的工作原理</a></p>
+<h3 id="在浏览器中输入url到显示页面经历哪些过程涉及到哪些协议">在浏览器中输入URL到显示页面经历哪些过程，涉及到哪些协议？</h3>
+<p>浏览器要将URL解析为IP地址，解析域名就要用到DNS协议，首先主机会查询DNS的缓存，如果没有就给本地DNS发送查询请求。DNS查询分为两种方式，一种是递归查询，一种是迭代查询。如果是迭代查询，本地的DNS服务器，向根域名服务器发送查询请求，根域名服务器告知该域名的一级域名服务器，然后本地服务器给该一级域名服务器发送查询请求，然后依次类推直到查询到该域名的IP地址。<code>DNS服务器是基于UDP的，因此会用到UDP协议。</code></p>
+<p>得到IP地址后，浏览器就要与服务器建立一个http连接。因此要用到http协议。http生成一个get请求报文，将该报文传给TCP层处理，所以还会用到TCP协议。如果采用https还会使用https协议先对http数据进行加密。TCP层如果有需要先将HTTP数据包分片，分片依据路径MTU和MSS。TCP的数据包然后会发送给IP层，用到IP协议。IP层通过路由选路，一跳一跳发送到目的地址。当然在一个网段内的寻址是通过以太网协议实现(也可以是其他物理层协议，比如PPP，SLIP)，以太网协议需要直到目的IP地址的物理地址，有需要ARP协议。</p>
+<p>其中：</p>
+<p>1、<code>DNS协议，http协议，https协议属于应用层</code></p>
+<p>应用层是体系结构中的最高层。应用层确定进程之间通信的性质以满足用户的需要。这里的进程就是指正在运行的程序。应用层不仅要提供应用进程所需要的信息交换和远地操作，而且还要作为互相作用的应用进程的用户代理，来完成一些为进行语义上有意义的信息交换所必须的功能。应用层直接为用户的应用进程提供服务。</p>
+<p>2、<code>TCP/UDP属于传输层</code></p>
+<p>传输层的任务就是负责主机中两个进程之间的通信。因特网的传输层可使用两种不同协议：即面向连接的传输控制协议TCP，和无连接的用户数据报协议UDP。面向连接的服务能够提供可靠的交付，但无连接服务则不保证提供可靠的交付，它只是“尽最大努力交付”。这两种服务方式都很有用，备有其优缺点。在分组交换网内的各个交换结点机都没有传输层。</p>
+<p>3、<code>IP协议，ARP协议属于网络层</code></p>
+<p>网络层负责为分组交换网上的不同主机提供通信。在发送数据时，网络层将运输层产生的报文段或用户数据报封装成分组或包进行传送。在TCP/IP体系中，分组也叫作IP数据报，或简称为数据报。网络层的另一个任务就是要选择合适的路由，使源主机运输层所传下来的分组能够交付到目的主机。</p>
+<p>4、数据链路层</p>
+<p>当发送数据时，数据链路层的任务是将在网络层交下来的IP数据报组装成帧，在两个相邻结点间的链路上传送以帧为单位的数据。每一帧包括数据和必要的控制信息（如同步信息、地址信息、差错控制、以及流量控制信息等）。控制信息使接收端能够知道—个帧从哪个比特开始和到哪个比特结束。控制信息还使接收端能够检测到所收到的帧中有无差错。</p>
+<p>5、物理层</p>
+<p>物理层的任务就是透明地传送比特流。在物理层上所传数据的单位是比特。传递信息所利用的一些物理媒体，如双绞线、同轴电缆、光缆等，并不在物理层之内而是在物理层的下面。因此也有人把物理媒体当做第0层。</p>
+<h3 id="浏览器的主要功能">浏览器的主要功能</h3>
+<p>浏览器的主要功能就是向服务器发出请求，在浏览器窗口中展示您选择的网络资源。这里所说的资源一般是指 HTML 文档，也可以是 PDF、图片或其他的类型。资源的位置由用户使用 URI（统一资源标示符）指定。</p>
+<h3 id="浏览器的工作原理">浏览器的工作原理</h3>
+<p>渲染引擎一开始会从网络层获取请求文档的内容，内容的大小一般限制在 8000 个块以内。</p>
+<p>然后进行如下所示的基本流程：</p>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ef6cb226b374e89914a2315e4ca9ba9~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></figure>
+<p>图：渲染引擎的基本流程。</p>
+<p>渲染引擎将开始<code>解析 HTML 文档</code>，并将各标记逐个转化成“内容树”上的 <a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.html5rocks.com%2Fzh%2Ftutorials%2Finternals%2Fhowbrowserswork%2F%23DOM" title="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#DOM">DOM</a> 节点。同时也会<code>解析外部 CSS 文件以及样式元素中的样式数据</code>。HTML 中这些带有视觉指令的样式信息将用于创建另一个树结构：<a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.html5rocks.com%2Fzh%2Ftutorials%2Finternals%2Fhowbrowserswork%2F%23Render_tree_construction" title="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#Render_tree_construction"><code>渲染树</code></a>。</p>
+<p>渲染树包含多个带有视觉属性（如颜色和尺寸）的矩形。这些矩形的排列顺序就是它们将在屏幕上显示的顺序。</p>
+<p>渲染树构建完毕之后，进入“<a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.html5rocks.com%2Fzh%2Ftutorials%2Finternals%2Fhowbrowserswork%2F%23layout" title="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#layout">布局</a>”处理阶段，也就是为每个节点分配一个应出现在屏幕上的确切坐标。下一个阶段是<a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.html5rocks.com%2Fzh%2Ftutorials%2Finternals%2Fhowbrowserswork%2F%23Painting" title="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#Painting">绘制</a> - 渲染引擎会遍历渲染树，由用户界面后端层将每个节点绘制出来。</p>
+<p>需要着重指出的是，这是一个渐进的过程。为达到更好的用户体验，渲染引擎会力求尽快将内容显示在屏幕上。它不必等到整个 HTML 文档解析完毕之后，就会开始构建呈现树和设置布局。在不断接收和处理来自网络的其余内容的同时，渲染引擎会将部分内容解析并显示出来。</p>
+<h3 id="浏览器的主要组成部分是什么">浏览器的主要组成部分是什么？</h3>
+<ol>
+<li><strong>用户界面</strong> - 包括地址栏、前进/后退按钮、书签菜单等。除了浏览器主窗口显示的您请求的页面外，其他显示的各个部分都属于用户界面。</li>
+<li><strong>浏览器引擎</strong> - 在用户界面和呈现引擎之间传送指令。</li>
+<li><strong>呈现引擎</strong> - 负责显示请求的内容。如果请求的内容是 HTML，它就负责解析 HTML 和 CSS 内容，并将解析后的内容显示在屏幕上。</li>
+<li><strong>网络</strong> - 用于网络调用，比如 HTTP 请求。其接口与平台无关，并为所有平台提供底层实现。</li>
+<li><strong>用户界面后端</strong> - 用于绘制基本的窗口小部件，比如组合框和窗口。其公开了与平台无关的通用接口，而在底层使用操作系统的用户界面方法。</li>
+<li><strong>JavaScript 解释器</strong>。用于解析和执行 JavaScript 代码。</li>
+<li><strong>数据存储</strong>。这是持久层。浏览器需要在硬盘上保存各种数据，例如 Cookie。新的 HTML 规范 (HTML5) 定义了“网络数据库”，这是一个完整（但是轻便）的浏览器内数据库。<br>
+<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f83cb61cb9de4a65abeb95e50608af48~tplv-k3u1fbpfcp-watermark.awebp" alt="" loading="lazy"></li>
+</ol>
+<p>图：浏览器的主要组件。</p>
+<p>值得注意的是，和大多数浏览器不同，Chrome 浏览器的每个标签页都分别对应一个呈现引擎实例。每个标签页都是一个独立的进程。</p>
+<h3 id="浏览器是如何渲染ui的">浏览器是如何渲染UI的？</h3>
+<ol>
+<li>浏览器获取HTML文件，然后对文件进行解析，形成DOM Tree</li>
+<li>与此同时，进行CSS解析，生成Style Rules</li>
+<li>接着将DOM Tree与Style Rules合成为 Render Tree</li>
+<li>接着进入布局（Layout）阶段，也就是为每个节点分配一个应出现在屏幕上的确切坐标</li>
+<li>随后调用GPU进行绘制（Paint），遍历Render Tree的节点，并将元素呈现出来</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67b1336692f540c9a81756f93e82c2f5~tplv-k3u1fbpfcp-watermark.image" alt="image.png" loading="lazy"></figure>
+<h3 id="dom-tree是如何构建的">DOM Tree是如何构建的？</h3>
+<ol>
+<li>转码: 浏览器将接收到的二进制数据按照指定编码格式转化为HTML字符串</li>
+<li>生成Tokens: 之后开始parser，浏览器会将HTML字符串解析成Tokens</li>
+<li>构建Nodes: 对Node添加特定的属性，通过指针确定 Node 的父、子、兄弟关系和所属 treeScope</li>
+<li>生成DOM Tree: 通过node包含的指针确定的关系构建出DOM<br>
+Tree</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1dc0f577836c4705bb582b2ac15bc5d1~tplv-k3u1fbpfcp-zoom-1.image" alt="2019-06-22-11-48-00" loading="lazy"></figure>
+<h3 id="浏览器重绘与重排的区别">浏览器重绘与重排的区别？</h3>
+<ul>
+<li><code>重排/回流（Reflow）</code>：当<code>DOM</code>的变化影响了元素的几何信息，浏览器需要重新计算元素的几何属性，将其安放在界面中的正确位置，这个过程叫做重排。表现为重新生成布局，重新排列元素。</li>
+<li><code>重绘(Repaint)</code>: 当一个元素的外观发生改变，但没有改变布局,重新把元素外观绘制出来的过程，叫做重绘。表现为某些元素的外观被改变</li>
+</ul>
+<p>单单改变元素的外观，肯定不会引起网页重新生成布局，但当浏览器完成重排之后，将会重新绘制受到此次重排影响的部分</p>
+<p>重排和重绘代价是高昂的，它们会破坏用户体验，并且让UI展示非常迟缓，而相比之下重排的性能影响更大，在两者无法避免的情况下，一般我们宁可选择代价更小的重绘。</p>
+<p>『重绘』不一定会出现『重排』，『重排』必然会出现『重绘』。</p>
+<h3 id="如何触发重排和重绘">如何触发重排和重绘？</h3>
+<p>任何改变用来构建渲染树的信息都会导致一次重排或重绘：</p>
+<ul>
+<li>添加、删除、更新DOM节点</li>
+<li>通过display: none隐藏一个DOM节点-触发重排和重绘</li>
+<li>通过visibility: hidden隐藏一个DOM节点-只触发重绘，因为没有几何变化</li>
+<li>移动或者给页面中的DOM节点添加动画</li>
+<li>添加一个样式表，调整样式属性</li>
+<li>用户行为，例如调整窗口大小，改变字号，或者滚动。</li>
+</ul>
+<h3 id="如何避免重绘或者重排">如何避免重绘或者重排？</h3>
+<ol>
+<li>
+<p><code>集中改变样式</code>，不要一条一条地修改 DOM 的样式。</p>
+</li>
+<li>
+<p>不要把 DOM 结点的属性值放在循环里当成循环里的变量。</p>
+</li>
+<li>
+<p>为动画的 HTML 元件使用 <code>fixed</code> 或 <code>absoult</code> 的 <code>position</code>，那么修改他们的 CSS 是不会 reflow 的。</p>
+</li>
+<li>
+<p>不使用 table 布局。因为可能很小的一个小改动会造成整个 table 的重新布局。</p>
+</li>
+<li>
+<p>尽量只修改<code>position：absolute</code>或<code>fixed</code>元素，对其他元素影响不大</p>
+</li>
+<li>
+<p>动画开始<code>GPU</code>加速，<code>translate</code>使用<code>3D</code>变化</p>
+</li>
+<li>
+<p>提升为合成层</p>
+<p>将元素提升为合成层有以下优点：</p>
+<ul>
+<li>合成层的位图，会交由 GPU 合成，比 CPU 处理要快</li>
+<li>当需要 repaint 时，只需要 repaint 本身，不会影响到其他的层</li>
+<li>对于 transform 和 opacity 效果，不会触发 layout 和 paint</li>
+</ul>
+<p>提升合成层的最好方式是使用 CSS 的 will-change 属性：</p>
+<pre><code>#target {
+  will-change: transform;
+}
+</code></pre>
+<blockquote>
+<p>关于合成层的详解请移步<a href="https://link.juejin.cn?target=http%3A%2F%2Ftaobaofed.org%2Fblog%2F2016%2F04%2F25%2Fperformance-composite%2F" title="http://taobaofed.org/blog/2016/04/25/performance-composite/">无线性能优化：Composite</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="介绍下304过程">介绍下304过程</h3>
+<ul>
+<li>a. 浏览器请求资源时首先命中资源的Expires 和 Cache-Control，Expires 受限于本地时间，如果修改了本地时间，可能会造成缓存失效，可以通过Cache-control: max-age指定最大生命周期，状态仍然返回200，但不会请求数据，在浏览器中能明显看到from cache字样。</li>
+<li>b. 强缓存失效，进入协商缓存阶段，首先验证ETagETag可以保证每一个资源是唯一的，资源变化都会导致ETag变化。服务器根据客户端上送的If-None-Match值来判断是否命中缓存。</li>
+<li>c. 协商缓存Last-Modify/If-Modify-Since阶段，客户端第一次请求资源时，服务服返回的header中会加上Last-Modify，Last-modify是一个时间标识该资源的最后修改时间。再次请求该资源时，request的请求头中会包含If-Modify-Since，该值为缓存之前返回的Last-Modify。服务器收到If-Modify-Since后，根据资源的最后修改时间判断是否命中缓存。</li>
+</ul>
+<h3 id="浏览器的缓存机制-强制缓存-协商缓存">浏览器的缓存机制 强制缓存 &amp;&amp; 协商缓存</h3>
+<p>浏览器与服务器通信的方式为应答模式，即是：浏览器发起HTTP请求 – 服务器响应该请求。那么浏览器第一次向服务器发起该请求后拿到请求结果，会根据响应报文中HTTP头的缓存标识，决定是否缓存结果，是则将请求结果和缓存标识存入浏览器缓存中，简单的过程如下图：</p>
+<figure data-type="image" tabindex="6"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/487144abaada4b9a8b34bc9375191ec7~tplv-k3u1fbpfcp-zoom-1.image" alt="图片" loading="lazy"></figure>
+<p>由上图我们可以知道：</p>
+<ul>
+<li>浏览器每次发起请求，都会<code>先在浏览器缓存中查找该请求的结果以及缓存标识</code></li>
+<li>浏览器每次拿到返回的请求结果都会<code>将该结果和缓存标识存入浏览器缓存中</code></li>
+</ul>
+<p>以上两点结论就是浏览器缓存机制的关键，他确保了每个请求的缓存存入与读取，只要我们再理解浏览器缓存的使用规则，那么所有的问题就迎刃而解了。为了方便理解，这里根据是否需要向服务器重新发起HTTP请求将缓存过程分为两个部分，分别是<code>强制缓存</code>和<code>协商缓存</code>。</p>
+<ul>
+<li>
+<p><strong>强制缓存</strong></p>
+<p><code>强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程。</code>当浏览器向服务器发起请求时，服务器会将缓存规则放入HTTP响应报文的HTTP头中和请求结果一起返回给浏览器，控制强制缓存的字段分别是 <code>Expires</code> 和 <code>Cache-Control</code>，其中Cache-Control优先级比Expires高。</p>
+<p>强制缓存的情况主要有三种(暂不分析协商缓存过程)，如下：</p>
+<ol>
+<li>不存在该缓存结果和缓存标识，强制缓存失效，则直接向服务器发起请求（跟第一次发起请求一致）。</li>
+<li>存在该缓存结果和缓存标识，但该结果已失效，强制缓存失效，则使用协商缓存。</li>
+<li>存在该缓存结果和缓存标识，且该结果尚未失效，强制缓存生效，直接返回该结果</li>
+</ol>
+</li>
+<li>
+<p><strong>协商缓存</strong></p>
+<p><code>协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程</code>，同样，协商缓存的标识也是在响应报文的HTTP头中和请求结果一起返回给浏览器的，控制协商缓存的字段分别有：<code>Last-Modified / If-Modified-Since</code> 和 <code>Etag / If-None-Match</code>，其中Etag / If-None-Match的优先级比Last-Modified / If-Modified-Since高。协商缓存主要有以下两种情况：</p>
+<ol>
+<li>协商缓存生效，返回304</li>
+<li>协商缓存失效，返回200和请求结果结果</li>
+</ol>
+</li>
+</ul>
+<p>传送门 ☞ <a href="https://juejin.cn/post/6992843117963509791"># 彻底理解浏览器的缓存机制</a></p>
+<h3 id="cookie-sessionstorage-localstorage-的区别">Cookie、sessionStorage、localStorage 的区别</h3>
+<p><strong>相同点</strong>：</p>
+<ul>
+<li>存储在客户端</li>
+</ul>
+<p><strong>不同点</strong>：</p>
+<ul>
+<li>cookie数据大小不能超过4k；sessionStorage和localStorage的存储比cookie大得多，可以达到5M+</li>
+<li>cookie设置的过期时间之前一直有效；localStorage永久存储，浏览器关闭后数据不丢失除非主动删除数据；sessionStorage数据在当前浏览器窗口关闭后自动删除</li>
+<li>cookie的数据会自动的传递到服务器；sessionStorage和localStorage数据保存在本地</li>
+</ul>
+<h3 id="说下进程-线程和协程">说下进程、线程和协程</h3>
+<p><strong>进程</strong>是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，<code>是操作系统进行资源分配和调度的一个独立单位</code>，是应用程序运行的载体。进程是一种抽象的概念，从来没有统一的标准定义。</p>
+<p><strong>线程</strong>是程序执行中一个单一的顺序控制流程，是<code>程序执行流的最小单元</code>，是处理器调度和分派的基本单位。一个进程可以有一个或多个线程，各个线程之间共享程序的内存空间(也就是所在进程的内存空间)。一个标准的线程由线程ID、当前指令指针(PC)、寄存器和堆栈组成。而进程由内存空间(代码、数据、进程空间、打开的文件)和一个或多个线程组成。</p>
+<p><strong>协程</strong>，英文Coroutines，是一种<code>基于线程之上，但又比线程更加轻量级的存在</code>，这种由程序员自己写程序来管理的轻量级线程叫做『用户空间线程』，具有对内核来说不可见的特性。</p>
+<p><strong>进程和线程的区别与联系</strong></p>
+<p>【区别】：</p>
+<p>调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位；</p>
+<p>并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行；</p>
+<p>拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源。</p>
+<p>系统开销：在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销。但是进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个进程死掉就等于所有的线程死掉，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。</p>
+<p>【联系】：</p>
+<p>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程；</p>
+<p>资源分配给进程，同一进程的所有线程共享该进程的所有资源；</p>
+<p>处理机分给线程，即真正在处理机上运行的是线程；</p>
+<p>线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的办法实现同步。</p>
+<p>传送门 ☞ <a href="https://juejin.cn/post/7005465381791875109"># 一文搞懂进程、线程、协程及JS协程的发展</a><br>
+<a href="http://www.360doc.com/content/20/0417/14/32196507_906628857.shtml">☞了解更多</a></p>
+<p>关于浏览器传送门 ☞<a href="https://juejin.cn/post/6993095345576083486"># 深入了解现代 Web 浏览器</a></p>
+<h3 id="进程间的通信方式">进程间的通信方式</h3>
+<p><code>进程通信</code>：<br>
+每个进程各自有不同的用户地址空间,任何一个进程的全局变量在另一个进程中都看不到，所以进程之间要交换数据必须通过内核,在内核中开辟一块缓冲区,进程A把数据从用户空间拷到内核缓冲区,进程B再从内核缓冲区把数据读走,内核提供的这种机制称为进程间通信。</p>
+<p>进程间的通信方式：管道、有名管道、信号、消息队列、共享内存、信号量、socket</p>
+<p><code>匿名管道( pipe )</code>： 管道是一种半双工的通信方式，数据只能<strong>单向流动</strong>，而且只能在具有亲缘关系的进程间使用。进程的亲缘关系通常是指<strong>父子进程关系</strong>。</p>
+<p><code>高级管道(popen)</code>：将另一个程序当做一个新的进程在当前程序进程中启动，则它算是当前程序的子进程，这种方式我们成为高级管道方式。</p>
+<p><code>有名管道 (named pipe)</code>： 有名管道也是半双工的通信方式，但是它允许无亲缘关系进程间的通信。</p>
+<p><code>消息队列( message queue )</code> ： 消息队列是由消息的链表，存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
+<p><code>信号量( semophore )</code> ： 信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
+<p><code>信号 ( sinal )</code> ： 信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</p>
+<p><code>共享内存( shared memory )</code> ：共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针对其他进程间通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号两，配合使用，来实现进程间的同步和通信。</p>
+<p><code>套接字( socket ) 通信</code>： 套接口也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同机器间的进程通信</p>
+<h3 id="浏览器样式兼容">浏览器样式兼容</h3>
+<h4 id="一-css初始化">一、CSS初始化</h4>
+<p>每个浏览器的css默认样式不尽相同，所以最简单有效的方式就是对其进行初始化（覆盖默认样式）</p>
+<blockquote>
+<p>常见 :  *{ margin: 0; padding: 0;}</p>
+<p>库：normalize.css</p>
+</blockquote>
+<h4 id="二-浏览器私有属性">二、<strong>浏览器私有属性</strong></h4>
+<blockquote>
+<p>常用的前缀有：</p>
+<p>firefox浏览器 ：-moz-</p>
+<p>chrome、safari ：-webkit-</p>
+<p>opera ：-o- / -xv-</p>
+<p>IE浏览器 ：-ms-（目前只有 IE 8+支持）</p>
+</blockquote>
+<h4 id="三-css-hack条件hack-属性级hack-选择符级hack"><strong>三、CSS hack（条件hack、属性级hack、选择符级hack）</strong></h4>
+<h3 id="js垃圾回收机制">JS垃圾回收机制</h3>
+<ol>
+<li>
+<p>项目中，如果存在大量不被释放的内存（堆/栈/上下文），页面性能会变得很慢。当某些代码操作不能被合理释放，就会造成内存泄漏。我们尽可能减少使用闭包，因为它会消耗内存。</p>
+</li>
+<li>
+<p>浏览器垃圾回收机制/内存回收机制:</p>
+<blockquote>
+<p>浏览器的<code>Javascript</code>具有自动垃圾回收机制(<code>GC:Garbage Collecation</code>)，垃圾收集器会定期（周期性）找出那些不在继续使用的变量，然后释放其内存。</p>
+</blockquote>
+<p><strong>标记清除</strong>:在<code>js</code>中，最常用的垃圾回收机制是标记清除：当变量进入执行环境时，被标记为“进入环境”，当变量离开执行环境时，会被标记为“离开环境”。垃圾回收器会销毁那些带标记的值并回收它们所占用的内存空间。<br>
+<strong>谷歌浏览器</strong>：“查找引用”，浏览器不定时去查找当前内存的引用，如果没有被占用了，浏览器会回收它；如果被占用，就不能回收。<br>
+<strong>IE浏览器</strong>：“引用计数法”，当前内存被占用一次，计数累加1次，移除占用就减1，减到0时，浏览器就回收它。</p>
+</li>
+<li>
+<p>优化手段：内存优化 ; 手动释放：取消内存的占用即可。</p>
+<p>（1）堆内存：fn = null 【null：空指针对象】</p>
+<p>（2）栈内存：把上下文中，被外部占用的堆的占用取消即可。</p>
+</li>
+<li>
+<p>内存泄漏</p>
+<p>在 JS 中，常见的内存泄露主要有 4 种,全局变量、闭包、DOM 元素的引用、定时器</p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[面经汇总01.计算机网络.md]]></title>
+        <id>https://coderdml.github.io/post/mian-jing-hui-zong-01ji-suan-ji-wang-luo-md/</id>
+        <link href="https://coderdml.github.io/post/mian-jing-hui-zong-01ji-suan-ji-wang-luo-md/">
+        </link>
+        <updated>2022-02-08T09:40:45.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="http-和-https">HTTP 和 HTTPS</h1>
+<h3 id="http-的基本概念">HTTP 的基本概念</h3>
+<p>http: 是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端<code>请求和应答的标准（TCP）</code>，用于从 WWW 服务器传输超文本到本地浏览器的<code>超文本传输协议</code>。</p>
+<h3 id="http工作原理">HTTP工作原理</h3>
+<p>HTTP协议定义Web客户端如何从Web服务器请求Web页面，以及服务器如何把Web页面传送给客户端。客户端向服务器发送一个请求报文，服务器以一个状态行作为响应。</p>
+<h3 id="http请求响应的步骤">HTTP请求/响应的步骤</h3>
+<ul>
+<li>1.客户端连接到Web服务器</li>
+<li>2.发送HTTP请求</li>
+<li>3.服务器接受请求并返回HTTP响应</li>
+<li>4.释放TCP连接</li>
+<li>5.客户端（浏览器）解析HTML内容</li>
+</ul>
+<blockquote>
+<p>记忆口诀：连接发送加响应，释放解析整过程。</p>
+</blockquote>
+<h3 id="http-的-5-种方法">HTTP 的 5 种方法</h3>
+<ul>
+<li>GET---获取资源</li>
+<li>POST---传输资源</li>
+<li>PUT---更新资源</li>
+<li>DELETE---删除资源</li>
+<li>HEAD---获取报文首部</li>
+</ul>
+<h3 id="get与post的区别">GET与POST的区别</h3>
+<p><strong>1.浏览器回退表现不同</strong> GET在浏览器回退时是无害的，而POST会再次提交请求<br>
+<strong>2.浏览器对请求地址的处理不同</strong> GET请求地址会被浏览器主动缓存，而POST不会，除非手动设置<br>
+<strong>3.浏览器对响应的处理不同</strong>GET请求参数会被完整的保留在浏览器历史记录里，而POST中的参数不会被保留<br>
+<strong>4.参数大小不同.</strong> GET请求在URL中传送的参数是有长度的限制，而POST没有限制<br>
+<strong>5.安全性不同.</strong> GET参数通过URL传递，会暴露，不安全；POST放在Request Body中，相对更安全<br>
+<strong>6.针对数据操作的类型不同</strong>.GET对数据进行查询，POST主要对数据进行增删改！简单说，GET是只读，POST是写。</p>
+<h3 id="http报文的组成成分">HTTP报文的组成成分</h3>
+<p>请求报文{ 请求行、请求头、空行、请求体 } 请求行：{http方法、页面地址、http协议、http版本} 响应报文{ 状态行、响应头、空行、响应体 }</p>
+<p><strong>Request Header:</strong></p>
+<ol>
+<li><strong>GET /sample.Jsp HTTP/1.1</strong>  //请求行</li>
+<li><strong>Host:</strong>  www.uuid.online/ //请求的目标域名和端口号</li>
+<li><strong>Origin:</strong> http://localhost:8081/  //请求的来源域名和端口号 （跨域请求时，浏览器会自动带上这个头信息）</li>
+<li><strong>Referer:</strong> https://localhost:8081/link?query=xxxxx //请求资源的完整URI</li>
+<li><strong>User-Agent:</strong> Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36 //浏览器信息</li>
+<li><strong>Cookie:</strong>  BAIDUID=FA89F036:FG=1; BD_HOME=1; sugstore=0  //当前域名下的Cookie</li>
+<li><strong>Accept:</strong> text/html,image/apng  //代表客户端希望接受的数据类型是html或者是png图片类型</li>
+<li><strong>Accept-Encoding:</strong> gzip, deflate  //代表客户端能支持gzip和deflate格式的压缩</li>
+<li><strong>Accept-Language:</strong> zh-CN,zh;q=0.9  //代表客户端可以支持语言zh-CN或者zh(值得一提的是q(0~1)是优先级权重的意思，不写默认为1，这里zh-CN是1，zh是0.9)</li>
+<li><strong>Connection:</strong> keep-alive  //告诉服务器，客户端需要的tcp连接是一个长连接</li>
+</ol>
+<p><strong>Response Header:</strong></p>
+<ol>
+<li><strong>HTTP/1.1 200 OK</strong>  // 响应状态行</li>
+<li><strong>Date:</strong>  Mon, 30 Jul 2018 02:50:55 GMT  //服务端发送资源时的服务器时间</li>
+<li><strong>Expires:</strong>  Wed, 31 Dec 1969 23:59:59 GMT //比较过时的一种验证缓存的方式，与浏览器（客户端）的时间比较，超过这个时间就不用缓存（不和服务器进行验证），适合版本比较稳定的网页</li>
+<li><strong>Cache-Control:</strong>  no-cache  // 现在最多使用的控制缓存的方式，会和服务器进行缓存验证，具体见<a href="https://www.cnblogs.com/amiezhang/p/9389537.html">博文”Cache-Control“</a></li>
+<li><strong>etag:</strong>  &quot;fb8ba2f80b1d324bb997cbe188f28187-ssl-df&quot;  // 一般是<a href="http://www.t086.com/article/5207">Nginx静态服务器</a>发来的静态文件签名，浏览在没有“Disabled cache”情况下，接收到etag后，同一个url第二次请求就会自动带上“If-None-Match”</li>
+<li><strong>Last-Modified:</strong>  Fri, 27 Jul 2018 11:04:55 GMT //是服务器发来的当前资源最后一次修改的时间，下次请求时，如果服务器上当前资源的修改时间大于这个时间，就返回新的资源内容</li>
+<li><strong>Content-Type:</strong>  text/html; charset=utf-8  //如果返回是流式的数据，我们就必须告诉浏览器这个头，不然浏览器会下载这个页面，同时告诉浏览器是utf8编码，否则可能出现乱码</li>
+<li><strong>Content-Encoding:</strong>  gzip  //告诉客户端，应该采用gzip对资源进行解码</li>
+<li><strong>Connection:</strong>  keep-alive  //告诉客户端服务器的tcp连接也是一个长连接</li>
+</ol>
+<h3 id="https-的基本概念">https 的基本概念</h3>
+<p>https:是以安全为目标的 HTTP 通道，即 HTTP 下 加入 SSL 层进行加密。</p>
+<p>https 协议的作用：建立一个信息安全通道，来确保数据的传输，确保网站的真实性。</p>
+<h3 id="http-和-https-的区别">http 和 https 的区别？</h3>
+<ul>
+<li>http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。</li>
+<li>Https 协议需要 ca 证书，费用较高。</li>
+<li>使用不同的链接方式，端口也不同，一般，http 协议的端口为 80，https 的端口为 443。</li>
+<li>http 的连接很简单，是无状态的。</li>
+</ul>
+<blockquote>
+<p>记忆口诀：明文传输超文本，安全等级各不同。CA证书费用高，无状连接端难同。</p>
+</blockquote>
+<h4 id="https-协议的工作原理">https 协议的工作原理</h4>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c42bc6f45451457fa6d614fb27534516~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>客户端在使用 HTTPS 方式与 Web 服务器通信时有以下几个步骤：</p>
+<ol>
+<li>客户端使用 https url 访问服务器，则要求 web 服务器<code>建立 ssl 链接</code>。</li>
+<li>web 服务器接收到客户端的请求之后，会<code>将网站的证书（证书中包含了公钥），传输给客户端</code>。</li>
+<li>客户端和 web 服务器端开始<code>协商 SSL 链接的安全等级</code>，也就是加密等级。</li>
+<li>客户端浏览器通过双方协商一致的安全等级，<code>建立会话密钥</code>，然后通过网站的公钥来加密会话密钥，并传送给网站。</li>
+<li>web 服务器<code>通过自己的私钥解密出会话密钥</code>。</li>
+<li>web 服务器<code>通过会话密钥加密与客户端之间的通信</code>。</li>
+</ol>
+<blockquote>
+<p>记忆口诀：一连二传三协商，四建五得六使用。</p>
+</blockquote>
+<h4 id="https-协议的优缺点">https 协议的优缺点</h4>
+<ul>
+<li>HTTPS 协议要比 http 协议<code>安全</code>，可防止数据在传输过程中被窃取、改变，确保数据的完整性。</li>
+<li>https 握手阶段比较<code>费时</code>，会使页面加载时间延长 50%，增加 10%~20%的耗电。</li>
+<li>https <code>缓存</code>不如 http 高效，会增加数据开销。</li>
+<li>SSL 证书也需要钱，功能越强大的<code>证书费</code>用越高。</li>
+<li>SSL 证书需要绑定 <code>IP</code>，不能再同一个 ip 上绑定多个域名，ipv4 资源支持不了这种消耗。</li>
+</ul>
+<h3 id="tcpip网络模型">TCP/IP网络模型</h3>
+<p>TCP/IP模型是互联网的基础，它是一系列网络协议的总称。这些协议可以划分为四层，分别为链路层、网络层、传输层和应用层。</p>
+<ul>
+<li>链路层：负责封装和解封装IP报文，发送和接受ARP/RARP报文等。</li>
+<li>网络层：负责路由以及把分组报文发送给目标网络或主机。</li>
+<li>传输层：负责对报文进行分组和重组，并以TCP或UDP协议格式封装报文。</li>
+<li>应用层：负责向用户提供应用程序，比如HTTP、FTP、Telnet、DNS、SMTP等。</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2fa80b3b48a84bd18d8e708c56a1dc22~tplv-k3u1fbpfcp-watermark.image" alt="image.png" loading="lazy"></figure>
+<h3 id="tcp三次握手">TCP三次握手</h3>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/baf3d5df95a74f47a1d779ee50c3411f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>第一次握手：<code>建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认</code>；SYN：同步序列编号（Synchronize Sequence Numbers）。</li>
+<li>第二次握手：<code>服务器收到syn包并确认客户的SYN</code>（ack=j+1），<code>同时也发送一个自己的SYN包</code>（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；</li>
+<li>第三次握手：<code>客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1）</code>，此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</li>
+</ol>
+<pre><code>握手过程中传送的包里不包含数据，三次握手完毕后，客户端与服务器才正式开始传送数据。
+</code></pre>
+<h3 id="tcp-四次挥手">TCP 四次挥手</h3>
+<ol>
+<li><code>客户端进程发出连接释放报文</code>，并且停止发送数据。释放数据报文首部，FIN=1，其序列号为seq=u（等于前面已经传送过来的数据的最后一个字节的序号加1），此时，客户端进入FIN-WAIT-1（终止等待1）状态。 TCP规定，FIN报文段即使不携带数据，也要消耗一个序号。</li>
+</ol>
+<p>2）<code>服务器收到连接释放报文，发出确认报文</code>，ACK=1，ack=u+1，并且带上自己的序列号seq=v，此时，服务端就进入了CLOSE-WAIT（关闭等待）状态。TCP服务器通知高层的应用进程，客户端向服务器的方向就释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。这个状态还要持续一段时间，也就是整个CLOSE-WAIT状态持续的时间。</p>
+<p>3）客户端收到服务器的确认请求后，此时，客户端就进入FIN-WAIT-2（终止等待2）状态，等待服务器发送连接释放报文（在这之前还需要接受服务器发送的最 后的数据）。</p>
+<p>4）<code>服务器将最后的数据发送完毕后，就向客户端发送连接释放报文</code>，FIN=1，ack=u+1，由于在半关闭状态，服务器很可能又发送了一些数据，假定此时的序列号为seq=w，此时，服务器就进入了LAST-ACK（最后确认）状态，等待客户端的确认。</p>
+<p>5）<code>客户端收到服务器的连接释放报文后，必须发出确认</code>，ACK=1，ack=w+1，而自己的序列号是seq=u+1，此时，客户端就进入了TIME-WAIT（时间等待）状态。注意此时TCP连接还没有释放，必须经过2∗∗MSL（最长报文段寿命）的时间后，当客户端撤销相应的TCB后，才进入CLOSED状态。</p>
+<p>6）服务器只要收到了客户端发出的确认，立即进入CLOSED状态。同样，撤销TCB后，就结束了这次的TCP连接。可以看到，服务器结束TCP连接的时间要比客户端早一些。</p>
+<h3 id="tcp和udp的区别">TCP和UDP的区别</h3>
+<ol>
+<li>
+<p>TCP是面向<code>连接</code>的，而UDP是面向无连接的。</p>
+</li>
+<li>
+<p>TCP仅支持<code>单播传输</code>，UDP 提供了单播，多播，广播的功能。</p>
+</li>
+<li>
+<p>TCP的三次握手保证了连接的<code>可靠性</code>; UDP是无连接的、不可靠的一种数据传输协议，首先不可靠性体现在无连接上，通信都不需要建立连接，对接收到的数据也不发送确认信号，发送端不知道数据是否会正确接收。</p>
+</li>
+<li>
+<p>UDP的<code>头部开销</code>比TCP的更小，数据<code>传输速率更高</code>，<code>实时性更好</code>。</p>
+</li>
+</ol>
+<h3 id="http-请求跨域问题">HTTP 请求跨域问题</h3>
+<ol>
+<li>
+<p>跨域的原理</p>
+<p><strong>跨域</strong>，是指浏览器不能执行其他网站的脚本。它是由浏览器的<code>同源策略</code>造成的。<br>
+<strong>同源策略</strong>,是浏览器对 JavaScript 实施的安全限制，只要<code>协议、域名、端口</code>有任何一个不同，都被当作是不同的域。<br>
+<strong>跨域原理</strong>，即是通过各种方式，<code>避开浏览器的安全限制</code>。</p>
+</li>
+<li>
+<p>解决方案</p>
+<p>最初做项目的时候，使用的是jsonp，但存在一些问题，使用get请求不安全，携带数据较小，后来也用过iframe，但只有主域相同才行，也是存在些问题，后来通过了解和学习发现使用代理和proxy代理配合起来使用比较方便，就引导后台按这种方式做下服务器配置，在开发中使用proxy，在服务器上使用nginx代理，这样开发过程中彼此都方便，效率也高；现在h5新特性还有 windows.postMessage()</p>
+<ul>
+<li>
+<p><strong>JSONP</strong>：<br>
+ajax 请求受同源策略影响，不允许进行跨域请求，而 script 标签 src 属性中的链 接却可以访问跨域的 js 脚本，利用这个特性，服务端不再返回 JSON 格式的数据，而是 返回一段调用某个函数的 js 代码，在 src 中进行了调用，这样实现了跨域。</p>
+<p>步骤：</p>
+<ol>
+<li>去创建一个script标签</li>
+<li>script的src属性设置接口地址</li>
+<li>接口参数，必须要带一个自定义函数名，要不然后台无法返回数据</li>
+<li>通过定义函数名去接受返回的数据</li>
+</ol>
+<pre><code class="language-js">//动态创建 script
+var script = document.createElement('script');
+
+// 设置回调函数
+function getData(data) {
+    console.log(data);
+}
+
+//设置 script 的 src 属性，并设置请求地址
+script.src = 'http://localhost:3000/?callback=getData';
+
+// 让 script 生效
+document.body.appendChild(script);
+</code></pre>
+<p><strong>JSONP 的缺点</strong>:<br>
+JSON 只支持 get，因为 script 标签只能使用 get 请求； JSONP 需要后端配合返回指定格式的数据。</p>
+</li>
+<li>
+<p><strong>document.domain</strong>  基础域名相同 子域名不同</p>
+</li>
+<li>
+<p><strong>window.name</strong> 利用在一个浏览器窗口内，载入所有的域名都是共享一个 window.name</p>
+</li>
+<li>
+<p><strong>CORS</strong> CORS(Cross-origin resource sharing)跨域资源共享 服务器设置对CORS的支持原理：服务器设置Access-Control-Allow-Origin HTTP响应头之后，浏览器将会允许跨域请求</p>
+</li>
+<li>
+<p><strong>proxy代理</strong> 目前常用方式</p>
+</li>
+<li>
+<p><strong>window.postMessage()</strong>  利用h5新特性 window.postMessage()</p>
+</li>
+<li>
+<p><strong>Websocket</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="cookie-sessionstorage-localstorage-的区别">Cookie、sessionStorage、localStorage 的区别</h3>
+<p><strong>相同点</strong>：</p>
+<ul>
+<li>存储在客户端</li>
+</ul>
+<p><strong>不同点</strong>：</p>
+<ul>
+<li>cookie数据大小不能超过4k；sessionStorage和localStorage的存储比cookie大得多，可以达到5M+</li>
+<li>cookie设置的过期时间之前一直有效；localStorage永久存储，浏览器关闭后数据不丢失除非主动删除数据；sessionStorage数据在当前浏览器窗口关闭后自动删除</li>
+<li>cookie的数据会自动的传递到服务器；sessionStorage和localStorage数据保存在本地</li>
+</ul>
+<h3 id="http状态码及常见状态码">HTTP状态码及常见状态码</h3>
+<h4 id="http状态码">HTTP状态码</h4>
+<ul>
+<li>1xx：指示信息类，表示请求已接受，继续处理</li>
+<li>2xx：指示成功类，表示请求已成功接受</li>
+<li>3xx：指示重定向，表示要完成请求必须进行更近一步的操作</li>
+<li>4xx：指示客户端错误，请求有语法错误或请求无法实现</li>
+<li>5xx：指示服务器错误，服务器未能实现合法的请求</li>
+</ul>
+<h4 id="常见状态码">常见状态码</h4>
+<ul>
+<li>
+<p>200 OK：客户端请求成功</p>
+</li>
+<li>
+<p>301 Moved Permanently：所请求的页面已经永久重定向至新的URL</p>
+</li>
+<li>
+<p>302 Found：所请求的页面已经临时重定向至新的URL</p>
+</li>
+<li>
+<p>304 Not Modified 未修改。</p>
+</li>
+<li>
+<p>403 Forbidden：对请求页面的访问被禁止</p>
+</li>
+<li>
+<p>404 Not Found：请求资源不存在</p>
+</li>
+<li>
+<p>500 Internal Server Error：服务器发生不可预期的错误原来缓冲的文档还可以继续使用</p>
+</li>
+<li>
+<p>503 Server Unavailable：请求未完成，服务器临时过载或宕机，一段时间后可恢复正常</p>
+</li>
+<li>
+<p>1xx（临时响应）表示临时响应并需要请求者继续执行操作的状态码</p>
+<ul>
+<li>100 - 继续 请求者应当继续提出请求。服务器返回此代码表示已收到请求的第一部分，正在等待其余部分</li>
+<li>101 - 切换协议 请求者已要求服务器切换协议，服务器已确认并准备切换</li>
+</ul>
+</li>
+<li>
+<p>2xx（成功）表示成功处理了请求的状态码</p>
+<ul>
+<li><code>200</code> - 成功 服务器已经成功处理了请求。通常，这表示服务器提供了请求的网页</li>
+<li>201 - 已创建 请求成功并且服务器创建了新的资源</li>
+<li>202 - 已接受 服务器已接受请求，但尚未处理</li>
+<li>203 - 非授权信息 服务器已经成功处理了请求，但返回的信息可能来自另一来源</li>
+<li>204 - 无内容 服务器成功处理了请求，但没有返回任何内容</li>
+<li>205 - 重置内容 服务器成功处理了请求，但没有返回任何内容</li>
+</ul>
+</li>
+<li>
+<p>3xx（重定向）表示要完成请求，需要进一步操作；通常，这些状态代码用来重定向</p>
+<ul>
+<li>300 - 多种选择 针对请求，服务器可执行多种操作。服务器可根据请求者（user agent）选择一项操作，或提供操作列表供请求者选择</li>
+<li><code>301</code> - 永久移动 请求的网页已永久移动到新位置。服务器返回此响应（对GET或HEAD请求的响应）时，会自动将请求者转到新位置</li>
+<li><code>302</code> - 临时移动 服务器目前从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求</li>
+<li>303 - 查看其它位置 请求者应当对不同的位置使用单独的GET请求来检索响应时，服务器返回此代码</li>
+<li><code>304</code> - 未修改 自上次请求后，请求的网页未修改过。服务器返回此响应，不会返回网页的内容</li>
+<li>305 - 使用代理 请求者只能使用代理访问请求的网页。如果服务器返回此响应，还表示请求者应使用代理</li>
+<li><code>307</code> - 临时性重定向 服务器目前从不同位置的网页响应请求，但请求者应继续使用原有的位置来进行以后的请求</li>
+</ul>
+</li>
+<li>
+<p>4xx（请求错误）这些状态码表示请求可能出错，妨碍了服务器的处理</p>
+<ul>
+<li><code>400</code> - 错误请求 服务器不理解请求的语法</li>
+<li><code>401</code> - 未授权 请求要求身份验证。对于需要登录的网页，服务器可能返回此响应</li>
+<li><code>403</code> - 禁止 服务器拒绝请求</li>
+<li><code>404</code> - 未找到 服务器找不到请求的网页</li>
+<li>405 - 方法禁用 禁用请求中指定的方法</li>
+<li>406 - 不接受 无法使用请求的内容特性响应请求的网页</li>
+<li><code>407</code> - 需要代理授权 此状态码与401（未授权）类似，但指定请求者应当授权使用代理</li>
+<li><code>408</code> - 请求超时 服务器等候请求时发生超时</li>
+<li>410 - 已删除 如果请求的资源已永久删除，服务器就会返回此响应</li>
+<li><code>413</code> - 请求实体过大 服务器无法处理请求，因为请求实体过大，超出了服务器的处理能力</li>
+<li><code>414</code> - 请求的URI过长 请求的URI（通常为网址）过长，服务器无法处理</li>
+</ul>
+</li>
+<li>
+<p>5xx（服务器错误）这些状态码表示服务器在尝试处理请求时发生内部错误。这些错误可能是服务器本身的错误，而不是请求出错</p>
+<ul>
+<li><code>500</code> - 服务器内部错误 服务器遇到错误，无法完成请求</li>
+<li>501 - 尚未实施 服务器不具备完成请求的功能。例如，服务器无法识别请求方法时可能会返回此代码</li>
+<li><code>502</code> - 错误网关 服务器作为网关或代理，从上游服务器无法收到无效响应</li>
+<li><code>503</code> - 服务器不可用 服务器目前无法使用（由于超载或者停机维护）。通常，这只是暂时状态</li>
+<li><code>504</code> - 网关超时 服务器作为网关代理，但是没有及时从上游服务器收到请求</li>
+<li>505 - HTTP版本不受支持 服务器不支持请求中所用的HTTP协议版本</li>
+</ul>
+</li>
+</ul>
+<h3 id="介绍下304过程">介绍下304过程</h3>
+<ul>
+<li>
+<p>a. 浏览器请求资源时首先命中资源的Expires 和 Cache-Control，Expires 受限于本地时间，如果修改了本地时间，可能会造成缓存失效，可以通过Cache-control: max-age指定最大生命周期，状态仍然返回200，但不会请求数据，在浏览器中能明显看到from cache字样。</p>
+</li>
+<li>
+<p>b. 强缓存失效，进入协商缓存阶段，首先验证ETagETag可以保证每一个资源是唯一的，资源变化都会导致ETag变化。服务器根据客户端上送的If-None-Match值来判断是否命中缓存。</p>
+</li>
+<li>
+<p>c. 协商缓存Last-Modify/If-Modify-Since阶段，客户端第一次请求资源时，服务服返回的header中会加上Last-Modify，Last-modify是一个时间标识该资源的最后修改时间。再次请求该资源时，request的请求头中会包含If-Modify-Since，该值为缓存之前返回的Last-Modify。服务器收到If-Modify-Since后，根据资源的最后修改时间判断是否命中缓存。</p>
+</li>
+</ul>
+<h3 id="浏览器的缓存机制-强制缓存-协商缓存">浏览器的缓存机制 强制缓存 &amp;&amp; 协商缓存</h3>
+<p>浏览器与服务器通信的方式为应答模式，即是：浏览器发起HTTP请求 – 服务器响应该请求。那么浏览器第一次向服务器发起该请求后拿到请求结果，会根据响应报文中HTTP头的缓存标识，决定是否缓存结果，是则将请求结果和缓存标识存入浏览器缓存中，简单的过程如下图：</p>
+<figure data-type="image" tabindex="4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/05b3fe9c411f4881a8b22fe37eae170b~tplv-k3u1fbpfcp-zoom-1.image" alt="图片" loading="lazy"></figure>
+<p>由上图我们可以知道：</p>
+<ul>
+<li>浏览器每次发起请求，都会<code>先在浏览器缓存中查找该请求的结果以及缓存标识</code></li>
+<li>浏览器每次拿到返回的请求结果都会<code>将该结果和缓存标识存入浏览器缓存中</code></li>
+</ul>
+<p>以上两点结论就是浏览器缓存机制的关键，他确保了每个请求的缓存存入与读取，只要我们再理解浏览器缓存的使用规则，那么所有的问题就迎刃而解了。为了方便理解，这里根据是否需要向服务器重新发起HTTP请求将缓存过程分为两个部分，分别是<code>强制缓存</code>和<code>协商缓存</code>。</p>
+<ul>
+<li>
+<p><strong>强制缓存</strong></p>
+<p><code>强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程。</code>当浏览器向服务器发起请求时，服务器会将缓存规则放入HTTP响应报文的HTTP头中和请求结果一起返回给浏览器，控制强制缓存的字段分别是 <code>Expires</code> 和 <code>Cache-Control</code>，其中Cache-Control优先级比Expires高。</p>
+<p>强制缓存的情况主要有三种(暂不分析协商缓存过程)，如下：</p>
+<ol>
+<li>不存在该缓存结果和缓存标识，强制缓存失效，则直接向服务器发起请求（跟第一次发起请求一致）。</li>
+<li>存在该缓存结果和缓存标识，但该结果已失效，强制缓存失效，则使用协商缓存。</li>
+<li>存在该缓存结果和缓存标识，且该结果尚未失效，强制缓存生效，直接返回该结果</li>
+</ol>
+</li>
+<li>
+<p><strong>协商缓存</strong></p>
+<p><code>协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程</code>，同样，协商缓存的标识也是在响应报文的HTTP头中和请求结果一起返回给浏览器的，控制协商缓存的字段分别有：<code>Last-Modified / If-Modified-Since</code> 和 <code>Etag / If-None-Match</code>，其中Etag / If-None-Match的优先级比Last-Modified / If-Modified-Since高。协商缓存主要有以下两种情况：</p>
+<ol>
+<li>协商缓存生效，返回304</li>
+<li>协商缓存失效，返回200和请求结果结果</li>
+</ol>
+</li>
+</ul>
+<figure data-type="image" tabindex="5"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e0ce991db4847b98d9f049f9ffa5c93~tplv-k3u1fbpfcp-watermark.image" alt="image.png" loading="lazy"></figure>
+<p>传送门 ☞ <a href="https://juejin.cn/post/6992843117963509791" title="https://juejin.cn/post/6992843117963509791"># 彻底理解浏览器的缓存机制</a></p>
+<h3 id="http-请求跨域问题-2">HTTP 请求跨域问题</h3>
+<ol>
+<li>
+<p>跨域的原理</p>
+<p><strong>跨域</strong>，是指浏览器不能执行其他网站的脚本。它是由浏览器的<code>同源策略</code>造成的。跨域访问是被各大浏览器所默认禁止的。<br>
+<strong>同源策略</strong>,是浏览器对 JavaScript 实施的安全限制，只要<code>协议、域名、端口</code>有任何一个不同，都被当作是不同的域。<br>
+<strong>跨域原理</strong>，即是通过各种方式，<code>避开浏览器的安全限制</code>。</p>
+</li>
+<li>
+<p>解决方案</p>
+<p>最初做项目的时候，使用的是jsonp，但存在一些问题，使用get请求不安全，携带数据较小，后来也用过iframe，但只有主域相同才行，也是存在些问题，后来通过了解和学习发现使用代理和proxy代理配合起来使用比较方便，就引导后台按这种方式做下服务器配置，在开发中使用proxy，在服务器上使用nginx代理，这样开发过程中彼此都方便，效率也高；现在h5新特性还有 windows.postMessage()</p>
+<ul>
+<li>
+<p><strong>JSONP</strong>：<br>
+ajax 请求受同源策略影响，不允许进行跨域请求，而 script 标签 src 属性中的链 接却可以访问跨域的 js 脚本，利用这个特性，服务端不再返回 JSON 格式的数据，而是 返回一段调用某个函数的 js 代码，在 src 中进行了调用，这样实现了跨域。</p>
+<p>步骤：</p>
+<ol>
+<li>去创建一个script标签</li>
+<li>script的src属性设置接口地址</li>
+<li>接口参数，必须要带一个自定义函数名，要不然后台无法返回数据</li>
+<li>通过定义函数名去接受返回的数据</li>
+</ol>
+<pre><code class="language-js">//动态创建 script
+var script = document.createElement('script');
+
+// 设置回调函数
+function getData(data) {
+    console.log(data);
+}
+
+//设置 script 的 src 属性，并设置请求地址
+script.src = 'http://localhost:3000/?callback=getData';
+
+// 让 script 生效
+document.body.appendChild(script);
+</code></pre>
+<p><strong>JSONP 的缺点</strong>:<br>
+JSON 只支持 get，因为 script 标签只能使用 get 请求； JSONP 需要后端配合返回指定格式的数据。</p>
+</li>
+<li>
+<p><strong>document.domain</strong> 基础域名相同 子域名不同</p>
+</li>
+<li>
+<p><strong>window.name</strong> 利用在一个浏览器窗口内，载入所有的域名都是共享一个window.name</p>
+</li>
+<li>
+<p><strong>CORS</strong><br>
+CORS(Cross-origin resource sharing)跨域资源共享 是一种机制，是目前主流的跨域解决方案，它使用额外的 HTTP 头来告诉浏览器 让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。服务器设置对CORS的支持原理：服务器设置Access-Control-Allow-Origin HTTP响应头之后，浏览器将会允许跨域请求</p>
+<p>1.浏览器端会自动向请求头添加origin字段，表明当前请求来源。<br>
+2.服务器设置Access-Control-Allow-Origin、Access-Control-Allow-Methods、Access-Control-Allow-Headers等 HTTP响应头字段之后，浏览器将会允许跨域请求。</p>
+<p><strong>预检</strong></p>
+<p>但是还有复杂一点的请求，我们需要先发OPTIONS请求，a.com想请求b.com它需要发一个自定义的Headers：X-ABC和content-type，这个时候就不是简单请求了， a.com要给b.com 发一个options请求，它其实在问b.com我用post行不行，还想在Headers中带X-ABC和content-type；并不是所有的headers都发这个OPTIONS请求，因为X-ABC是自定义的，所以需要发；b.com看到OPTIONS请求，先不会返回数据，先检查自己的策略，看看能不能支持这次请求，如果支持就返回200。</p>
+<p>OPTIONS请求返回以下报文</p>
+<p>HTTP/2.0 20 OK<br>
+Access-Control-Allow-Origin:https://a.com<br>
+Access-Control-Allow-Methods:POST,GET,OPTIONS<br>
+Access-Control-Allow-Headers:X-ABC,Content-Type<br>
+Access-Control-Max-Age:86400 // 告诉浏览器这个策略生效时间为一个小时，在一个小时之内发送类似的请求，不用在问服务端了，相当于缓存了<br>
+浏览器收到了OPTIONS的返回，会在发一次，这一次才是真正的请求数据，这次headers会带上X-ABC、contentType。</p>
+<p>整体的过程cors将请求分为2种，简单请求和复杂请求，需不需要发送OPTIONS浏览器说的算，浏览器判断是简单请求还是复杂请求，cors是非常广泛的跨域手段 这里的缺点是OPTIONS请求也是一次请求，消耗带宽，真正的请求也会延迟。</p>
+</li>
+<li>
+<p>最方便的跨域方案 <strong>proxy代理+ Nginx</strong><br>
+nginx是一款极其强大的web服务器，其优点就是轻量级、启动快、高并发。</p>
+<p>跨域问题的产生是因为浏览器的同源政策造成的，但是服务器与服务器之间的数据交换是没有这个限制。</p>
+<p>反向代理就是采用这种方式，建立一个虚拟的代理服务器来接收 internet 上的链接请求，然后转发给内部网络上的服务器，并将从服务器上得到的结果，返回给 internet 上请求链接的客户端。现在的新项目中nginx几乎是首选，我们用node或者java开发的服务通常都需要经过nginx的反向代理。</p>
+</li>
+<li>
+<p><strong>window.postMessage()</strong> 利用h5新特性window.postMessage()</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>跨域传送门 ☞ <a href="https://juejin.cn/post/7003232769182547998"># 跨域，不可不知的基础概念</a></p>
+<h3 id="粘包问题分析与对策">粘包问题分析与对策</h3>
+<p>TCP粘包是指发送方发送的若干包数据到接收方接收时粘成一包，从接收缓冲区看，后一包数据的头紧接着前一包数据的尾。</p>
+<p><strong>粘包出现原因</strong></p>
+<p>简单得说，在流传输中出现，UDP不会出现粘包，因为它有<strong>消息边界</strong></p>
+<p>粘包情况有两种，一种是<code>粘在一起的包都是完整的数据包</code>，另一种情况是<code>粘在一起的包有不完整的包</code>。</p>
+<p>为了<strong>避免粘包</strong>现象，可采取以下几种措施：</p>
+<p>（1）对于发送方引起的粘包现象，用户可通过编程设置来避免，<code>TCP提供了强制数据立即传送的操作指令push</code>，TCP软件收到该操作指令后，就立即将本段数据发送出去，而不必等待发送缓冲区满；</p>
+<p>（2）对于接收方引起的粘包，则可通过优化程序设计、精简接收进程工作量、<code>提高接收进程优先级等措施</code>，使其及时接收数据，从而尽量避免出现粘包现象；</p>
+<p>（3）由接收方控制，将一包数据按结构字段，人为控制分多次接收，然后合并，通过这种手段来避免粘包。<code>分包多发</code>。</p>
+<p>以上提到的三种措施，都有其不足之处。</p>
+<p>（1）第一种编程设置方法虽然可以避免发送方引起的粘包，但它关闭了优化算法，降低了网络发送效率，影响应用程序的性能，一般不建议使用。</p>
+<p>（2）第二种方法只能减少出现粘包的可能性，但并不能完全避免粘包，当发送频率较高时，或由于网络突发可能使某个时间段数据包到达接收方较快，接收方还是有可能来不及接收，从而导致粘包。</p>
+<p>（3）第三种方法虽然避免了粘包，但应用程序的效率较低，对实时应用的场合不适合。</p>
+<blockquote>
+<p>一种比较周全的对策是：接收方创建一预处理线程，对接收到的数据包进行预处理，将粘连的包分开。实验证明这种方法是高效可行的。</p>
+</blockquote>
+<h3 id="客户端与服务端长连接的几种方式">客户端与服务端长连接的几种方式</h3>
+<ol>
+<li>
+<p><strong>ajax 轮询</strong><br>
+<strong>实现原理</strong>：ajax 轮询指客户端每间隔一段时间向服务端发起请求，保持数据的同步。</p>
+<p><strong>优点</strong>：可实现基础（指间隔时间较短）的数据更新。</p>
+<p><strong>缺点</strong>：这种方法也只是尽量的模拟即时传输，但并非真正意义上的即时通讯，很有可能出现客户端请求时，服务端数据并未更新。或者服务端数据已更新，但客户端未发起请求。导致多次请求资源浪费，效率低下。【<code>数据更新不及时，效率低下</code>】</p>
+</li>
+<li>
+<p><strong>long poll 长轮询</strong></p>
+<p><strong>实现原理</strong>：<br>
+long poll 指的是客户端发送请求之后，如果没有数据返回，服务端会将请求挂起放入队列（不断开连接）处理其他请求，直到有数据返回给客户端。然后客户端再次发起请求，以此轮询。在 HTTP1.0 中客户端可以设置请求头 Connection:keep-alive，服务端收到该请求头之后知道这是一个长连接，在响应报文头中也添加 Connection:keep-alive。客户端收到之后表示长连接建立完成，可以继续发送其他的请求。在 HTTP1.1 中默认使用了 Connection:keep-alive 长连接。</p>
+<p><strong>优点</strong>：减少客户端的请求，降低无效的网络传输，保证每次请求都有数据返回，不会一直占用线程。</p>
+<p><strong>缺点</strong>：无法处理高并发，当客户端请求量大，请求频繁时对服务器的处理能力要求较高。服务器一直保持连接会消耗资源，需要同时维护多个线程，服务器所能承载的 TCP 连接数是有上限的，这种轮询很容易把连接数顶满。每次通讯都需要客户端发起，服务端不能主动推送。【<code>无法处理高并发，消耗服务器资源严重，服务端不能主动推送</code>】</p>
+</li>
+<li>
+<p><strong>iframe 长连接</strong></p>
+<p><strong>实现原理：</strong><br>
+在网页上嵌入一个 iframe 标签，该标签的 src 属性指向一个长连接请求。这样服务端就可以源源不断地给客户端传输信息。保障信息实时更新。</p>
+<p><strong>优点</strong>：消息及时传输。</p>
+<p><strong>缺点</strong>：<code>消耗服务器资源</code>。</p>
+</li>
+<li>
+<p><strong>WebSocket</strong></p>
+<p><strong>实现原理</strong>：<br>
+Websocket 实现了客户端与服务端的双向通信，只需要连接一次，就可以相互传输数据，很适合实时通讯、数据实时更新等场景。</p>
+<p>Websocket 协议与 HTTP 协议没有关系，它是一个建立在 TCP 协议上的全新协议，为了兼容 HTTP 握手规范，在握手阶段依然使用 HTTP 协议，握手完成之后，数据通过 TCP 通道进行传输。</p>
+<p>Websoket 数据传输是通过 frame 形式，一个消息可以分成几个片段传输。这样大数据可以分成一些小片段进行传输，不用考虑由于数据量大导致标志位不够的情况。也可以边生成数据边传递消息，提高传输效率。</p>
+<p><strong>优点</strong>：<br>
+双向通信。客户端和服务端双方都可以主动发起通讯。<br>
+没有同源限制。客户端可以与任意服务端通信，不存在跨域问题。<br>
+数据量轻。第一次连接时需要携带请求头，后面数据通信都不需要带请求头，减少了请求头的负荷。<br>
+传输效率高。因为只需要一次连接，所以数据传输效率高。</p>
+<p><strong>缺点</strong>：<br>
+长连接需要后端处理业务的代码更稳定，推送消息相对复杂；<br>
+长连接受网络限制比较大，需要处理好重连。<br>
+兼容性，WebSocket 只支持 IE10 及其以上版本。<br>
+服务器长期维护长连接需要一定的成本，各个浏览器支持程度不一；<br>
+成熟的 HTTP 生态下有大量的组件可以复用，WebSocket 则没有，遇到异常问题难以快速定位快速解决。【需要后端代码稳定，受网络限制大，兼容性差，维护成本高，生态圈小】</p>
+</li>
+</ol>
+<h3 id="利用socket建立网络连接的步骤">利用Socket建立网络连接的步骤</h3>
+<p>建立Socket连接至少需要一对套接字，其中一个运行于客户端，称为ClientSocket ，另一个运行于服务器端，称为ServerSocket 。</p>
+<p>套接字之间的连接过程分为三个步骤：服务器监听，客户端请求，连接确认。</p>
+<p>1、服务器监听：服务器端套接字并不定位具体的客户端套接字，而是处于等待连接的状态，实时监控网络状态，等待客户端的连接请求。</p>
+<p>2、客户端请求：指客户端的套接字提出连接请求，要连接的目标是服务器端的套接字。</p>
+<p>为此，客户端的套接字必须首先描述它要连接的服务器的套接字，指出服务器端套接字的地址和端口号，然后就向服务器端套接字提出连接请求。</p>
+<p>3、连接确认：当服务器端套接字监听到或者说接收到客户端套接字的连接请求时，就响应客户端套接字的请求，建立一个新的线程，把服务器端套接字的描述发给客户端，一旦客户端确认了此描述，双方就正式建立连接。</p>
+<p>而服务器端套接字继续处于监听状态，继续接收其他客户端套接字的连接请求。</p>
+<h3 id="非对称加密rsa">非对称加密RSA</h3>
+<p>简介：</p>
+<ol>
+<li>对称加密算法又称现代加密算法。</li>
+<li>非对称加密是计算机通信安全的基石，保证了加密数据不会被破解。</li>
+<li>非对称加密算法需要两个密钥：公开密钥(publickey) 和私有密(privatekey)</li>
+<li>公开密钥和私有密钥是一对</li>
+</ol>
+<p>如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密。 <br>
+如果用私有密钥对数据进行加密，只有用对应的公开密钥才能解密。</p>
+<p>特点： <br>
+算法强度复杂，安全性依赖于算法与密钥。 <br>
+加密解密速度慢。</p>
+<p>与对称加密算法的对比： <br>
+对称加密只有一种密钥，并且是非公开的，如果要解密就得让对方知道密钥。 <br>
+非对称加密有两种密钥，其中一个是公开的。</p>
+<p>RSA应用场景： <br>
+由于RSA算法的加密解密速度要比对称算法速度慢很多，在实际应用中，通常采取 <br>
+数据本身的加密和解密使用对称加密算法(AES)。 用RSA算法加密并传输对称算法所需的密钥。</p>
+<h3 id="http1-http2-http3">HTTP1、HTTP2、HTTP3</h3>
+<p>HTTP/2 相比于 HTTP/1.1，可以说是大幅度提高了网页的性能，只需要升级到该协议就可以减少很多之前需要做的性能优化工作，虽如此但HTTP/2并非完美的，HTTP/3 就是为了解决 HTTP/2 所存在的一些问题而被推出来的。</p>
+<h3 id="http11-的缺陷"><strong>HTTP1.1 的缺陷</strong></h3>
+<ol>
+<li>
+<p>高延迟 — 队头阻塞(Head-Of-Line Blocking)</p>
+<p><code>队头阻塞</code>是指当顺序发送的请求序列中的一个请求因为某种原因被阻塞时，在后面排队的所有请求也一并被阻塞，会导致客户端迟迟收不到数据。</p>
+<p>针对队头阻塞的解决办法:</p>
+<ul>
+<li><code>将同一页面的资源分散到不同域名下，提升连接上限</code>。</li>
+<li><code>合并小文件减少资源数</code>，使用精灵图。</li>
+<li><code>内联(Inlining)资源</code>是另外一种防止发送很多小图请求的技巧，将图片的原始数据嵌入在CSS文件里面的URL里，减少网络请求次数。</li>
+<li><code>减少请求数量</code>，合并文件。</li>
+</ul>
+</li>
+<li>
+<p>无状态特性 — 阻碍交互</p>
+<p><code>无状态是指协议对于连接状态没有记忆能力</code>。纯净的 HTTP 是没有 cookie 等机制的，每一个连接都是一个新的连接。</p>
+<p><code>Header里携带的内容过大，在一定程度上增加了传输的成本</code>。且请求响应报文里有大量字段值都是重复的。</p>
+</li>
+<li>
+<p>明文传输 — 不安全性</p>
+<p>HTTP/1.1在传输数据时，所有<code>传输的内容都是明文</code>，客户端和服务器端都无法验证对方的身份，无法保证数据的安全性。</p>
+</li>
+<li>
+<p>不支持服务端推送</p>
+</li>
+</ol>
+<blockquote>
+<p>记忆口诀：队头阻塞高延迟，无状态阻交互，明文传输不安全，服务推送不支持。</p>
+</blockquote>
+<p><strong>HTTP 1.1 排队问题</strong></p>
+<p>HTTP 1.1多个文件共用一个TCP，这样可以减少tcp握手，这样3个文件就不用握手9次了，不过这样请求文件需要排队，请求和返回都需要排队， 如果第一个文件响应慢，会阻塞后面的文件，这样就产生了对头的等待问题。</p>
+<p>有的网站可能会有很多文件，浏览器处于对机器性能的考虑，它不可能让你无限制的发请求建连接，因为建立连接需要占用资源，浏览器不想把用户的网络资源都占用了，所以浏览器最多会建立6个tcp连接；如果有上百个文件可能都需要排队，http2.0正在解决这个问题。</p>
+<figure data-type="image" tabindex="6"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8ecdc60670194df7957ee59e1f56701f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="spdy-协议与-http2-简介">SPDY 协议与 HTTP/2 简介</h3>
+<h4 id="1-http2-简介">1、HTTP/2 简介</h4>
+<p>HTTP/2是现行HTTP协议（HTTP/1.x）的替代，但它不是重写。<strong>HTTP/2基于SPDY，专注于性能，最大的一个目标是在用户和网站间只用一个连接（connection）</strong> 。</p>
+<h4 id="2-http2-新特性">2、HTTP/2 新特性</h4>
+<h4 id="1-二进制传输">1、二进制传输</h4>
+<p><code>HTTP/2传输数据量的大幅减少,主要有两个原因:以二进制方式传输和Header 压缩</code>。我们先来介绍二进制传输,HTTP/2 采用二进制格式传输数据，而非HTTP/1.x 里纯文本形式的报文 ，二进制协议解析起来更高效。<code>HTTP/2 将请求和响应数据分割为更小的帧，并且它们采用二进制编码</code>。</p>
+<h4 id="2-header-压缩">2、Header 压缩</h4>
+<p>HTTP/2并没有使用传统的压缩算法，而是开发了专门的&quot;HPACK”算法，在客户端和服务器两端建立“字典”，用索引号表示重复的字符串，还采用哈夫曼编码来压缩整数和字符串，可以达到50%~90%的高压缩率。</p>
+<h4 id="3-多路复用">3、多路复用</h4>
+<p>在 HTTP/2 中引入了多路复用的技术。多路复用很好的解决了浏览器限制同一个域名下的请求数量的问题，同时也更容易实现全速传输。</p>
+<figure data-type="image" tabindex="7"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f756ad3403bc4fe18e970c56677c796e~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h4 id="4-server-push">4、Server Push</h4>
+<p>HTTP2还在一定程度上改变了传统的“请求-应答”工作模式，服务器不再是完全被动地响应请求，也可以新建“流”主动向客户端发送消息。减少等待的延迟，这被称为&quot;<code>服务器推送</code>&quot;（ Server Push，也叫 Cache push）</p>
+<h4 id="5-提高安全性">5、提高安全性</h4>
+<p>出于兼容的考虑，HTTP/2延续了HTTP/1的“明文”特点，可以像以前一样使用明文传输数据，不强制使用加密通信，不过格式还是二进制，只是不需要解密。</p>
+<p>但由于HTTPS已经是大势所趋，而且主流的浏览器Chrome、Firefox等都公开宣布只支持加密的HTTP/2，<strong>所以“事实上”的HTTP/2是加密的</strong>。也就是说，互联网上通常所能见到的HTTP/2都是使用&quot;https”协议名，跑在TLS上面。HTTP/2协议定义了两个字符串标识符：“h2&quot;表示加密的HTTP/2，“h2c”表示明文的HTTP/2。</p>
+<h4 id="6-防止对头阻塞">6、防止对头阻塞</h4>
+<p>http1.1如果第一个文件阻塞，第二个文件也就阻塞了。</p>
+<figure data-type="image" tabindex="8"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b67bd1f793a3425d9e8a415cae9b7863~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>http2.0的解决，把3个请求打包成一个小块发送过去，即使第一个阻塞了，后面2个也可以回来；相当于3个文件同时请求，就看谁先回来谁后回来，阻塞的可能就后回来，对带宽的利用是最高的；但没有解决TCP的对头阻塞，如果TCP发过去的一个分包发丢了，他会重新发一次；http2.0的解决了大文件的阻塞。</p>
+<figure data-type="image" tabindex="9"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/77d8ae8e0de44f3aa693f0626a346d4c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>一个分包请求3个文件，即使第一个阻塞了，第二个也能返回</p>
+<h3 id="http2-的缺点">HTTP/2 的缺点</h3>
+<p>虽然 HTTP/2 解决了很多之前旧版本的问题，但它还是存在一个巨大的问题，<strong>主要是底层支撑的 TCP 协议造成的</strong>。HTTP/2的缺点主要有以下几点：</p>
+<ol>
+<li>TCP 以及 TCP+TLS 建立连接时延时</li>
+<li>TCP 的队头阻塞并没有彻底解决</li>
+<li>多路复用导致服务器压力上升也容易 Timeout</li>
+</ol>
+<h3 id="http3-新特性">HTTP/3 新特性</h3>
+<h4 id="1-http3简介">1、HTTP/3简介</h4>
+<p>Google 在推SPDY的时候就搞了个基于 UDP 协议的“QUIC”协议，让HTTP跑在QUIC上而不是TCP上。而“HTTP over QUIC”就是HTTP/3，真正“完美”地解决了“队头阻塞”问题。</p>
+<p>QUIC 虽然基于 UDP，但是在原本的基础上新增了很多功能，接下来我们重点介绍几个QUIC新功能。</p>
+<h4 id="2-quic新功能">2、QUIC新功能</h4>
+<p>QUIC基于UDP，而UDP是“无连接”的，根本就不需要“握手”和“挥手”，所以就比TCP来得快。此外QUIC也实现了可靠传输，保证数据一定能够抵达目的地。它还引入了类似HTTP/2的“流”和“多路复用”，单个“流&quot;是有序的，可能会因为丢包而阻塞，但其他“流”不会受到影响。具体来说QUIC协议有以下特点：</p>
+<ul>
+<li>
+<p><strong>实现了类似TCP的流量控制、传输可靠性的功能</strong></p>
+<p>虽然UDP不提供可靠性的传输，但QUIC在UDP的基础之上增加了一层来保证数据可靠性传输。它提供了数据包重传、拥塞控制以及其他一些TCP中存在的特性。</p>
+</li>
+<li>
+<p><strong>实现了快速握手功能</strong></p>
+<p>由于QUIC是基于UDP的，所以QUIC可以实现使用0-RTT或者1-RTT来建立连接，这意味着QUIC可以用最快的速度来发送和接收数据，这样可以大大提升首次打开页面的速度。<strong>0RTT 建连可以说是 QUIC 相比 HTTP2 最大的性能优势</strong>。</p>
+</li>
+<li>
+<p><strong>集成了TLS加密功能</strong></p>
+</li>
+<li>
+<p><strong>多路复用，彻底解决TCP中队头阻塞的问题</strong></p>
+<p>和TCP不同，QUIC实现了在同一物理连接上可以有多个独立的逻辑数据流。实现了数据流的单独传输，就解决了TCP中队头阻塞的问题。</p>
+</li>
+<li>
+<p><strong>连接迁移</strong></p>
+<p>TCP 是按照 4 要素（客户端 IP、端口, 服务器 IP、端口）确定一个连接的。而 QUIC 则是让客户端生成一个 Connection ID （64 位）来区别不同连接。只要 Connection ID 不变，连接就不需要重新建立，即便是客户端的网络发生变化。由于迁移客户端继续使用相同的会话密钥来加密和解密数据包，QUIC 还提供了迁移客户端的自动加密验证。</p>
+</li>
+</ul>
+<h3 id="总结">总结</h3>
+<ul>
+<li>HTTP/1.1有两个主要的缺点：安全不足和性能不高。</li>
+<li>HTTP/2完全兼容HTTP/1，是“更安全的HTTP、更快的HTTPS&quot;，二进制传输、头部压缩、多路复用、服务器推送等技术可以充分利用带宽，降低延迟，从而大幅度提高上网体验；</li>
+<li>QUIC 基于 UDP 实现，是 HTTP/3 中的底层支撑协议，该协议基于 UDP，又取了 TCP 中的精华，实现了即快又可靠的协议。</li>
+</ul>
+<h3 id="理解xsscsrfddos攻击原理以及避免方式">理解xss，csrf，ddos攻击原理以及避免方式</h3>
+<p><code>XSS</code>(<code>Cross-Site Scripting</code>，<strong>跨站脚本攻击</strong>)是一种代码注入攻击。攻击者在目标网站上注入恶意代码，当被攻击者登陆网站时就会执行这些恶意代码，这些脚本可以读取 <code>cookie，session tokens</code>，或者其它敏感的网站信息，对用户进行钓鱼欺诈，甚至发起蠕虫攻击等。</p>
+<p><code>CSRF</code>（<code>Cross-site request forgery</code>）<strong>跨站请求伪造</strong>：攻击者诱导受害者进入第三方网站，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的。</p>
+<p><strong>XSS避免方式：</strong></p>
+<ol>
+<li><code>url</code>参数使用<code>encodeURIComponent</code>方法转义</li>
+<li>尽量不是有<code>InnerHtml</code>插入<code>HTML</code>内容</li>
+<li>使用特殊符号、标签转义符。</li>
+</ol>
+<p><code>CSRF</code>避免方式：</p>
+<ol>
+<li>
+<p>添加验证码</p>
+</li>
+<li>
+<p>使用token</p>
+<ul>
+<li>服务端给用户生成一个token，加密后传递给用户</li>
+<li>用户在提交请求时，需要携带这个token</li>
+<li>服务端验证token是否正确</li>
+</ul>
+</li>
+</ol>
+<p><code>DDoS</code>又叫分布式拒绝服务，全称 <code>Distributed Denial of Service</code>，其原理就是利用大量的请求造成资源过载，导致服务不可用。</p>
+<p><strong><code>DDos</code>避免方式：</strong></p>
+<ol>
+<li>限制单IP请求频率。</li>
+<li>防火墙等防护设置禁止<code>ICMP</code>包等</li>
+<li>检查特权端口的开放</li>
+</ol>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzkzNzI0MDMxNQ==&amp;mid=2247487116&amp;idx=1&amp;sn=09187eeb7e45faa1bee86ff48ae14be1&amp;source=41#wechat_redirect">360技术：嗨，送你一张Web性能优化地图</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[诡异面试题]]></title>
         <id>https://coderdml.github.io/post/gui-yi-mian-shi-ti/</id>
@@ -116,212 +2012,6 @@ https://juejin.cn/post/6844904165672484871</p>
 需要注意，函数参数也在函数作用域中。
 
 词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[大厂面试题]]></title>
-        <id>https://coderdml.github.io/post/mian-shi-ti-ji-lei/</id>
-        <link href="https://coderdml.github.io/post/mian-shi-ti-ji-lei/">
-        </link>
-        <updated>2022-02-07T09:42:52.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>01.字节面试题</strong><br>
-123['toString'].length + 123 = ?<br>
-考点1：原型链的继承<br>
-123是Number的实例，继承了Number的toString方法<br>
-考点2：函数的length<br>
-函数的length就是形参的个数，toString方法的形参个数是一个</p>
-<p>答案：124</p>
-<p><strong>02.字节面试题</strong><br>
-(a<mark>1&amp;&amp;a</mark>2&amp;&amp;a==3)为true？</p>
-<p>思路一：利用对象的隐式转换调用toString</p>
-<p>思路二：利用数组的隐式转换调用join</p>
-<p>思路三：利用defineProperty</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[04.力扣剑指OFFER——JZ52 两个链表的第一个公共结点]]></title>
-        <id>https://coderdml.github.io/post/04/</id>
-        <link href="https://coderdml.github.io/post/04/">
-        </link>
-        <updated>2022-02-07T09:34:57.000Z</updated>
-        <content type="html"><![CDATA[<p>描述<br>
-输入两个无环的单向链表，找出它们的第一个公共结点，如果没有公共节点则返回空。（注意因为传入数据是链表，所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）</p>
-<p>数据范围： n \le 1000n≤1000<br>
-要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
-<p><strong>解题思路：</strong></p>
-<p>使用两个指针N1,N2，一个从链表1的头节点开始遍历，我们记为N1，一个从链表2的头节点开始遍历，我们记为N2。</p>
-<p>让N1和N2一起遍历，当N1先走完链表1的尽头（为null）的时候，则从链表2的头节点继续遍历，同样，如果N2先走完了链表2的尽头，则从链表1的头节点继续遍历，也就是说，N1和N2都会遍历链表1和链表2。</p>
-<p>因为两个指针，同样的速度，走完同样长度（链表1+链表2），不管两条链表有无相同节点，都能够到达同时到达终点。</p>
-<p>（N1最后肯定能到达链表2的终点，N2肯定能到达链表1的终点）。</p>
-<p>所以，如何得到公共节点：</p>
-<pre><code>有公共节点的时候，N1和N2必会相遇，因为长度一样嘛，速度也一定，必会走到相同的地方的，所以当两者相等的时候，则会第一个公共的节点
-无公共节点的时候，此时N1和N2则都会走到终点，那么他们此时都是null，所以也算是相等了。
-</code></pre>
-<p>下面看个动态图，可以更形象的表示这个过程~<br>
-<img src="https://coderdml.github.io/post-images/1644226544855.gif" alt="" loading="lazy"></p>
-<pre><code>function FindFirstCommonNode(pHead1, pHead2)
-{
-    // write code here
-    let p1 = pHead1
-    let p2 = pHead2
-    while(p1 != p2){
-        if(p1)
-            p1 = p1.next
-        else
-            p1 = pHead2
-        if(p2)
-            p2 = p2.next
-        else
-            p2 = pHead1
-}
-    return p1
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[03.力扣剑指OFFER——JZ25 合并两个排序的链表]]></title>
-        <id>https://coderdml.github.io/post/03/</id>
-        <link href="https://coderdml.github.io/post/03/">
-        </link>
-        <updated>2022-02-07T08:51:17.000Z</updated>
-        <content type="html"><![CDATA[<p>描述<br>
-输入两个递增的链表，单个链表的长度为n，合并这两个链表并使新链表中的节点仍然是递增排序的。<br>
-数据范围： 0 \le n \le 10000≤n≤1000，-1000 \le 节点值 \le 1000−1000≤节点值≤1000<br>
-要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
-<pre><code>构造一个链表函数，new一个虚拟头部，比较两个链表头节点的值并且向后移动节点，当有链表被遍历结束之后指针指向剩余的链表
-</code></pre>
-<pre><code>function Merge(pHead1, pHead2)
-{
-    // write code here
-    function ListNode(x){
-    this.val = x;
-    this.next = null;
-        }
-    let dummy = new ListNode(-1)
-    let cur = dummy
-    while(pHead1 &amp;&amp; pHead2){
-        if(pHead1.val &lt;= pHead2.val){
-            cur.next = pHead1
-            pHead1 = pHead1.next
-            
-        }
-        else{
-            cur.next = pHead2
-            pHead2 = pHead2.next
-            
-        }
-        cur = cur.next
-    }
-    if(!pHead1){
-        cur.next = pHead2
-    }
-    if(!pHead2){
-        cur.next = pHead1
-    }
-     return dummy.next
-}
-</code></pre>
-<pre><code>function Merge(pHead1, pHead2)
-{
-    // write code here
-    let head = {
-        val: null,
-        next: null,
-    };
-    
-    let cur = head;
-    while (pHead1 &amp;&amp; pHead2){
-        if (pHead1.val &lt;= pHead2.val){
-            cur.next = pHead1;
-            cur = cur.next;
-            pHead1 = pHead1.next;
-        } else {
-            cur.next = pHead2;
-            cur = cur.next;
-            pHead2 = pHead2.next;
-        } 
-    }
-    
-    if (pHead1) cur.next = pHead1;
-    else cur.next = pHead2;
-    
-    return head.next;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[02.力扣剑指OFFER——JZ24 反转链表 ]]></title>
-        <id>https://coderdml.github.io/post/02li-kou-jian-zhi-offer-jz24-fan-zhuan-lian-biao/</id>
-        <link href="https://coderdml.github.io/post/02li-kou-jian-zhi-offer-jz24-fan-zhuan-lian-biao/">
-        </link>
-        <updated>2022-01-19T22:24:47.000Z</updated>
-        <content type="html"><![CDATA[<p>要求：空间复杂度 O(1) ，时间复杂度 O(n) 。</p>
-<pre><code>链表特点：只有前序节点指向后序节点的指针
-</code></pre>
-<p>反转链表需要使后序节点指向前序节点，pre指针指向当前节点的前一个节点，cur指针指向当前节点<br>
-为防止链表断开还需要一个tmp指针保存当前节点的后序节点</p>
-<p>tmp保存后序节点-&gt;改变指针指向-&gt;向后移动<br>
-<img src="https://coderdml.github.io/post-images/1644216902830.png" alt="" loading="lazy"></p>
-<pre><code>function ReverseList(pHead)
-{
-    // write code here
-    let pre = null , cur = pHead
-    while(cur){
-        let tmp = cur.next  //用tmp保存后序节点防止链表断开
-        cur.next = pre //改变当前节点的指向
-        pre = cur //向后移动pre指针
-        cur = tmp //向后移动cur指针
-    }
-    return pre
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[01.力扣剑指OFFER——JZ6 从尾到头打印链表]]></title>
-        <id>https://coderdml.github.io/post/01li-kou-jian-zhi-offer-jz6-cong-wei-dao-tou-da-yin-lian-biao/</id>
-        <link href="https://coderdml.github.io/post/01li-kou-jian-zhi-offer-jz6-cong-wei-dao-tou-da-yin-lian-biao/">
-        </link>
-        <updated>2022-01-19T22:09:14.000Z</updated>
-        <content type="html"><![CDATA[<p>利用栈的先进后出特性</p>
-<pre><code> /*function ListNode(x){
-    this.val = x;
-    this.next = null;
-}*/
-function printListFromTailToHead(head)
-{
-    let res = [];
-    while(head){
-        res.unshift(head.val);
-        head = head.next
-    }
-    return res
-}
-module.exports = {
-    printListFromTailToHead : printListFromTailToHead
-};
-</code></pre>
-<p>或者使用push方法在尾部添加后，返回时使用reverse方法逆转数组</p>
-<p>unshift()方法<br>
-实例<br>
-将新项添加到数组起始位置:</p>
-<pre><code>var fruits = [&quot;Banana&quot;, &quot;Orange&quot;, &quot;Apple&quot;, &quot;Mango&quot;];
-fruits.unshift(&quot;Lemon&quot;,&quot;Pineapple&quot;);
-</code></pre>
-<p>fruits 将输出：</p>
-<pre><code>Lemon,Pineapple,Banana,Orange,Apple,Mango
-</code></pre>
-<p>unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。</p>
-<p>注意： 该方法将改变数组的数目。</p>
-<p>提示: 将新项添加到数组末尾，请使用 push() 方法。</p>
-<pre><code>shift方法和pop方法
-删除并返回数组的第一个元素。
-注：如果数组是空的，那么该方法不进行任何操作，返回 undefined。
-该方法直接修改原数组。
-提示：要删除并返回数组的最后一个元素，请使用 pop() 方法。
-</code></pre>
 ]]></content>
     </entry>
 </feed>
