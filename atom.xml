@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://coderdml.github.io</id>
     <title>Study for money</title>
-    <updated>2022-02-08T10:19:49.969Z</updated>
+    <updated>2022-02-08T10:35:08.573Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://coderdml.github.io"/>
     <link rel="self" href="https://coderdml.github.io/atom.xml"/>
@@ -1907,16 +1907,6 @@ Websocket 实现了客户端与服务端的双向通信，只需要连接一次�
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[诡异面试题]]></title>
-        <id>https://coderdml.github.io/post/gui-yi-mian-shi-ti/</id>
-        <link href="https://coderdml.github.io/post/gui-yi-mian-shi-ti/">
-        </link>
-        <updated>2022-02-08T09:36:02.000Z</updated>
-        <content type="html"><![CDATA[<p>函数提升</p>
-<p>变量提升</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[06.力扣剑指OFFER——JZ22 链表中倒数最后k个结点]]></title>
         <id>https://coderdml.github.io/post/06li-kou-jian-zhi-offer-jz22-lian-biao-zhong-dao-shu-zui-hou-k-ge-jie-dian/</id>
         <link href="https://coderdml.github.io/post/06li-kou-jian-zhi-offer-jz22-lian-biao-zhong-dao-shu-zui-hou-k-ge-jie-dian/">
@@ -2012,6 +2002,26 @@ https://juejin.cn/post/6844904165672484871</p>
 需要注意，函数参数也在函数作用域中。
 
 词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[大厂面试题]]></title>
+        <id>https://coderdml.github.io/post/mian-shi-ti-ji-lei/</id>
+        <link href="https://coderdml.github.io/post/mian-shi-ti-ji-lei/">
+        </link>
+        <updated>2022-02-07T09:42:52.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>01.字节面试题</strong><br>
+123['toString'].length + 123 = ?<br>
+考点1：原型链的继承<br>
+123是Number的实例，继承了Number的toString方法<br>
+考点2：函数的length<br>
+函数的length就是形参的个数，toString方法的形参个数是一个</p>
+<p>答案：124</p>
+<p><strong>02.字节面试题</strong><br>
+(a<mark>1&amp;&amp;a</mark>2&amp;&amp;a==3)为true？</p>
+<p>思路一：利用对象的隐式转换调用toString</p>
+<p>思路二：利用数组的隐式转换调用join</p>
+<p>思路三：利用defineProperty</p>
 ]]></content>
     </entry>
 </feed>
