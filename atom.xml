@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://coderdml.github.io</id>
     <title>Work for money</title>
-    <updated>2022-02-08T11:40:33.634Z</updated>
+    <updated>2022-02-09T17:16:49.221Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://coderdml.github.io"/>
     <link rel="self" href="https://coderdml.github.io/atom.xml"/>
@@ -10,6 +10,28 @@
     <logo>https://coderdml.github.io/images/avatar.png</logo>
     <icon>https://coderdml.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Work for money</rights>
+    <entry>
+        <title type="html"><![CDATA[restday]]></title>
+        <id>https://coderdml.github.io/post/restday/</id>
+        <link href="https://coderdml.github.io/post/restday/">
+        </link>
+        <updated>2022-02-09T13:53:24.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>人之怒 Wrath of Man
+</code></pre>
+<p><img src="https://coderdml.github.io/post-images/1644414951460.webp" alt="" loading="lazy"><br>
+6.7<br>
+又名: 玩命钞劫(台) / 运钞车 / Cash Truck<br>
+导演: 盖·里奇 Guy Ritchie<br>
+演员: 杰森·斯坦森 Jason Statham / 霍特·麦克卡兰尼 Holt McCallany / 罗奇·威廉姆斯 Rocci Williams / 乔什·哈奈特 Josh Hartnett / 杰弗里·多诺万 Jeffrey Donovan<br>
+类型: 动作 / 犯罪<br>
+制片国家/地区: 美国 / 英国<br>
+年份: 2021<br>
+简介: 在一次全副武装的运钞车劫案中，梅斯先生（杰森·斯坦森 饰）的儿子作为案发目击者被劫匪杀害。怒火中烧的梅斯为报丧子之仇，化身H卧底成为运钞车安保，试图找出杀害他儿子的劫匪以及与劫匪暗中勾结的安保公司内鬼。</p>
+<pre><code>双线交织+分章节叙述
+</code></pre>
+<p><code>我觉得配乐很棒</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[面经汇总05.Vue]]></title>
         <id>https://coderdml.github.io/post/mian-jing-hui-zong-05vue/</id>
@@ -2002,26 +2024,6 @@ https://juejin.cn/post/6844904165672484871</p>
 需要注意，函数参数也在函数作用域中。
 
 词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[大厂面试题]]></title>
-        <id>https://coderdml.github.io/post/mian-shi-ti-ji-lei/</id>
-        <link href="https://coderdml.github.io/post/mian-shi-ti-ji-lei/">
-        </link>
-        <updated>2022-02-07T09:42:52.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>01.字节面试题</strong><br>
-123['toString'].length + 123 = ?<br>
-考点1：原型链的继承<br>
-123是Number的实例，继承了Number的toString方法<br>
-考点2：函数的length<br>
-函数的length就是形参的个数，toString方法的形参个数是一个</p>
-<p>答案：124</p>
-<p><strong>02.字节面试题</strong><br>
-(a<mark>1&amp;&amp;a</mark>2&amp;&amp;a==3)为true？</p>
-<p>思路一：利用对象的隐式转换调用toString</p>
-<p>思路二：利用数组的隐式转换调用join</p>
-<p>思路三：利用defineProperty</p>
 ]]></content>
     </entry>
 </feed>
