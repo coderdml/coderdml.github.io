@@ -2,17 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>点击标题滚动到相应位置以及滑动到相应位置时显示对应标题 | Work for money</title>
+<title>08.力扣剑指OFFER——JZ18 删除链表的节点 | Work for money</title>
 <link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644573433246">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="点击标题滚动到相应位置以及滑动到相应位置时显示对应标题 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="08.力扣剑指OFFER——JZ18 删除链表的节点 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="1
-" />
+    <meta name="description" content="描述
+给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。返回删除后的链表的头节点。
+1.此题对比原题有改动
+2.题目保证链表中节点的值互不相同
+3.该题只会输出返回的链表和结果做对比，所以若使用 C 或 C++ 语言，你不..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,21 +78,63 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              点击标题滚动到相应位置以及滑动到相应位置时显示对应标题
+              08.力扣剑指OFFER——JZ18 删除链表的节点
             </h2>
             <div class="post-info">
               <span>
-                2021-08-19
+                2022-02-11
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>1</p>
+                <p>描述<br>
+给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。返回删除后的链表的头节点。</p>
+<p>1.此题对比原题有改动<br>
+2.题目保证链表中节点的值互不相同<br>
+3.该题只会输出返回的链表和结果做对比，所以若使用 C 或 C++ 语言，你不需要 free 或 delete 被删除的节点</p>
+<p>数据范围:<br>
+0&lt;=链表节点值&lt;=10000<br>
+0&lt;=链表长度&lt;=10000</p>
+<pre><code>匹配值删除，删除匹配值的节点以及该节点的next指针，并且改变上一个节点的指向。
+由此出现两种情况，匹配节点是头结点或者不是头结点，所以在头结点前加一个虚拟节点
+</code></pre>
+<pre><code>/*
+ * function ListNode(x){
+ *   this.val = x;
+ *   this.next = null;
+ * }
+ */
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param head ListNode类 
+ * @param val int整型 
+ * @return ListNode类
+ */
+function deleteNode( head ,  val ) {
+    // write code here
+    var dumny = new ListNode(-1);
+    var pre = dumny
+    pre.next = head
+    while(pre.next){
+        if(pre.next.val == val){
+            pre.next = pre.next.next;
+            break
+        }
+        pre = pre.next  
+    }
+    return dumny.next
+}
+module.exports = {
+    deleteNode : deleteNode
+};
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -102,9 +147,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://coderdml.github.io/post/xiang-mu-shou-huo/">
+            <a href="https://coderdml.github.io/post/yan-sheng-zhi-shi/">
               <h3 class="post-title">
-                项目收获
+                衍生知识
               </h3>
             </a>
           </div>

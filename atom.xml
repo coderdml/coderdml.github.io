@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://coderdml.github.io</id>
     <title>Work for money</title>
-    <updated>2022-02-11T09:43:30.107Z</updated>
+    <updated>2022-02-11T09:57:17.615Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://coderdml.github.io"/>
     <link rel="self" href="https://coderdml.github.io/atom.xml"/>
@@ -10,6 +10,57 @@
     <logo>https://coderdml.github.io/images/avatar.png</logo>
     <icon>https://coderdml.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Work for money</rights>
+    <entry>
+        <title type="html"><![CDATA[08.力扣剑指OFFER——JZ18 删除链表的节点]]></title>
+        <id>https://coderdml.github.io/post/08li-kou-jian-zhi-offer-jz18-shan-chu-lian-biao-de-jie-dian/</id>
+        <link href="https://coderdml.github.io/post/08li-kou-jian-zhi-offer-jz18-shan-chu-lian-biao-de-jie-dian/">
+        </link>
+        <updated>2022-02-11T09:54:00.000Z</updated>
+        <content type="html"><![CDATA[<p>描述<br>
+给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。返回删除后的链表的头节点。</p>
+<p>1.此题对比原题有改动<br>
+2.题目保证链表中节点的值互不相同<br>
+3.该题只会输出返回的链表和结果做对比，所以若使用 C 或 C++ 语言，你不需要 free 或 delete 被删除的节点</p>
+<p>数据范围:<br>
+0&lt;=链表节点值&lt;=10000<br>
+0&lt;=链表长度&lt;=10000</p>
+<pre><code>匹配值删除，删除匹配值的节点以及该节点的next指针，并且改变上一个节点的指向。
+由此出现两种情况，匹配节点是头结点或者不是头结点，所以在头结点前加一个虚拟节点
+</code></pre>
+<pre><code>/*
+ * function ListNode(x){
+ *   this.val = x;
+ *   this.next = null;
+ * }
+ */
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param head ListNode类 
+ * @param val int整型 
+ * @return ListNode类
+ */
+function deleteNode( head ,  val ) {
+    // write code here
+    var dumny = new ListNode(-1);
+    var pre = dumny
+    pre.next = head
+    while(pre.next){
+        if(pre.next.val == val){
+            pre.next = pre.next.next;
+            break
+        }
+        pre = pre.next  
+    }
+    return dumny.next
+}
+module.exports = {
+    deleteNode : deleteNode
+};
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[衍生知识]]></title>
         <id>https://coderdml.github.io/post/yan-sheng-zhi-shi/</id>
@@ -2041,43 +2092,6 @@ Websocket 实现了客户端与服务端的双向通信，只需要连接一次�
         fast = fast.next
     }
     return slow;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[05.力扣剑指OFFER——JZ23 链表中环的入口结点]]></title>
-        <id>https://coderdml.github.io/post/05/</id>
-        <link href="https://coderdml.github.io/post/05/">
-        </link>
-        <updated>2022-02-08T08:49:48.000Z</updated>
-        <content type="html"><![CDATA[<p>描述<br>
-给一个长度为n链表，若其中包含环，请找出该链表的环的入口结点，否则，返回null。</p>
-<p>数据范围： n\le10000n≤10000，1&lt;=结点值&lt;=100001&lt;=结点值&lt;=10000<br>
-要求：空间复杂度 O(1)O(1)，时间复杂度 O(n)O(n)</p>
-<pre><code>function EntryNodeOfLoop(pHead)
-{
-    // write code here
-//     设置快慢指针，都从链表头出发，快指针每次走两步，慢指针一次走一步
-//   假如有环，一定相遇于环中某点(结论1)
-//   接着让两个指针分别从相遇点和链表头出发，两者都改为每次走一步，最终相遇于环入口(结论2)。
-    if(pHead === null || pHead.next === null){
-        return null;
-    }
-    let p1 = pHead
-    let p2 = pHead
-    while(p2 &amp;&amp; p2.next){  //p2是快指针，保证p2
-        p1 = p1.next
-        p2 = p2.next.next
-        if(p1 === p2){  //第一次相遇后改变指针位置
-            p1 = pHead
-            while(p1 !== p2){
-            p2 = p2.next
-            p1 = p1.next
-            }
-            return p1
-        }
-    }
 }
 </code></pre>
 ]]></content>
