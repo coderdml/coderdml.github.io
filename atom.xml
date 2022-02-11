@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://coderdml.github.io</id>
     <title>Work for money</title>
-    <updated>2022-02-10T07:12:49.647Z</updated>
+    <updated>2022-02-11T08:52:29.762Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://coderdml.github.io"/>
     <link rel="self" href="https://coderdml.github.io/atom.xml"/>
@@ -10,6 +10,79 @@
     <logo>https://coderdml.github.io/images/avatar.png</logo>
     <icon>https://coderdml.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Work for money</rights>
+    <entry>
+        <title type="html"><![CDATA[衍生知识]]></title>
+        <id>https://coderdml.github.io/post/yan-sheng-zhi-shi/</id>
+        <link href="https://coderdml.github.io/post/yan-sheng-zhi-shi/">
+        </link>
+        <updated>2022-02-10T12:22:05.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>1.ISP缓存是什么-----衍生自问题“从输入URL到页面加载的全过程”
+</code></pre>
+<p>ISP缓存的技术说明：</p>
+<p>1、ISP缓存，本身是一种宽带接入提供商给网页批量访问加速的技术。ISP会将当前访问量较大的网页内容放到ISP服务器的缓存中，当有新的用户请求相同内容时，可以直接从缓存中发送相关信息，不必每次都去访问真正的网站，从而加快了不同用户对相同内容的访问速度，同时也能节省网间流量结算成本。</p>
+<p>2、ISP缓存主要以缓存静态页面为主，比如新浪的新闻页。</p>
+<p>3、 如果ISP的缓存中的网页带有用户SESSIONID信息，就可能发生登录串号现象。当用户A登录时服务端返回页面内容被ISP缓存，这时同网络的用户B访问该网站，直接取得了刚才ISP缓存的信息，而该缓存信息中包含有用户A的SESSIONID（此时用户A还未退出），这样用户B处就显示出了A的信息。</p>
+<p>ISP缓存导致登录串号的解决方案：</p>
+<p>1、  最好的解决方法是使用https来登录，因为是通过非对称加密，缓存设备无法得到服务器端的私钥，所以可以避免被ISP缓存。</p>
+<p>2、  如果觉得实施成本高，或需要快速解决，可以在请求设置SESSIONID的网页链接中增加一个随机数参数，来临时绕过ISP缓存，但这样可能会增加网站自身服务器的压力，同时宽带接入提供商也可以调整缓存策略，忽略这些随机参数。</p>
+<p>3、  网站也可以在SESSIONID的生成规则中加入生成IP的校验规则，这样至少可以确保即使SESSIONID串号了，网站自己也能发现并马上退出登录，从而不影响用户隐私。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[07.力扣剑指OFFER——JZ35 复杂链表的复制]]></title>
+        <id>https://coderdml.github.io/post/jz35-fu-za-lian-biao-de-fu-zhi/</id>
+        <link href="https://coderdml.github.io/post/jz35-fu-za-lian-biao-de-fu-zhi/">
+        </link>
+        <updated>2022-02-10T12:09:59.000Z</updated>
+        <content type="html"><![CDATA[<p>解题思路一<br>
+链表拼接、拆分<br>
+此解法参考了大佬的做法, 主要思路是将原链表的结点对应的拷贝节点连在其后, 最后链表变成 原1 -&gt; 拷1 -&gt; 原2 -&gt; 拷2 -&gt; ... -&gt; null 的形式<br>
+然后我们再逐步处理对应的随机指针, 使用双指针, 一个指针指向原链表的节点, 一个指向拷贝链表的节点, 那么就有 拷-&gt;random = 原-&gt;random-&gt;next (random不为空)<br>
+最后再用双指针将两条链表拆分即可, 此算法大大优化了空间复杂度, 十分优秀<br>
+<img src="https://coderdml.github.io/post-images/1644495079280.gif" alt="" loading="lazy"><br>
+报错代码<br>
+程序异常退出，请检查是否存在语法错误或者数组越界非法访问等情况<br>
+TypeError: Cannot read property 'next' of null</p>
+<pre><code>function RandomListNode(x){
+    this.val = x;
+    this.next = null;
+    this.random = null;
+}
+function Clone(head)
+{
+    // write code here
+     if (head === null) return null;
+    //1.复制节点并插入
+    var cur = head;
+    while(cur){
+        let newNode =new RandomListNode(cur.val);
+      //  newNode.val = cur.val;
+        newNode.next = cur.next;
+        cur.next = newNode;
+        cur = newNode.next;
+    }
+    //2.构造random
+    while(cur){
+        if(cur.random){
+            cur.next.random = cur.random.next
+        }
+        cur = cur.next.next
+    }
+    //3.拆分链表
+    var newHead = head.next
+    while(cur.next){
+        var tmp = cur.next 
+        cur.next = tmp.next
+        cur = tmp
+       }
+    return newHead
+    
+}
+</code></pre>
+<p>解题思路二<br>
+深拷贝</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[restday]]></title>
         <id>https://coderdml.github.io/post/restday/</id>
@@ -2007,30 +2080,6 @@ Websocket 实现了客户端与服务端的双向通信，只需要连接一次�
     }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[面经草稿]]></title>
-        <id>https://coderdml.github.io/post/mian-jing-cao-gao/</id>
-        <link href="https://coderdml.github.io/post/mian-jing-cao-gao/">
-        </link>
-        <updated>2022-02-08T08:25:49.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[作用域和闭包]]></title>
-        <id>https://coderdml.github.io/post/zuo-yong-yu-he-bi-bao/</id>
-        <link href="https://coderdml.github.io/post/zuo-yong-yu-he-bi-bao/">
-        </link>
-        <updated>2022-02-07T10:40:24.000Z</updated>
-        <content type="html"><![CDATA[<p>掘金链接<br>
-https://juejin.cn/post/6844904165672484871</p>
-<pre><code>当可执行代码内部访问变量时，会先查找本地作用域，如果找到目标变量即返回，否则会去父级作用域继续查找...一直找到全局作用域。我们把这种作用域的嵌套机制，称为 作用域链。
-
-需要注意，函数参数也在函数作用域中。
-
-词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。</code></pre>
 ]]></content>
     </entry>
 </feed>

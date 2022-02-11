@@ -2,17 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>重学面试知识 | Work for money</title>
+<title>07.力扣剑指OFFER——JZ35 复杂链表的复制 | Work for money</title>
 <link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644569547090">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="重学面试知识 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="07.力扣剑指OFFER——JZ35 复杂链表的复制 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="作用域
-" />
+    <meta name="description" content="解题思路一
+链表拼接、拆分
+此解法参考了大佬的做法, 主要思路是将原链表的结点对应的拷贝节点连在其后, 最后链表变成 原1 -&gt; 拷1 -&gt; 原2 -&gt; 拷2 -&gt; ... -&gt; null 的形式
+然后我们再逐..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,21 +77,67 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              重学面试知识
+              07.力扣剑指OFFER——JZ35 复杂链表的复制
             </h2>
             <div class="post-info">
               <span>
-                2021-12-17
+                2022-02-10
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>作用域</p>
+                <p>解题思路一<br>
+链表拼接、拆分<br>
+此解法参考了大佬的做法, 主要思路是将原链表的结点对应的拷贝节点连在其后, 最后链表变成 原1 -&gt; 拷1 -&gt; 原2 -&gt; 拷2 -&gt; ... -&gt; null 的形式<br>
+然后我们再逐步处理对应的随机指针, 使用双指针, 一个指针指向原链表的节点, 一个指向拷贝链表的节点, 那么就有 拷-&gt;random = 原-&gt;random-&gt;next (random不为空)<br>
+最后再用双指针将两条链表拆分即可, 此算法大大优化了空间复杂度, 十分优秀<br>
+<img src="https://coderdml.github.io/post-images/1644495079280.gif" alt="" loading="lazy"><br>
+报错代码<br>
+程序异常退出，请检查是否存在语法错误或者数组越界非法访问等情况<br>
+TypeError: Cannot read property 'next' of null</p>
+<pre><code>function RandomListNode(x){
+    this.val = x;
+    this.next = null;
+    this.random = null;
+}
+function Clone(head)
+{
+    // write code here
+     if (head === null) return null;
+    //1.复制节点并插入
+    var cur = head;
+    while(cur){
+        let newNode =new RandomListNode(cur.val);
+      //  newNode.val = cur.val;
+        newNode.next = cur.next;
+        cur.next = newNode;
+        cur = newNode.next;
+    }
+    //2.构造random
+    while(cur){
+        if(cur.random){
+            cur.next.random = cur.random.next
+        }
+        cur = cur.next.next
+    }
+    //3.拆分链表
+    var newHead = head.next
+    while(cur.next){
+        var tmp = cur.next 
+        cur.next = tmp.next
+        cur = tmp
+       }
+    return newHead
+    
+}
+</code></pre>
+<p>解题思路二<br>
+深拷贝</p>
 
               </div>
               <div class="toc-container">
@@ -102,9 +150,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://coderdml.github.io/post/fang-dou-han-shu/">
+            <a href="https://coderdml.github.io/post/restday/">
               <h3 class="post-title">
-                防抖函数
+                restday
               </h3>
             </a>
           </div>

@@ -2,17 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>重学面试知识 | Work for money</title>
+<title>衍生知识 | Work for money</title>
 <link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1644569547090">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="重学面试知识 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="衍生知识 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="作用域
-" />
+    <meta name="description" content="1.ISP缓存是什么-----衍生自问题“从输入URL到页面加载的全过程”
+
+ISP缓存的技术说明：
+1、ISP缓存，本身是一种宽带接入提供商给网页批量访问加速的技术。ISP会将当前访问量较大的网页内容放到ISP服务器的缓存中，当有新的用户..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,21 +77,30 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              重学面试知识
+              衍生知识
             </h2>
             <div class="post-info">
               <span>
-                2021-12-17
+                2022-02-10
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>作用域</p>
+                <pre><code>1.ISP缓存是什么-----衍生自问题“从输入URL到页面加载的全过程”
+</code></pre>
+<p>ISP缓存的技术说明：</p>
+<p>1、ISP缓存，本身是一种宽带接入提供商给网页批量访问加速的技术。ISP会将当前访问量较大的网页内容放到ISP服务器的缓存中，当有新的用户请求相同内容时，可以直接从缓存中发送相关信息，不必每次都去访问真正的网站，从而加快了不同用户对相同内容的访问速度，同时也能节省网间流量结算成本。</p>
+<p>2、ISP缓存主要以缓存静态页面为主，比如新浪的新闻页。</p>
+<p>3、 如果ISP的缓存中的网页带有用户SESSIONID信息，就可能发生登录串号现象。当用户A登录时服务端返回页面内容被ISP缓存，这时同网络的用户B访问该网站，直接取得了刚才ISP缓存的信息，而该缓存信息中包含有用户A的SESSIONID（此时用户A还未退出），这样用户B处就显示出了A的信息。</p>
+<p>ISP缓存导致登录串号的解决方案：</p>
+<p>1、  最好的解决方法是使用https来登录，因为是通过非对称加密，缓存设备无法得到服务器端的私钥，所以可以避免被ISP缓存。</p>
+<p>2、  如果觉得实施成本高，或需要快速解决，可以在请求设置SESSIONID的网页链接中增加一个随机数参数，来临时绕过ISP缓存，但这样可能会增加网站自身服务器的压力，同时宽带接入提供商也可以调整缓存策略，忽略这些随机参数。</p>
+<p>3、  网站也可以在SESSIONID的生成规则中加入生成IP的校验规则，这样至少可以确保即使SESSIONID串号了，网站自己也能发现并马上退出登录，从而不影响用户隐私。</p>
 
               </div>
               <div class="toc-container">
@@ -102,9 +113,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://coderdml.github.io/post/fang-dou-han-shu/">
+            <a href="https://coderdml.github.io/post/jz35-fu-za-lian-biao-de-fu-zhi/">
               <h3 class="post-title">
-                防抖函数
+                07.力扣剑指OFFER——JZ35 复杂链表的复制
               </h3>
             </a>
           </div>
