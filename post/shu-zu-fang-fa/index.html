@@ -1,0 +1,219 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数组方法 | Work for money</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1670180948944">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数组方法 | Work for money - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="push() pop() shift() unshift() reverse() concat() splice() slice() join()
+indexOf()
+其中 'slice'和'concat'方法在不传参数时实现数组复制
+sl..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1670180948944" alt="">
+  </a>
+  <h1 class="site-title">
+    Work for money
+  </h1>
+  <p class="site-description">
+    study for more money
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              数组方法
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-21
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>push() pop() shift() unshift() reverse() concat() splice() slice() join()</p>
+<p>indexOf()</p>
+<p>其中 'slice'和'concat'方法在不传参数时实现数组复制</p>
+<p>slice 包前不包后</p>
+<p>数组去重<br>
+<code>var arr = [1,2,3,4,3,5,6,6,4,7]</code><br>
+1.</p>
+<pre><code>
+
+</code></pre>
+<p>2.利用obj的key值唯一性</p>
+<pre><code>var obj = {}
+    for(let i=0;i&lt;arr.length;i++){
+        obj[arr[i]] = '随便'
+    }
+    var arr2 = []
+    for(var i in obj){ 
+        arr2.push(i)
+    }
+    console.log(arr2)
+</code></pre>
+<p>3.new Set()</p>
+<pre><code>var str1 =  new Set(arr)
+console.log(str1)
+
+var arr2 = Array.from(str1)
+console.log(arr2)
+
+</code></pre>
+<p>forEach() map() filter()<br>
+<em>用例</em></p>
+<pre><code>arr.forEach(function(item,index,arr){
+    console.log(item)    
+}
+</code></pre>
+<p>every() some() 返回布尔值</p>
+<pre><code>var arr=[80,91,89,92]
+var arr2 = arr.every(function(item){
+    return item&gt;90
+})
+</code></pre>
+<p>find()<br>
+find和filter的区别<br>
+<code>返回值的区别</code>filter返回的是数组，find返回的是单一项</p>
+<p>reduce叠加</p>
+<pre><code>var arr = [1,2,3,4,5]
+var arr2 = arr.reduce(function(prev,item){
+    return prev + item
+},&quot;&quot;)
+console.log(arr2)
+
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/number-parseint-parsefloat-de-qu-bie/">
+              <h3 class="post-title">
+                Number() ParseInt() ParseFloat() 的区别
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
