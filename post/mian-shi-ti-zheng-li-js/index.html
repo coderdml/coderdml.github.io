@@ -1,0 +1,211 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>面试题整理---js | 多巴胺正在摧毁你的自律</title>
+<link rel="shortcut icon" href="https://coderdml.github.io/favicon.ico?v=1681607009959">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://coderdml.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="面试题整理---js | 多巴胺正在摧毁你的自律 - Atom Feed" href="https://coderdml.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="延迟加载JS有哪些方式？
+JS微任务和宏任务
+JS判断变量是不是数组，你能写出哪些方法？
+JS数组去重
+找出多维数组最大值
+** 给字符串新增方法实现功能给字符串对象定义一个addPrefix函数，当传入一个字符串str时，它会返回新的带有..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://coderdml.github.io">
+  <img class="avatar" src="https://coderdml.github.io/images/avatar.png?v=1681607009959" alt="">
+  </a>
+  <h1 class="site-title">
+    多巴胺正在摧毁你的自律
+  </h1>
+  <p class="site-description">
+    沃尔夫冈正在撕裂永恒领域
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              面试题整理---js
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-04-10
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>延迟加载JS有哪些方式？</strong><br>
+<strong>JS微任务和宏任务</strong><br>
+<strong>JS判断变量是不是数组，你能写出哪些方法？</strong><br>
+<strong>JS数组去重</strong><br>
+<strong>找出多维数组最大值</strong><br>
+** 给字符串新增方法实现功能给字符串对象定义一个addPrefix函数，当传入一个字符串str时，它会返回新的带有指定前缀的字符串，例如：console.log( 'world'.addPrefix('hello') ) 控制台会输出helloworld**<br>
+解答：</p>
+<pre><code>String.prototype.addPrefix = function(str){
+	return str  + this;
+}
+console.log( 'world'.addPrefix('hello') )
+</code></pre>
+<p><strong>找出字符串出现最多次数的字符以及次数</strong></p>
+<pre><code>var str = 'aaabbbbbccddddddddddx';
+var obj = {};
+for(var i=0;i&lt;str.length;i++){
+	var char = str.charAt(i);
+	if( obj[char] ){
+		obj[char]++;
+	}else{
+		obj[char] = 1;
+	}
+}
+console.log( obj );
+//统计出来最大值
+var max = 0;
+for( var key in obj ){
+	if( max &lt; obj[key] ){
+		max = obj[key];
+	}
+}
+//拿最大值去对比
+for( var key in obj ){
+	if( obj[key] == max ){
+		console.log('最多的字符是'+key);
+		console.log('出现的次数是'+max);
+	}
+}
+</code></pre>
+<p><strong>indexOf</strong><br>
+https://blog.csdn.net/qq_44603011/article/details/122622083?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168048282316800188560166%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=168048282316800188560166&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2<sub>all</sub>sobaiduend~default-1-122622083-null-null.142<sup>v80</sup>insert_down38,201<sup>v4</sup>add_ask,239<sup>v2</sup>insert_chatgpt&amp;utm_term=js%20.indexOf&amp;spm=1018.2226.3001.4187</p>
+<p>https://blog.csdn.net/weixin_40013817/article/details/103182967?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=instanceof&amp;utm_medium=distribute.pc_search_result.none-task-blog-2<sub>all</sub>sobaiduweb~default-0-103182967.142<sup>v74</sup>pc_new_rank,201<sup>v4</sup>add_ask,239<sup>v2</sup>insert_chatgpt&amp;spm=1018.2226.3001.4187</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://coderdml.github.io/post/mian-shi-ti-zheng-li-css/">
+              <h3 class="post-title">
+                面试题整理---css
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://coderdml.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
